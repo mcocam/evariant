@@ -1,0 +1,158 @@
+/* STYLES NAVBAR */
+
+nav {
+    /* UI Properties */
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    opacity: 0.8;
+}
+
+.tex-color{
+    color: #012E3D;
+    opacity: 1;
+}
+
+#btn-login {
+    border-color:#012E3D;
+    color: #012E3D;
+    opacity: 100%;
+}
+
+.navbar {
+    --bs-navbar-toggler-border-color: #3B8AB2;
+    --bs-navbar-active-color: #012E3D;
+}
+
+.navbar-toggler-icon {
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: middle;
+    background-image: url("../img/Icon-menu.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+}
+
+
+
+/* STYLES LANDING PAGE */
+body {
+    font-family: 'Quicksand';font-size: 22px;
+    color: #012E3D;
+}
+
+#home-header {
+    margin-left: 14rem;
+    text-align: left;
+    float: left;
+}
+
+#team_seccion {
+    background-color: #B7E7FE;
+}
+
+.card-title {
+    color: #3B8AB2;
+}
+
+.btn-end-section {
+    border-color:#012E3D;
+    border-radius: 4px 4px 4px 4px;
+    opacity: 100%;
+    color:#012E3D;
+}
+
+.img-end-section {
+    height:400px;
+    background-image: url('../img/end_background.svg');
+    background-repeat:no-repeat;
+    background-size:cover;
+    background-position:center center;
+}
+
+
+/* FOOTER */
+#footer-text {
+    color: #90A7B0;
+}
+
+.footer-b {
+    bottom: 0;
+    right: 0;
+    left: 0;
+    position: relative;
+    background-color: white;
+}
+
+
+/* SNP FINDER */
+#btn-snp {
+    float: right;
+    align-items: end;
+    color: #3B8AB2;
+    background-image: linear-gradient(to top, #B7E7FF 5%, #71aecc  100%);
+    transition: 0.5s;
+    box-shadow: 0px 0px 1px #00000029;
+    border: 0;
+    opacity: 1;
+}
+
+/* SNP FINDER -> TABLE */
+
+.table {
+    color: #012E3D;
+}
+.border-botton{
+    border: #012E3D;
+}
+.table-btn-style {
+    color: #3B8AB2;
+}
+
+
+/* SNP FINDER -> MODAL */
+
+#text-info {
+    color: #90A7B0;
+}
+
+#text-upload{
+    color: #3B8AB2;
+}
+
+.btn-snpCancel {
+    float: right;
+    border-color:#D8E1E5;
+    color: #90A7B0;
+    padding-left: 4em !important;
+    padding-right: 4em !important;
+}
+.btn-snpNext {
+    float: right;
+    align-items: end;
+    color: #3B8AB2;
+    background-image: linear-gradient(to top, #B7E7FF 5%, #71aecc  100%);
+    transition: 0.5s;
+    box-shadow: 0px 0px 1px #00000029;
+    border: 0;
+    padding-left: 4em !important;
+    padding-right: 4em !important;
+}
+
+/* SNP FINDER -> DRAG AND DROG */
+
+.upload_dropZone {
+    color: #0f3c4b;
+    outline: 2px dashed #012E3D;
+    outline-offset: -15px;
+    transition:
+      outline-offset 0.2s ease-out,
+      outline-color 0.3s ease-in-out,
+      background-color 0.2s ease-out;
+  }
+  .upload_dropZone.highlight {
+    outline-offset: -4px;
+    outline-color: var(--colorPrimaryNormal, #0576bd);
+    background-color: var(--colorPrimaryEighth, #c8dadf);
+  }
+  

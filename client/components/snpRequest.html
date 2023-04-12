@@ -1,0 +1,77 @@
+<!-- Modal -->
+<div class="modal fade" id="newRequest" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header border border-bottom-0">
+                <h2 class="modal-title fs-5 fw-bold mt-2 ms-3" id="snpRequestTitle"> New Request </h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- STEP1 -->
+           <div id="snp_step1">
+                
+                <div class="modal-body mb-5 ms-3" >
+                <p id="text-info" >STEP 1: Give your request a title.</p>
+
+                    <form>
+                        <fieldset>
+                            <label for="" class="fs-6 fw-bold">Request title</label><br>
+                            <input type="text" class="form-control" placeholder="2023-03-20 SNP Finder Request">
+                        </fieldset>
+                    </form>
+                </div>
+
+                    <!-- Footer Step 1 -->
+                <div class="modal-footer justify-content-around">
+                    <button type="button" class="btn btn-outline-light btn-snpCancel fs-6 fw-bold px-5" data-bs-dismiss="modal"> Cancel </button>
+                    <button type="button" class="btn btn-info btn-snpNext fs-6 fw-bold px-5" id="btn_next_step1"> Next </button>
+                </div>
+           </div>
+
+
+
+            <!-- STEP2 -->
+            <div id="snp_step2" style="display:none;">
+
+                <div class="modal-body">
+                    <p id="text-info" class="ms-3">STEP 2: Give your request a title.</p>
+        
+                        <div>
+                            <form>
+                              <fieldset class=" upload_dropZone rounded-4  text-center  mb-3 p-5">
+                            
+                                <!-- Image uploader -->
+                                <img src="../img/Upload_file.svg" alt="Upload File">
+                                                
+                                <p class="fs-5 fw-bold my-2"> <strong id="text-upload">Click to upload</strong>  or drag and drop</p>
+                            
+                                <input id="upload_file" data-post-name="snp_file" data-post-url="https://someplace.com/image/uploads/logos/" 
+                                class="position-absolute invisible" type="file" multiple accept="file/fasta" />
+                            
+                                <p class="fs-6 my-2"><i>Max. file size 20 MB.</i></p>
+                                <div class="upload_gallery d-flex flex-wrap justify-content-center gap-3 mb-0"></div>
+                            
+                              </fieldset>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Footer Step 2 -->
+                    <div class="modal-footer justify-content-around">
+                        <button type="button" class="btn btn-outline-light btn-snpCancel fs-6 fw-bold px-5" id="btn_back_step2"> Back </button>
+                        <button type="button" class="btn btn-info btn-snpNext fs-6 fw-bold px-5" id="btn_save_step2">Next</button>
+                    </div>
+
+                    <!--  -->
+            </div>
+            
+        </div>
+    </div>
+
+</div>
+
+<script src="./js/components/snpRequest.js"></script>
+
+

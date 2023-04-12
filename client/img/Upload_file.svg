@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="58" viewBox="0 0 50 58">
+  <g id="Grupo_38" data-name="Grupo 38" transform="translate(-653 -301)">
+    <g id="Grupo_29" data-name="Grupo 29" transform="translate(-2 -1)">
+      <path id="Trazado_108" data-name="Trazado 108" d="M3,0H28.85L44,15.058V52a3,3,0,0,1-3,3H3a3,3,0,0,1-3-3V3A3,3,0,0,1,3,0Z" transform="translate(655 302)" fill="#e6eef2"/>
+      <path id="Trazado_107" data-name="Trazado 107" d="M6220.071-577.143h-14.623v-14.991Z" transform="translate(-5522 895)" fill="#d8e1e5" stroke="#d8e1e5" stroke-linejoin="round" stroke-width="1.2"/>
+      <g id="Grupo_28" data-name="Grupo 28" transform="translate(29 5)">
+        <text id="FASTA" transform="translate(639 313)" fill="#d8e1e5" font-size="7" font-family="Quicksand" font-weight="700"><tspan x="-10" y="0">FASTA</tspan></text>
+      </g>
+    </g>
+    <g id="Grupo_37" data-name="Grupo 37" transform="translate(-65 -1)">
+      <circle id="Elipse_88" data-name="Elipse 88" cx="14" cy="14" r="14" transform="translate(740 332)" fill="#012e3d"/>
+      <g id="Icon_feather-upload-cloud" data-name="Icon feather-upload-cloud" transform="translate(744.508 334.951)">
+        <path id="Trazado_112" data-name="Trazado 112" d="M17.817,20.909,14.909,18,12,20.909" transform="translate(-5.414 -6.952)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"/>
+        <path id="Trazado_113" data-name="Trazado 113" d="M18,18v6.546" transform="translate(-8.505 -6.952)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"/>
+        <path id="Trazado_114" data-name="Trazado 114" d="M15.6,15.7a3.637,3.637,0,0,0-1.738-6.83h-.916a5.818,5.818,0,1,0-9.992,5.31" transform="translate(0)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"/>
+        <path id="Trazado_115" data-name="Trazado 115" d="M17.817,20.909,14.909,18,12,20.909" transform="translate(-5.414 -6.952)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"/>
+      </g>
+    </g>
+  </g>
+</svg>

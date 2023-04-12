@@ -1,0 +1,39 @@
+version: "3"
+services:
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports: 
+      - "8345:3306"
+    volumes: 
+      - "./mysql/users.sql:/docker-entrypoint-initdb.d/2.sql"
+      - "./mysql/init.sql:/docker-entrypoint-initdb.d/1.sql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+
+  api:
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: './server'
+    command: uvicorn main:app --host 0.0.0.0 --port 5053 --reload --root-path /app/
+    links: 
+      - "db"
+    volumes:
+      - ./server/app:/app
+    ports:
+      - 5053:5053
+
+  nginx:
+    depends_on:
+      - api
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: './nginx'
+    volumes:
+      - ./client:/etc/nginx/html
+    ports:
+      - '80:80'

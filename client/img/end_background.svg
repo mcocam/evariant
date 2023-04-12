@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1366" height="398" viewBox="0 0 1366 398">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectángulo_2097" data-name="Rectángulo 2097" width="1366" height="398" transform="translate(0 2565)" fill="rgba(255,0,0,0.18)" opacity="0.9"/>
+    </clipPath>
+  </defs>
+  <g id="Enmascarar_grupo_3" data-name="Enmascarar grupo 3" transform="translate(0 -2565)" clip-path="url(#clip-path)">
+    <g id="Grupo_36" data-name="Grupo 36">
+      <g id="Grupo_35" data-name="Grupo 35">
+        <path id="Trazado_109" data-name="Trazado 109" d="M41,8.641C104.885-27,201.43,42.291,198.8,130.71S254.92,241.676,207.976,278.3c-18.912,9.357-60.32,13.122-81.284,42.775-23.575,33.346-27.485,92.434-63.069,93.615-46.018,1.528-27.206-54.5-41.246-97.182-6.289-19.119-32.212-28.167-51.489-40.879C-90.9,235.883-22.878,44.28,41,8.641Z" transform="matrix(-0.105, -0.995, 0.995, -0.105, -18.248, 3059.393)" fill="#ffd3b7"/>
+        <path id="Trazado_110" data-name="Trazado 110" d="M84.852,159.2c63.881-35.64,193.474,45.4,226.359,125.583s18.575,214.839-73.5,223.839C86.019,523.447,135.559,378.5,96,347.068,45.328,306.813,20.97,194.838,84.852,159.2Z" transform="translate(1525.378 2569.154) rotate(84)" fill="#b7ffd3"/>
+        <path id="Trazado_111" data-name="Trazado 111" d="M132.513,0c33.6,8.2,14.234,39.679,45.7,75.327s65.92,71.5,51.368,105.739-47.121,27.114-100.264,38.242S44.168,279.673,4.085,260.493s-35.108-73.41-35.108-117.9c6.8-91.318,33.958-64.43,74.842-100.077S98.916-8.2,132.513,0Z" transform="translate(746.494 2587.89) rotate(-17)" fill="#b7e7ff"/>
+        <circle id="Elipse_76" data-name="Elipse 76" cx="11" cy="11" r="11" transform="translate(1026 2593)" fill="#b7e7ff"/>
+        <circle id="Elipse_77" data-name="Elipse 77" cx="16" cy="16" r="16" transform="translate(690 2712)" fill="#b7e7ff"/>
+        <circle id="Elipse_78" data-name="Elipse 78" cx="11" cy="11" r="11" transform="translate(655 2673)" fill="#b7e7ff"/>
+        <circle id="Elipse_79" data-name="Elipse 79" cx="6" cy="6" r="6" transform="translate(684 2659)" fill="#b7e7ff"/>
+        <circle id="Elipse_80" data-name="Elipse 80" cx="5.5" cy="5.5" r="5.5" transform="translate(987 2587)" fill="#b7e7ff"/>
+        <ellipse id="Elipse_81" data-name="Elipse 81" cx="16" cy="16" rx="16" ry="16" transform="translate(1152.403 2667.1) rotate(-83)" fill="#b7fed3"/>
+        <ellipse id="Elipse_82" data-name="Elipse 82" cx="11" cy="11" rx="11" ry="11" transform="translate(1230.772 2965.459) rotate(-83)" fill="#b7fed3"/>
+        <ellipse id="Elipse_83" data-name="Elipse 83" cx="6" cy="6" rx="6" ry="6" transform="translate(1258.127 2939.6) rotate(-83)" fill="#b7fed3"/>
+        <ellipse id="Elipse_84" data-name="Elipse 84" cx="6" cy="6" rx="6" ry="6" transform="translate(1019.313 2817.8) rotate(-83)" fill="#b7fed3"/>
+        <circle id="Elipse_85" data-name="Elipse 85" cx="11" cy="11" r="11" transform="translate(335.895 3021.787)" fill="#fed3b7"/>
+        <circle id="Elipse_86" data-name="Elipse 86" cx="5.5" cy="5.5" r="5.5" transform="translate(303.791 3015.643)" fill="#fed3b7"/>
+        <ellipse id="Elipse_87" data-name="Elipse 87" cx="16" cy="16" rx="16" ry="16" transform="translate(262.016 2822.817) rotate(-83)" fill="#fed3b7"/>
+      </g>
+    </g>
+  </g>
+</svg>
