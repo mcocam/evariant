@@ -1,5 +1,6 @@
 # Database credentials
 mysql/users.sql
+mysql/init.sql
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
