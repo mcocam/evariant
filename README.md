@@ -8,13 +8,13 @@ A fully functional example can be found:
 
 The application is a dockerized fullstack web app powered by NGINX as reverse proxy that connects frontend (HTML+CSS+JS) and backend (FastAPI python) on a single entry. Also a MySQL database is used.
 
-The deployment is done via Ubuntu Virtual Machine and it is continously integrated via github. Every push triggers a new docker set up.
+The deployment is done via Ubuntu Virtual Machine and it is continously integrated via github. Every push triggers a new docker set up. 
 
 # Server (VM)
 
 The server can be accessed via SSH:
 The app is located on /home/evariant
-
+ 
 Server has the following features
 
     PRETTY_NAME="Ubuntu 22.04.2 LTS"
