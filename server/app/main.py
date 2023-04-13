@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from server.app.routes.session import session
+from routes.session import session
 from uvicorn import run
 
 from fastapi.middleware.cors import CORSMiddleware
