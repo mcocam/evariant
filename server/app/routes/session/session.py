@@ -6,6 +6,8 @@ from fastapi_sessions.frontends.implementations import SessionCookie, CookiePara
 from fastapi_sessions.session_verifier import SessionVerifier
 from fastapi_sessions.backends.implementations import InMemoryBackend
 from uuid import UUID, uuid4
+import env
+import os
 
 class SessionData(BaseModel):
     username: str
@@ -18,7 +20,7 @@ cookie = SessionCookie(
     cookie_name="evariantSession",
     identifier="general_verifier",
     auto_error=True,
-    secret_key="DONOTUSE",
+    secret_key=os.environ["SESSION_SECRERT"],
     cookie_params=cookie_params,
 )
 
@@ -29,7 +31,7 @@ router = APIRouter(
 )
 
 
-
+# Session verifier
 class BasicVerifier(SessionVerifier[UUID, SessionData]):
     def __init__(
         self,
@@ -101,7 +103,9 @@ async def login(credentials: Credentials, res: Response):
             cookie.attach_to_response(res, session)
 
             response["error"] = False
-            response["message"] = "Session on!"
+            response["message"] = "Session on"
+        else:
+            response["message"] = "Invalid credentials"
  
     except Exception as e:
         print(f"Exception from login route: {e}")
@@ -111,12 +115,31 @@ async def login(credentials: Credentials, res: Response):
 
 @router.post("/verify", dependencies=[Depends(cookie)])
 async def verify(session_data: SessionData = Depends(verifier)):
-    return True
+    response: dict[str,any] = {
+        "error": False,
+        "message": "User correctly authorized",
+        "data": ""
+    }  
+    return response
 
 @router.post("/logout")
 async def del_session(response: Response, session_id: UUID = Depends(cookie)):
-    await backend.delete(session_id)
-    cookie.delete_from_response(response)
-    return "deleted session"
+    
+    response: dict[str,any] = {
+        "error": True,
+        "message": "",
+        "data": ""
+    }
+    
+    try:
+        await backend.delete(session_id)
+        cookie.delete_from_response(response)
+        response["error"] = False 
+        response["message"] = "Logout done"
+    except Exception as e:
+        print(f"Error on delete session: {e}")
+        response["message"] = e
+        
+    return response
 
 
