@@ -105,7 +105,7 @@ async def login(credentials: Credentials, res: Response):
             response["error"] = False
             response["message"] = "900"
         else:
-            response["message"] = "Invalid credentials"
+            response["message"] = "904"
  
     except Exception as e:
         print(f"Exception from login route: {e}")
