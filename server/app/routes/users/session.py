@@ -81,7 +81,7 @@ async def login(credentials: Credentials, res: Response):
 
     response: dict[str,any] = {
         "error": True,
-        "message": "",
+        "message": "904",
         "data": ""
     }
 
@@ -103,13 +103,13 @@ async def login(credentials: Credentials, res: Response):
             cookie.attach_to_response(res, session)
 
             response["error"] = False
-            response["message"] = "Session on"
+            response["message"] = "900"
         else:
             response["message"] = "Invalid credentials"
  
     except Exception as e:
         print(f"Exception from login route: {e}")
-        response["message"] = e
+        response["message"] = "909"
 
     return response
 
@@ -117,7 +117,7 @@ async def login(credentials: Credentials, res: Response):
 async def verify(session_data: SessionData = Depends(verifier)):
     response: dict[str,any] = {
         "error": False,
-        "message": "User correctly authorized",
+        "message": "900",
         "data": ""
     }  
     return response
@@ -127,7 +127,7 @@ async def del_session(response: Response, session_id: UUID = Depends(cookie)):
     
     response: dict[str,any] = {
         "error": True,
-        "message": "",
+        "message": "904",
         "data": ""
     }
     
@@ -135,10 +135,10 @@ async def del_session(response: Response, session_id: UUID = Depends(cookie)):
         await backend.delete(session_id)
         cookie.delete_from_response(response)
         response["error"] = False 
-        response["message"] = "Logout done"
+        response["message"] = "900"
     except Exception as e:
         print(f"Error on delete session: {e}")
-        response["message"] = e
+        response["message"] = "909"
         
     return response
 
