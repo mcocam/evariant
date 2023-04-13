@@ -112,7 +112,7 @@ body {
 
 /* SNP FINDER -> MODAL */
 
-#text-info {
+#light-text {
     color: #90A7B0;
 }
 
@@ -155,4 +155,15 @@ body {
     outline-color: var(--colorPrimaryNormal, #0576bd);
     background-color: var(--colorPrimaryEighth, #c8dadf);
   }
+  
+#div_progress {
+    border: #D8E1E5 1px solid;
+    border-color: #D8E1E5;
+    height: 6em;
+}
+
+#progress-bar {
+    width: 80%;
+    color: #012E3D;
+}
   

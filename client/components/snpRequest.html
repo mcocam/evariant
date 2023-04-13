@@ -13,7 +13,7 @@
            <div id="snp_step1">
                 
                 <div class="modal-body mb-5 ms-3" >
-                <p id="text-info" >STEP 1: Give your request a title.</p>
+                <p class="light-text" >STEP 1: Give your request a title.</p>
 
                     <form>
                         <fieldset>
@@ -36,7 +36,7 @@
             <div id="snp_step2" style="display:none;">
 
                 <div class="modal-body">
-                    <p id="text-info" class="ms-3">STEP 2: Give your request a title.</p>
+                    <p class="ms-3 light-text">STEP 2: Give your request a title.</p>
         
                         <div>
                             <form>
@@ -58,13 +58,29 @@
                         </div>
                     </div>
 
+                    <!-- Progress bar -->
+                    <div id="div_progress" style="display:none;" class="m-4 p-3">
+
+                        <div class="row">
+                            <p class="fs-6 fw-bold col-10">fastafilename1.fasta </p>
+                            <button type="button" id="btn_progress" class="btn-close col" aria-label="Close"></button>
+                        </div>
+                        <p class="fs-6 light-text">2,4 MB</p>
+                        
+                        <div class="row m-1">
+                            <progress id="progress-bar" max="100" value="0" class="col-6"> </progress>
+                            <p class="col light-text"> <span id="progress-value" >0</span>% </p>
+                        </div>
+
+                    </div>
+
                     <!-- Footer Step 2 -->
                     <div class="modal-footer justify-content-around">
                         <button type="button" class="btn btn-outline-light btn-snpCancel fs-6 fw-bold px-5" id="btn_back_step2"> Back </button>
-                        <button type="button" class="btn btn-info btn-snpNext fs-6 fw-bold px-5" id="btn_save_step2">Next</button>
+                        <button type="button" class="btn btn-info btn-snpNext fs-6 fw-bold px-5" id="btn_next_step2">Next</button>
                     </div>
 
-                    <!--  -->
+                    
             </div>
             
         </div>
@@ -73,5 +89,4 @@
 </div>
 
 <script src="./js/components/snpRequest.js"></script>
-
 
