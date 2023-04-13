@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from server.app.routes.session import session
 from uvicorn import run
-from models.persist.UserDao import UserDao
 
 from fastapi.middleware.cors import CORSMiddleware
 
