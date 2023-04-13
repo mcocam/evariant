@@ -5,11 +5,10 @@ from models.persist.UserDao import UserDao
 
 from fastapi.middleware.cors import CORSMiddleware
 
-
-
-
+# Initialize fastAPI
 app: FastAPI = FastAPI()
 
+# Allowed origins
 origins = [
     "http://localhost",
     "http://localhost:8080",
@@ -23,17 +22,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
+# User session routes and logic
 app.include_router(session.router)
-
-@app.get("/")
-async def login_trial():
-    
-    
-    
-    return ""
-
-
 
 if __name__ == "__main__":
     # To test individually
