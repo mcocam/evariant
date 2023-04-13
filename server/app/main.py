@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routes.session import login
+from server.app.routes.session import session
 from uvicorn import run
 from models.persist.UserDao import UserDao
 
@@ -26,7 +26,7 @@ app.add_middleware(
 )
 
 
-app.include_router(login.router)
+app.include_router(session.router)
 
 @app.get("/")
 async def login_trial():
