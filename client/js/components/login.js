@@ -27,5 +27,12 @@ $().ready(() => {
         const response = loginFunction(body);
         //console.log(response);
     });
+
+    //Login
+    
     
 });
+
+function loginAction() {
+    
+};
