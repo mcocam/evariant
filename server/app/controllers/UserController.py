@@ -1,6 +1,7 @@
 
 from models.persist.UserDao import UserDao
 from pydantic import BaseModel
+from models.User import User
 
 class UserController:
 
@@ -19,3 +20,30 @@ class UserController:
             print(e)
 
         return result
+    
+    async def check_if_user_exists(self, email: str) -> bool:
+        
+        user_exists: bool = True 
+        
+        try:
+            result = self.dao.get_user_by_email(email)
+            
+            if len(result) == 0:
+                user_exists = False
+            
+        except Exception as e:
+            print(e)
+            pass
+        
+        return user_exists
+    
+    async def register_user(self, new_user: User) -> bool:
+        
+        new_user_added: bool = False
+        
+        try:
+            new_user_added = self.dao.add_new_user(new_user)
+        except Exception as e:
+            print(e)
+        
+        return new_user_added

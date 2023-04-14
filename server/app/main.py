@@ -1,5 +1,6 @@
 from fastapi import FastAPI
-from routes.users import session
+from routes.users.session import router as session_router
+from routes.users.register import router as register_router
 from uvicorn import run
 
 from fastapi.middleware.cors import CORSMiddleware
@@ -22,7 +23,8 @@ app.add_middleware(
 )
 
 # User session routes and logic
-app.include_router(session.router)
+app.include_router(session_router)
+app.include_router(register_router)
 
 if __name__ == "__main__":
     # To test individually

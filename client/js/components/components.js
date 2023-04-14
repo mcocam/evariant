@@ -15,6 +15,10 @@ const components = [
         path: "./components/login.html"
     },
     {
+        id: "#logoutModal",
+        path: "./components/logout.html"
+    },
+    {
         id: "#landing",
         path: "./components/landing.html"
     },
