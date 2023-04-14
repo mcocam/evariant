@@ -18,5 +18,5 @@ function validateCookie() {
 
 $().ready(() => {
 
-    validateCookie();
+    // validateCookie();
 });
