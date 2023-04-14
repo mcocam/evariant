@@ -4,10 +4,10 @@ function validateCookie() {
         .post('/api/users/verify')
         .then(response => {
             console.log(response)
-            console.log(response.error)
-            if(!response.error)
+            console.log(response.data.error)
+            if(!response.data.error)
             {
-
+                
             }
         })
         .catch(e => {
