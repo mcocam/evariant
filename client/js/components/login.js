@@ -3,15 +3,20 @@ function loginFunction(body){
     axios
         .post('/api/users/login', body)
         .then(response => {
-            console.log(response)
-            if(response["error"] == true) {
-                 $(function() {
-                    $('result-login').text('A ocurrido un error');
-                 });
+            // console.log(response)
+
+            if (response.message[904]){
+                $('#result-login').text('Invalid Credentials');
+            }else if (response.message[900]){
+                $('#result-login').text('Session On');
+            }
+
+
+            // Errores cogidos desde el error
+            if(response.data["error"] == true) {
+                $('#result-login').text('Ha ocurrido un error');
             }else{
-                $(function() {
-                    $('result-login').text('Sin Errores');
-                 });
+                $('#result-login').text('Sin Errores');
             }
         })
         .catch(e => {
@@ -37,11 +42,4 @@ $().ready(() => {
         //console.log(response);
     });
 
-    //Login
-    
-    
 });
-
-function loginResponse() {
-
-}

@@ -1,6 +1,7 @@
-Codigos de error
+Error Codes
 
-904 -> Session Off Credenciales invalidas
+904 -> Invalid Credentials
+902 -> User already exists
 900 -> Session On
 
-900 -> El servidor ha fallado, intentalo mas tarde.
+909 -> Served has failed, try later
