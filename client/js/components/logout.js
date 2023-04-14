@@ -1,6 +1,8 @@
 function logoutFunction(){
 
-    $.cookie("evariantSession", null, { path: '/' });
+    // $.removeCookie('evariantSession');
+    // document.cookie = 'evariantSession=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    Cookies.remove('evariantSession');
 
     axios
         .post('/api/users/logout')
@@ -16,7 +18,6 @@ function logoutFunction(){
 };
 
 $().ready(() => {
-    console.log("Logout ready")
 
     $("#logoutButton").on("click", () => {
         console.log("Logging out")
