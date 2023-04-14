@@ -92,7 +92,7 @@ async def login(credentials: Credentials, res: Response):
         email: str = credentials.email
         password: str = credentials.password
 
-        user_exists = await userController.do_login(email,password)
+        user_exists: bool = await userController.do_login(email,password)
 
         if user_exists:
 

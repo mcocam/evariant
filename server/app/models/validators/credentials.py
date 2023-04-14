@@ -5,8 +5,8 @@ import re
 
 class Credentials(BaseModel):
 
-    email: str | None
-    password: str | None
+    email: str
+    password: str
 
 
     @validator('email')

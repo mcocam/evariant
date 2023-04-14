@@ -1,18 +1,18 @@
 from models.User import User
 from db.get_connection import get_connection
-from sqlalchemy import Engine, Table, MetaData, Column, Integer, String, DateTime
+from sqlalchemy import Engine, Table, MetaData, Column, Integer, String, DateTime, insert
 from datetime import datetime
 
 users_table_model: Table = Table(
     "users",
     MetaData(),
-    Column("id",Integer, primary_key=True),
+    Column("id",Integer, primary_key=True,autoincrement='auto'),
     Column("email",String,unique=True),
     Column("password", String),
     Column("name",String),
     Column("surname",String),
     Column("role",String),
-    Column("creation_date",DateTime)
+    Column("creation_date",DateTime,nullable=True)
 )
 
 
@@ -51,7 +51,7 @@ class UserDao:
         return response
 
 
-    def check_user_credentials(self,email: str, password: str) -> dict[str,any]:
+    def check_user_credentials(self,email: str, password: str) -> bool:
 
         is_ok: bool = False
 
@@ -77,6 +77,51 @@ class UserDao:
             print(e)
 
         return is_ok
+    
+    def get_user_by_email(self, email: str) -> list[dict]:
+        
+        user: list[dict] = []
+        
+        try:
+            
+            query = self.user_table.select().where(
+                (self.user_table.c.email == email)
+            )
+            
+            cursor = self.connection.connect()
+            
+            rows = cursor.execute(query)
+            
+            user: list[dict] = [row for row in rows]
+            
+        except Exception as e:
+            print(e)
+        
+        return user
+    
+    def add_new_user(self,user: User) -> bool:
+        
+        new_user_added: bool = False
+        query = insert(self.user_table).values(
+            email=user.email,
+            password=user.passowrd,
+            name=user.name,
+            surname=user.surname,
+            role=user.role
+        )
+        
+        try:
+            cursor = self.connection.connect()
+            response = cursor.execute(query)
+            cursor.commit()
+            if response.rowcount > 0:
+                new_user_added = True
+                
+            
+        except Exception as e:
+            print(e)
+        
+        return new_user_added
 
 
     def __parse_user(self, raw_data: list[any]) -> User:
