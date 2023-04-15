@@ -1,3 +1,7 @@
+/**
+ * This function sends a POST request to the server to authenticate a user with the provided credentials.
+ * @param {const} body 
+ */
 function loginFunction(body){
     
     const loginMessage = $('#result-login')
@@ -6,21 +10,22 @@ function loginFunction(body){
     axios
         .post('/api/users/login', body)
         .then(response => {
-            console.log(response)
 
-            if (response.data.message === "904"){
-                $(loginMessage).text('Invalid Credentials text');
-            }else if (response.data.message === "900"){
-                $(loginMessage).text('Session On text');
-
+            //If the request is successful, display a message to the user
+            switch(response.data.message) {
+                case "900":
+                    $(loginMessage).text('Session On');
+                    break;
+                case "904":
+                    $(loginMessage).text('Invalid Credentials');
+                    break;
+                case "909":
+                    $(loginMessage).text('Served has failed, try later');
+                    break;
+                default:
+                    $(loginMessage).text('');
             }
 
-            // // Errores cogidos desde el error
-            // if(response.data["error"] == true) {
-            //     $('#result-login').text('Ha ocurrido un error');
-            // }else{
-            //     $('#result-login').text('Sin Errores');
-            // }
         })
         .catch(e => {
             console.log(e);
@@ -29,6 +34,7 @@ function loginFunction(body){
 };
 
 
+/** ---------------------- LOGIN ACTION ----------------------------- */
 
 $().ready(() => {
 
