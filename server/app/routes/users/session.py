@@ -21,7 +21,7 @@ cookie = SessionCookie(
     identifier="general_verifier",
     auto_error=True,
     secret_key=os.environ["SESSION_SECRERT"],
-    cookie_params=cookie_params,
+    cookie_params=cookie_params
 )
 
 router = APIRouter(
@@ -125,7 +125,10 @@ async def verify(session_data: SessionData = Depends(verifier)):
 @router.post("/logout")
 async def del_session(response: Response, session_id: UUID = Depends(cookie)):
     
-    response: dict[str,any] = {
+    # await backend.delete(session_id)
+    # cookie.delete_from_response(response)
+    # return "deleted session"
+    res: dict[str,any] = {
         "error": True,
         "message": "904",
         "data": ""
@@ -134,12 +137,12 @@ async def del_session(response: Response, session_id: UUID = Depends(cookie)):
     try:
         await backend.delete(session_id)
         cookie.delete_from_response(response)
-        response["error"] = False 
-        response["message"] = "900"
+        res["error"] = False 
+        res["message"] = "900"
     except Exception as e:
         print(f"Error on delete session: {e}")
-        response["message"] = "909"
+        res["message"] = "909"
         
-    return response
+    return res
 
 
