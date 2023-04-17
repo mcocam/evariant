@@ -34,7 +34,6 @@ nav {
 }
 
 
-
 /* STYLES LANDING PAGE */
 body {
     font-family: 'Quicksand';font-size: 22px;
@@ -82,6 +81,26 @@ body {
     left: 0;
     position: relative;
     background-color: white;
+}
+
+/* LOGIN */
+#loginButton {
+    color: #FFFFFF;
+    background-color: #012E3D;
+    transition: 0.5s;
+    box-shadow: 0px 0px 1px #00000029;
+    border: 0;
+    opacity: 1;
+}
+
+/* REGISTER */
+#registerButton {
+    color: #FFFFFF;
+    background-color: #012E3D;
+    transition: 0.5s;
+    box-shadow: 0px 0px 1px #00000029;
+    border: 0;
+    opacity: 1;
 }
 
 
@@ -166,4 +185,4 @@ body {
     width: 80%;
     color: #012E3D;
 }
-  
+
