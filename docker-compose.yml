@@ -17,7 +17,7 @@ services:
     build:
       dockerfile: Dockerfile
       context: './server'
-    command: uvicorn main:app --host 0.0.0.0 --port 5053 --reload --root-path /app/
+    command: uvicorn main:app --host 0.0.0.0 --port 5053 --reload --root-path /api/
     links: 
       - "db"
     volumes:
