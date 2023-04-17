@@ -36,5 +36,77 @@ $().ready(() => {
     // Ejemplo de uso
     actualizarBarraDeProgreso(50);
 
+
+
+
+
+    // Ejemplo de Drag and Drop
+    var dropZone = document.getElementById('drag-drop-zone');
+    dropZone.addEventListener('dragover', handleDragOver, false);
+    dropZone.addEventListener('drop', handleFileSelect, false);
+
+    
+
       
 });
+
+//leer
+function leerArchivo(e) {
+    var archivo = e.target.files[0];
+    if (!archivo) {
+      return;
+    }
+    var lector = new FileReader();
+    lector.onload = function(e) {
+      var contenido = e.target.result;
+      mostrarContenido(contenido);
+    };
+    lector.readAsText(archivo);
+  }
+  
+  function mostrarContenido(contenido) {
+    var elemento = document.getElementById('contenido-archivo');
+    elemento.innerHTML = contenido;
+  }
+
+  //
+
+function handleFileSelect(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    
+    var files = evt.dataTransfer.files; // Get the file objects
+    var fastaFile = null;
+    
+    for (var i = 0, f; f = files[i]; i++) {
+      // Only accept .fasta files
+      if (f.name.split('.').pop() !== 'fasta') {
+        continue;
+      }
+      
+      fastaFile = f;
+      break;
+    }
+    
+    if (fastaFile) {
+      // Do something with the fasta file
+      alert('Se ha cargado el archivo: ' + fastaFile.name);
+      console.log('Se ha cargado el archivo: ' + fastaFile);
+      
+      //Leer el archivo
+      var lector = new FileReader();
+      lector.onload = function(fastaFile) {
+        var contenido = fastaFile.target.result;
+        mostrarContenido(contenido);
+      };
+      lector.readAsText(fastaFile.target.files);
+    } else {
+      alert('No se ha seleccionado un archivo .fasta');
+    }
+  }
+  
+  function handleDragOver(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    evt.dataTransfer.dropEffect = 'copy';
+  }
