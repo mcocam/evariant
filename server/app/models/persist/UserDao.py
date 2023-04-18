@@ -2,6 +2,9 @@ from models.User import User
 from db.get_connection import get_connection
 from sqlalchemy import Engine, Table, MetaData, Column, Integer, String, DateTime, insert
 from datetime import datetime
+from bcrypt import hashpw, checkpw
+import env
+import os
 
 users_table_model: Table = Table(
     "users",
@@ -23,6 +26,7 @@ class UserDao:
         self.connection: Engine = get_connection()
         self.user_table: Table = users_table_model
         self.response: dict[str,any] = {"error": True, "message": "", "data": User}
+        self.salt: str = bytes(os.environ["PASS_SECRET"],'"utf-8')
 
     async def get_user_by_id(self, id: int) -> list[str]:
 
@@ -52,13 +56,16 @@ class UserDao:
 
 
     def check_user_credentials(self,email: str, password: str) -> bool:
+        
+        password_utf8: str = password.encode("utf-8")
+        password_hash: str = hashpw(password_utf8,self.salt)
 
         is_ok: bool = False
 
         try:
             query = self.user_table.select().where(
                     (self.user_table.c.email == email) & 
-                    (self.user_table.c.password == password)
+                    (self.user_table.c.password == password_hash)
                 )
             
             cursor = self.connection.connect()
@@ -104,7 +111,7 @@ class UserDao:
         new_user_added: bool = False
         query = insert(self.user_table).values(
             email=user.email,
-            password=user.passowrd,
+            password= hashpw(user.passowrd.encode('utf-8'),self.salt),
             name=user.name,
             surname=user.surname,
             role=user.role
