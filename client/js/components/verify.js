@@ -1,18 +1,23 @@
 async function validateCookie() {
 
-    let response = null;
 
     try {
-        response = await fetch("./api/users/verify", {
+        const response = await fetch("./api/users/verify", {
             method: 'POST'
         })
+        const text = await response.json();
+        return text;
         // console.log(response.status)
     } catch(e) {
         // console.log("tudo mal")
     }
-
-    return await response.json();
 };
 
 const validSession = validateCookie();
-console.log(validSession);
+validSession.then(d => {
+    if(d.status_code === 200){
+        console.log("Session ok!")
+    }else{
+        console.log("Session Off!")
+    }
+});
