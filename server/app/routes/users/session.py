@@ -26,7 +26,7 @@ cookie = SessionCookie(
 
 router = APIRouter(
     prefix="/users",
-    tags=["session"],
+    tags=["Users"],
     responses={404: {"description": "Not found"}}
 )
 

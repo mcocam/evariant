@@ -1,0 +1,4 @@
+
+
+class Fasta:
+    pass

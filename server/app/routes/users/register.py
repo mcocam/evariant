@@ -5,7 +5,7 @@ from models.User import User
 
 router: APIRouter = APIRouter(
     prefix="/users",
-    tags=["session"],
+    tags=["Users"],
     responses={404: {"description": "Not found"}}
 )
 
