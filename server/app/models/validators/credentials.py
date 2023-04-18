@@ -23,7 +23,7 @@ class Credentials(BaseModel):
 
         regex = re.compile(r'(?=.*[a-zA-Z])(?=.*[0-9])')
 
-        if len(password) < 5:
+        if len(password) < 5 and len(password) > 20:
             raise ValueError("Password too short")
         
         if re.search(regex,password) is None:
