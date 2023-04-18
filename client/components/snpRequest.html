@@ -38,24 +38,23 @@
                 <div class="modal-body">
                     <p class="ms-3 light-text">STEP 2: Give your request a title.</p>
         
-                    <!-- Implement style new -->
 
-                    <div>
-                          <div id="drag-drop-zone" class="upload_dropZone rounded-4  text-center  mb-3 p-5">
+                    <!-- DRAG AND DROP -->
+                    <div id="drag-drop-zone" class="upload_dropZone rounded-4  text-center  mb-3 p-5">
+                
+                        <!-- Image uploader -->
+                        <img src="./img/Upload_file.svg" alt="Upload File">      
+                        <p class="fs-5 fw-bold my-2"> <strong id="text-upload">Click to upload</strong>  or drag and drop</p>
+                    
+                        <input type="file" id="file-input" style="display: none;">
                         
-                            <!-- Image uploader -->
-                            <img src="./img/Upload_file.svg" alt="Upload File">
-                                            
-                            <p class="fs-5 fw-bold my-2"> <strong id="text-upload">Click to upload</strong>  or drag and drop</p>
-                        
-                            <p class="fs-6 my-2"><i>Max. file size 20 MB.</i></p>
-                            <div class="upload_gallery d-flex flex-wrap justify-content-center gap-3 mb-0"></div>
-                        
-                          </div>
+                        <p class="fs-6 my-2"><i>Max. file size 20 MB.</i></p>
+                        <div class="upload_gallery d-flex flex-wrap justify-content-center gap-3 mb-0"></div>
+                    
                     </div>
 
 
-                    <!-- Progress bar -->
+                    <!-- PROGRESS BAR -->
                     <div id="div_progress" style="display:none;" class="m-4 p-3">
 
                         <div class="row">
@@ -71,7 +70,7 @@
 
                     </div>
 
-                    <!-- Footer Step 2 -->
+                    <!-- FOOTER STEP 2 -->
                     <div class="modal-footer justify-content-around">
                         <button type="button" class="btn btn-outline-light btn-snpCancel fs-6 fw-bold px-5" id="btn_back_step2"> Back </button>
                         <button type="button" class="btn btn-info btn-snpNext fs-6 fw-bold px-5" id="btn_next_step2">Next</button>

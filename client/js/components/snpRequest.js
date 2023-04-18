@@ -37,48 +37,86 @@ $().ready(() => {
     actualizarBarraDeProgreso(50);
 
 
+    
+    /**-------------------- DRAG AND DROP ---------------------------- */
 
-
-
-    // Ejemplo de Drag and Drop
+    // Collect item
     var dropZone = document.getElementById('drag-drop-zone');
+    var fileInput = document.getElementById('file-input');
+
+    // When dragging a file add the active class
     dropZone.addEventListener('dragover', handleDragOver, false);
+    $(dropZone).on("dragover", function(event) {
+      event.preventDefault();
+      $(this).addClass("active");
+    });
+
+    // When a file is dropped remove the active class
     dropZone.addEventListener('drop', handleFileSelect, false);
+    $(dropZone).on("drop", function(event) {
+      event.preventDefault();
+      $(this).removeClass("active");
+    });
+
+    // Action on click
+    dropZone.addEventListener('click', function() {
+      fileInput.click();
+    });
+    fileInput.addEventListener('change', handleFileSelect, false);
 
     
-
-      
 });
-//
+
+/**-------------------- FUNCTION OF DRAG AND DROP ---------------------------- */
+
+/**
+ * Function handleDragOver
+ * Handle the drag action
+ * @param {Event} evt 
+ * @author Ani Valle
+ */
+function handleDragOver(evt) {
+  evt.stopPropagation();
+  evt.preventDefault();
+  evt.dataTransfer.dropEffect = 'copy';
+}
+
+/**
+ * Function handleFileSelect
+ * It handles the selected file
+ * The stopPropagation() and preventDefault() methods are to prevent 
+ *  the browser from handling the drag and drop event by default.
+ * Check if the selected file is a .fasta file.
+ * @param {Event} evt
+ * @author Ani Valle
+ */
 function handleFileSelect(evt) {
-    evt.stopPropagation();
-    evt.preventDefault();
-    
-    var files = evt.dataTransfer.files; // Get the file objects
-    var fastaFile = null;
-    
-    for (var i = 0, f; f = files[i]; i++) {
-      // Only accept .fasta files
-      if (f.name.split('.').pop() !== 'fasta') {
-        continue;
-      }
-      
-      fastaFile = f;
-      break;
+  evt.stopPropagation();
+  evt.preventDefault();
+
+  var files = evt.target.files || evt.dataTransfer.files; // Get the file objects
+  var fastaFile = null;
+  
+  for (var i = 0, f; f = files[i]; i++) {
+    // Only accept .fasta files
+    if (f.name.split('.').pop() !== 'fasta') {
+      continue;
     }
-    
-    if (fastaFile) {
-      // Do something with the fasta file
-      alert('Se ha cargado el archivo: ' + fastaFile.name);
-      console.log('Se ha cargado el archivo: ' + fastaFile);
-      
-    } else {
-      alert('No se ha seleccionado un archivo .fasta');
-    }
+
+    fastaFile = f;
+    break;
   }
   
-  function handleDragOver(evt) {
-    evt.stopPropagation();
-    evt.preventDefault();
-    evt.dataTransfer.dropEffect = 'copy';
+  if (fastaFile) {
+    // Do something with the fasta file
+    alert('Se ha cargado el archivo: ' + fastaFile.name);
+    console.log('Se ha cargado el archivo: ' + fastaFile.name);
+
+  } else {
+    alert('No se ha seleccionado un archivo .fasta');
   }
+}
+
+
+
+
