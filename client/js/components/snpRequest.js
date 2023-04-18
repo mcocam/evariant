@@ -49,28 +49,7 @@ $().ready(() => {
 
       
 });
-
-//leer
-function leerArchivo(e) {
-    var archivo = e.target.files[0];
-    if (!archivo) {
-      return;
-    }
-    var lector = new FileReader();
-    lector.onload = function(e) {
-      var contenido = e.target.result;
-      mostrarContenido(contenido);
-    };
-    lector.readAsText(archivo);
-  }
-  
-  function mostrarContenido(contenido) {
-    var elemento = document.getElementById('contenido-archivo');
-    elemento.innerHTML = contenido;
-  }
-
-  //
-
+//
 function handleFileSelect(evt) {
     evt.stopPropagation();
     evt.preventDefault();
@@ -93,13 +72,6 @@ function handleFileSelect(evt) {
       alert('Se ha cargado el archivo: ' + fastaFile.name);
       console.log('Se ha cargado el archivo: ' + fastaFile);
       
-      //Leer el archivo
-      var lector = new FileReader();
-      lector.onload = function(fastaFile) {
-        var contenido = fastaFile.target.result;
-        mostrarContenido(contenido);
-      };
-      lector.readAsText(fastaFile.target.files);
     } else {
       alert('No se ha seleccionado un archivo .fasta');
     }
