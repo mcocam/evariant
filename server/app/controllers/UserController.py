@@ -2,6 +2,8 @@
 from models.persist.UserDao import UserDao
 from pydantic import BaseModel
 from models.User import User
+import env
+import os
 
 class UserController:
 

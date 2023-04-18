@@ -10,7 +10,7 @@ import env
 import os
 
 class SessionData(BaseModel):
-    username: str
+    email: str
 
 cookie_params = CookieParameters()
 backend = InMemoryBackend[UUID, SessionData]()
@@ -97,7 +97,7 @@ async def login(credentials: Credentials, res: Response):
         if user_exists:
 
             session = uuid4()
-            data = SessionData(username=email)
+            data = SessionData(email=email)
 
             await backend.create(session, data)
             cookie.attach_to_response(res, session)
@@ -114,7 +114,7 @@ async def login(credentials: Credentials, res: Response):
     return response
 
 @router.post("/verify", dependencies=[Depends(cookie)])
-async def verify(session_data: SessionData = Depends(verifier)):
+async def verify():
     response: dict[str,any] = {
         "error": False,
         "message": "900",
