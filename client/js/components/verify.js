@@ -1,22 +1,18 @@
-function validateCookie() {
+async function validateCookie() {
 
-    axios
-        .post('/api/users/verify')
-        .then(response => {
-            console.log(response)
-            console.log(response.data.error)
-            if(!response.data.error)
-            {
-                
-            }
+    let response = null;
+
+    try {
+        response = await fetch("./api/users/verify", {
+            method: 'POST'
         })
-        .catch(e => {
-            console.log(e);
-            return false;
-        });
+        // console.log(response.status)
+    } catch(e) {
+        // console.log("tudo mal")
+    }
+
+    return await response.json();
 };
 
-$().ready(() => {
-
-    // validateCookie();
-});
+const validSession = validateCookie();
+console.log(validSession);
