@@ -101,7 +101,6 @@ async def login(credentials: Credentials, res: Response):
 
             session = uuid4()
             user_info = await userController.get_user_info(email)
-            print(user_info)
             data = SessionData(
                 email = user_info[1],
                 name = user_info[3],
