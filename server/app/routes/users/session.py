@@ -11,6 +11,9 @@ import os
 
 class SessionData(BaseModel):
     email: str
+    name: str
+    surname: str
+    id: int
 
 cookie_params = CookieParameters()
 backend = InMemoryBackend[UUID, SessionData]()
@@ -97,7 +100,14 @@ async def login(credentials: Credentials, res: Response):
         if user_exists:
 
             session = uuid4()
-            data = SessionData(email=email)
+            user_info = await userController.get_user_info(email)
+            print(user_info)
+            data = SessionData(
+                email = user_info[1],
+                name = user_info[3],
+                surname = user_info[4],
+                id = user_info[0]
+                )
 
             await backend.create(session, data)
             cookie.attach_to_response(res, session)

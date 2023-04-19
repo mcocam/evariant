@@ -39,6 +39,21 @@ class UserController:
         
         return user_exists
     
+    async def get_user_info(self, email):
+        
+        data = {}
+        
+        try:
+            result = self.dao.get_user_by_email(email)
+            data = list(result[0])
+            
+        except Exception as e:
+            print(f"Get user infor error: {e}")
+            
+        return data
+        
+        
+    
     async def register_user(self, new_user: User) -> bool:
         
         new_user_added: bool = False
