@@ -1,3 +1,6 @@
+# Class User
+# @author: Marc Coca
+
 from datetime import datetime
 
 class User:

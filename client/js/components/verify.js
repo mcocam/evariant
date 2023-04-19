@@ -1,22 +1,23 @@
-function validateCookie() {
+async function validateCookie() {
 
-    axios
-        .post('/api/users/verify')
-        .then(response => {
-            console.log(response)
-            console.log(response.data.error)
-            if(!response.data.error)
-            {
-                
-            }
+
+    try {
+        const response = await fetch("./api/users/verify", {
+            method: 'POST'
         })
-        .catch(e => {
-            console.log(e);
-            return false;
-        });
+        const text = await response.json();
+        return text;
+        // console.log(response.status)
+    } catch(e) {
+        // console.log("tudo mal")
+    }
 };
 
-$().ready(() => {
-
-    // validateCookie();
+const validSession = validateCookie();
+validSession.then(d => {
+    if(d.status_code === 200){
+        console.log("Session ok!")
+    }else{
+        console.log("Session Off!")
+    }
 });

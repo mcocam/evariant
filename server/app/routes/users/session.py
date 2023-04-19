@@ -26,7 +26,7 @@ cookie = SessionCookie(
 
 router = APIRouter(
     prefix="/users",
-    tags=["session"],
+    tags=["Users"],
     responses={404: {"description": "Not found"}}
 )
 
@@ -115,12 +115,7 @@ async def login(credentials: Credentials, res: Response):
 
 @router.post("/verify", dependencies=[Depends(cookie)])
 async def verify():
-    response: dict[str,any] = {
-        "error": False,
-        "message": "900",
-        "data": ""
-    }  
-    return response
+    return HTTPException(status_code=200, detail="Session is correct")
 
 @router.post("/logout")
 async def del_session(response: Response, session_id: UUID = Depends(cookie)):

@@ -15,6 +15,9 @@ function loginFunction(body){
             switch(response.data.message) {
                 case "900":
                     $(loginMessage).text('Session On');
+                    setTimeout(function() {
+                        location.reload();
+                      }, 1000);
                     break;
                 case "904":
                     $(loginMessage).text('Invalid Credentials');
@@ -49,7 +52,6 @@ $().ready(() => {
         };
 
         const response = loginFunction(body);
-        //console.log(response);
     });
 
 
@@ -59,11 +61,11 @@ $().ready(() => {
 
 ["#loginEmail", "#loginPassword"].forEach((i) => {
     $(i).on("change", () => {
-        handleSingInButton()
+        handleSignInButton()
     })
 })
 
-const handleSingInButton = () => {
+const handleSignInButton = () => {
 
     let state = [];
 

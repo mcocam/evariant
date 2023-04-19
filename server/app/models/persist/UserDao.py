@@ -2,7 +2,7 @@ from models.User import User
 from db.get_connection import get_connection
 from sqlalchemy import Engine, Table, MetaData, Column, Integer, String, DateTime, insert
 from datetime import datetime
-from bcrypt import hashpw, checkpw
+from bcrypt import hashpw
 import env
 import os
 
