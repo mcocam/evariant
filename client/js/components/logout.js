@@ -4,6 +4,7 @@ function logoutFunction(){
         .post('/api/users/logout')
         .then(response => {
             console.log(response)
+            location.reload();
         })
         .catch(e => {
             console.log(e);
@@ -16,6 +17,7 @@ function logoutFunction(){
 $().ready(() => {
 
     $("#logoutButton").on("click", () => {
-        logoutFunction()
+        logoutFunction();
     });
+
 });
