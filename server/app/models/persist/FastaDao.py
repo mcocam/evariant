@@ -94,6 +94,6 @@ class FastaDao:
             type = type,
             user_id = user_id,
             creation_date = creation_date,
-            id = user_id,)
+            id = fasta_id,)
         
         return fasta
