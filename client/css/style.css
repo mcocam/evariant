@@ -1,3 +1,6 @@
+html {
+    font-size: 0.8em;
+}
 /* STYLES NAVBAR */
 
 nav {
@@ -205,6 +208,40 @@ body {
 }
 
 
+/* REQUEST RESULTS */
 
+.snp-result-card {
+    border: none;
+}
 
-  
+.snp-result-card h5 {
+    font-size: 1.7rem;
+}
+
+.snp-result-card .card {
+    margin-bottom: 1rem;
+}
+
+.snp-result-card .card-header {
+    background: none;
+    border: none;
+}
+
+.snp-result-card .card h5 button  {
+    color: #012E3D;
+    font-size: 1.3rem;
+    font-weight: 800;
+}
+
+.snp-result-card .card-body {
+    font-size: 1.1rem;
+}
+
+.snp-result-inner-card {
+    font-size: 0.636363rem;
+}
+
+#population-div td {
+    width: 220px;
+    height: 15px;
+}
