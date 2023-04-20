@@ -15,9 +15,9 @@ router: APIRouter = APIRouter(
 
 @router.post("/add_fasta", dependencies= [Depends(cookie)])
 async def add_fasta(new_file: UploadFile = File(...), session_data: SessionData = Depends(verifier)):
-    print("Id del usuario"+session_data.id)
+    print(f"Id del usuario: {session_data.id}")
     new_fasta: str = await new_file.read()
-    #print(new_fasta)
+    print(new_fasta)
     return False
 
 

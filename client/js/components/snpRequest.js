@@ -119,4 +119,12 @@ function handleFileSelect(evt) {
 
 
 
+/** Function upload Fasta */
+function uploadFasta(body){
+
+    axios
+      .post('/api/files/add_fasta', body)
+      .then(response)
+}
+
 

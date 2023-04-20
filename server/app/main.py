@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from routes.users.session import router as session_router
 from routes.users.register import router as register_router
-from routes.snp.fasta_snp import router as fasta_router
+from routes.fasta.fasta import router as fasta_router
 from uvicorn import run
 
 from fastapi.middleware.cors import CORSMiddleware
