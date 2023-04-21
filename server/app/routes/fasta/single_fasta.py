@@ -14,7 +14,7 @@ router: APIRouter = APIRouter(
 
 
 @router.post("/add_fasta/single", dependencies= [Depends(cookie)])
-async def add_fasta(fasta_id: int, title: string, raw_fasta: string, session_data: SessionData = Depends(verifier)):
+async def add_fasta(fasta_id: int, session_data: SessionData = Depends(verifier)):
     print(f"Id del usuario: {session_data.id}")
     print(f"Id del fasta: {fasta_id}")
 

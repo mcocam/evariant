@@ -1,8 +1,7 @@
 from models.persist.FastaDao import FastaDao
 # from models.persist.FastaDao import SingleFastaDao << TODO
 from pydantic import BaseModel
-from models.Fasta import Fasta
-# from models.Fasta import SingleFasta << TODO
+from models.SingleFasta import SingleFasta
 import env
 import os
 
