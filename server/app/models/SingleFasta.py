@@ -9,6 +9,7 @@ class SingleFasta:
                  fasta_id:      int,
                  assembly:      str,
                  chromosome:    str,
+                 strand:        int,
                  start_loc:     int,
                  end_loc:       int,
                  ) -> None:
@@ -16,6 +17,7 @@ class SingleFasta:
         self.fasta_id = fasta_id
         self.assembly = assembly
         self.chromosome = chromosome
+        self.strand     = strand
         self.start_loc = start_loc
         self.end_loc = end_loc
 
