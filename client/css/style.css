@@ -210,12 +210,18 @@ body {
 
 /* REQUEST RESULTS */
 
+
+
 .snp-result-card {
     border: none;
 }
 
 .snp-result-card h5 {
     font-size: 1.7rem;
+}
+
+.snp-result-inner-card h5 {
+    font-size: 1.3rem;
 }
 
 .snp-result-card .card {
