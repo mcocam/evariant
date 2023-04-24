@@ -1,5 +1,8 @@
 from typing import Annotated
-from fastapi import APIRouter, Response, Depends, HTTPException, File, UploadFile
+from fastapi import APIRouter, Response, Depends, File, UploadFile
+from uvicorn import run
+from fastapi.middleware.cors import CORSMiddleware
+
 from models.validators.new_fasta import New_fasta
 from controllers.FastaController import FastaController
 from models.Fasta import Fasta
@@ -14,11 +17,28 @@ router: APIRouter = APIRouter(
 
 
 @router.post("/add_fasta", dependencies= [Depends(cookie)])
-async def add_fasta(new_file: UploadFile = File(...), session_data: SessionData = Depends(verifier)):
-    print(f"Id del usuario: {session_data.id}")
-    new_fasta: str = await new_file.read()
-    print(new_fasta)
-    return False
+async def get_file(file: UploadFile = File(...), session_data: SessionData = Depends(verifier)):
+    content = await file.read()
+    print(content)
+    return {"data": "Content uploaded successfully"}
+
+if __name__ == "__main__":
+    run("main:app",host="0.0.0.0",port=5050, reload=True)
+
+
+
+
+# async def add_fasta(new_file: UploadFile  = File(...), session_data: SessionData = Depends(verifier)):
+#     print(f"Id del usuario: {session_data.id}")
+    
+#     new_fasta: str = await new_file.read()
+#     print(new_fasta)
+    
+#     response = f"archivo recibido {new_fasta}"
+#     return response
+
+
+
 
 
 
