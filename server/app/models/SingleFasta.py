@@ -7,6 +7,7 @@ class SingleFasta:
 
     def __init__(self,
                  fasta_id:      int,
+                 sequence:      str,
                  assembly:      str,
                  chromosome:    str,
                  strand:        int,
@@ -15,6 +16,7 @@ class SingleFasta:
                  ) -> None:
         
         self.fasta_id = fasta_id
+        self.sequence = sequence
         self.assembly = assembly
         self.chromosome = chromosome
         self.strand     = strand
