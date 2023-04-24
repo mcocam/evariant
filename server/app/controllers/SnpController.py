@@ -76,6 +76,7 @@ class SnpController:
         """
 
         fasta_snps: list[Snp] = []
+        
         try:
             fasta_snps = self.dao.get_snps_by_fasta_id(fasta_id)
 
