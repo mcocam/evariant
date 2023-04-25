@@ -69,6 +69,24 @@ $().ready(() => {
 
 /**-------------------- FUNCTION OF DRAG AND DROP ---------------------------- */
 
+// FUNCION ENVIAR ARCHIVO
+const sendFile = (file) =>{
+  
+  const body = new FormData();
+
+  body.append("file",file);
+
+  fetch("api/files/add_fasta", {
+      method: "POST",
+      body: body,
+      headers: {
+          "Access-Control-Allow-Origin": "*"
+      }
+  })
+  .then(r => console.log(r.json()))
+
+}
+
 /**
  * Function handleDragOver
  * Handle the drag action
@@ -95,7 +113,6 @@ function handleFileSelect(evt) {
   evt.preventDefault();
 
   var files = evt.target.files || evt.dataTransfer.files; // Get the file objects
-  console.log(files[0]);
   var fastaFile = null;
   
   for (var i = 0, f; f = files[i]; i++) {
@@ -103,53 +120,21 @@ function handleFileSelect(evt) {
     if (f.name.split('.').pop() !== 'fasta') {
       continue;
     }
-
     fastaFile = f;
     break;
   }
   
   if (fastaFile) {
+    console.log('Se ha cargado el archivo: ' + fastaFile.name);
+
     // Enviar el archivo al servidor
-
-    console.log('Se ha cargado el archivo: ' + fastaFile.value);
-
-    // Do something with the fasta file
-    alert('Se ha cargado el archivo: ' + fastaFile.name);
+    sendFile(fastaFile);
     
   } else {
     alert('No se ha seleccionado un archivo .fasta');
   }
 }
 
-
-
-
-/** Function upload Fasta */
-// function uploadFasta(file){
-
-//   var formData = new FormData();
-//   formData.append("fasta", file);
-
-//     axios({
-//       method: 'POST',
-//       url: '/api/files/add_fasta',
-//       data: formData,
-//       headers: {'Content-Type': 'multipart/form-data'},
-//     })
-//       // .post('/api/files/add_fasta', formData,{
-//       //   headers: {
-//       //     'Accept': 'application/json',
-//       //     'Content-Type': 'multipart/form-data'
-//       //   }
-//       // })
-//       .then(response => {
-//         console.log(response)
-//       })
-//       .catch(e => {
-//         console.log(e);
-//         return false;
-//       });
-// }
 
 
 //----------------------------------------------------------------
