@@ -37,13 +37,29 @@ class SnpHandler:
         return assembly_ok
     
     
-    def get_reference_sequence(self, single_fasta: SingleFasta):
+    def get_reference_sequence(self, single_fasta: SingleFasta) -> str:
+        
+        ref_seq: str = ""
         
         endpoint: str = f"{self.ucsc_base_endpoint}/getData/sequence"
         
         params = {
-            "genome": single_fasta.getAssembly()
+            'genome': single_fasta.getAssembly(),
+            'chrom': single_fasta.getChromosome(),
+            'start': single_fasta.getStartLoc(),
+            'end': single_fasta.getEndLoc()
         }
+        
+        try:
+            response: Response = get(endpoint,params)
+            ref_seq = response.json()["dna"]
+        except Exception as e:
+            print(f"SnpHandler, get_reference_seq error: {e}")
+        
+        return ref_seq
+    
+    def identify_differences():
+        pass
 
 
 
@@ -53,6 +69,20 @@ class SnpHandler:
 
 if __name__ == "__main__":
     
+    single_fasta_test: SingleFasta = SingleFasta(
+        1, 
+        'CTCGGGCACAGCATTCATGGAAAGGAAAGGTGTACGGGACATGCCCGAGGATCCTCAGTCCCACAGAAACAGGGAGGGGCTGGGAAGCTCATTCTACAGATGGGG',
+        'hg38', 
+        'chr3',
+        1 , 
+        8762634, 
+        8762739
+    )
+    
     snp_handler: SnpHandler = SnpHandler()
-    assembly_exists: bool = snp_handler.check_if_assembly_exists("hg38")
-    print(assembly_exists)
+    #assembly_exists: bool = snp_handler.check_if_assembly_exists("hg38")
+    ref_seq: str = snp_handler.get_reference_sequence(single_fasta=single_fasta_test)
+    
+    print(ref_seq)
+    
+    

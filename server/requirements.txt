@@ -37,3 +37,4 @@ uvloop==0.17.0
 watchfiles==0.18.1
 websockets==10.4
 python-multipart==0.0.6
+requests==2.28.2
