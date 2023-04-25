@@ -24,7 +24,7 @@ class SingleFastaDao:
         self.single_fasta_table:   Table  = single_fasta_table
         self.response: dict[str,any] = {"error": True, "message": "", "data": SingleFasta}
 
-    async def get_fasta_by_id(self, id: int) -> list[str] :
+    async def get_single_fasta_by_id(self, id: int) -> list[str] :
 
         response = self.response
 
