@@ -8,7 +8,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/style.css">
-    <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <title>Request Results</title>
 </head>
 
@@ -17,350 +20,419 @@
     <nav id="nav"></nav>
 
     <section>
-        <div class="container-fluid">
-
-            <div class=" row justify-content-around mt-5 mx-5 p-5 ">
-
+        <div class="container">
+            <div class=" row mt-5 mx-5 p-5 ">
                 <div class="col-md-6">
-                    <h1 class="fw-bold">SNP Finder</h1>
+                    <h1 class="fw-bold">2023-03-20 SNP Finder Request</h1>
                     <p class=""> Lorem ipsum dolor sit amet consectetur adipiscing elit. </p>
                 </div>
                 <div class="container">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseMain"
-                                    aria-expanded="true" aria-controls="collapseMain">
-                                    rs1234
-                                    <i class="fas fa-chevron-up float-right"></i>
-                                    <span class="float-right">Genotype A;A</span>
-                                </button>
-                            </h5>
-                        </div>
-
-                        <div id="collapseMain" class="collapse show" aria-labelledby="headingMain"
-                            data-parent="#accordion">
-                            <div class="card-body">
-
-                                <!-- Sección "SNP Genotype comparative" -->
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="mb-0">
-                                            <button class="btn btn-link" data-toggle="collapse"
-                                                data-target="#collapseOne" aria-expanded="true"
-                                                aria-controls="collapseOne">
-                                                SNP Genotype comparative
-                                            </button>
-                                            <i class="fas fa-chevron-up float-right"></i>
-                                        </h5>
+                    <div class="accordion" id="accordion">
+                        <div class="card snp-result-card">
+                            <div class="card-header d-flex">
+                                <h5 class="mb-0 fw-bolder align-items-center d-flex justify-content-between w-100">
+                                    <span>rs1234</span>
+                                    <div class="d-flex justify-content-end align-items-center">
+                                        <span class="me-3">Genotype A;A</span>
+                                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseMain"
+                                            aria-expanded="true" aria-controls="collapseMain">
+                                            <img src="./img/dropdown_btn_1.svg" alt="dropdown-arrow">
+                                        </button>
                                     </div>
+                                </h5>
+                            </div>
+                            <div id="collapseMain" class="collapse show" aria-labelledby="headingMain"
+                                data-parent="#accordion">
+                                <div class="card-body">
 
-                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                                        data-parent="#accordion">
-                                        <div class="card-body">
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Genotype</th>
-                                                        <th scope="col">Magnitude</th>
-                                                        <th scope="col">Summary</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>AA</td>
-                                                        <td>0.05</td>
-                                                        <td>Summary 1</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>GG</td>
-                                                        <td>0.02</td>
-                                                        <td>Summary 2</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>AG</td>
-                                                        <td>0.01</td>
-                                                        <td>Summary 3</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                    <!-- Sección "SNP Genotype comparative" -->
+                                    <div class="card snp-result-inner-card">
+                                        <div class="card-header">
+                                            <h5 class="mb-0 align-items-center d-flex justify-content-between w-100">
+                                                <span>SNP Genotype comparative</span>
+                                                <div class="d-flex justify-content-end align-items-center">
+                                                    <button class="btn btn-link" data-toggle="collapse"
+                                                        data-target="#collapseOne" aria-expanded="true"
+                                                        aria-controls="collapseOne">
+                                                        <img src="./img/dropdown_btn_2.svg" alt="dropdown-arrow">
+                                                    </button>
+                                                </div>
+                                            </h5>
+                                        </div>
+
+                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                            data-parent="#accordion">
+                                            <div class="card-body">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Genotype</th>
+                                                            <th scope="col">Magnitude</th>
+                                                            <th scope="col">Summary</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>AA</td>
+                                                            <td>0.05</td>
+                                                            <td>Summary 1</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>GG</td>
+                                                            <td>0.02</td>
+                                                            <td>Summary 2</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>AG</td>
+                                                            <td>0.01</td>
+                                                            <td>Summary 3</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Fin de sección "SNP Genotype comparative" -->
+
+                                    <!-- Sección "Related publications" -->
+                                    <div class="card snp-result-inner-card">
+                                        <div class="card-header">
+                                            <h5 class="mb-0 align-items-center d-flex justify-content-between w-100">
+                                                <span>Related publication</span>
+                                                <div class="d-flex justify-content-end align-items-center">
+                                                    <button class="btn btn-link" data-toggle="collapse"
+                                                        data-target="#collapseTwo" aria-expanded="true"
+                                                        aria-controls="collapseTwo">
+                                                        <img src="./img/dropdown_btn_2.svg" alt="dropdown-arrow">
+                                                    </button>
+                                                </div>
+                                            </h5>
+                                        </div>
+
+                                        <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
+                                            data-parent="#accordion">
+                                            <div class="card-body">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">PMID</th>
+                                                            <th scope="col">Title</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><a href="">PMID 1234567</a></td>
+                                                            <td>Title of publication 1</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><a href="">PMID 2345678</a></td>
+                                                            <td>Title of publication 2</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><a href="">PMID 3456789</a></td>
+                                                            <td>Title of publication 3</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div> <!-- card-body -->
+                                        </div>
+                                    </div>
+                                    <!-- End of section "Related publications" -->
+
+                                    <!-- "Population diversity" section -->
+                                    <div class="card snp-result-inner-card" id="population-div">
+                                        <div class="card-header" id="headingThree">
+                                            <h5 class="mb-0 align-items-center d-flex justify-content-between w-100">
+                                                <span>Population diversity</span>
+                                                <div class="d-flex justify-content-end align-items-center">
+                                                    <button class="btn btn-link collapsed" data-toggle="collapse"
+                                                        data-target="#collapseThree" aria-expanded="false"
+                                                        aria-controls="collapseThree">
+                                                        <img src="./img/dropdown_btn_2.svg" alt="dropdown-arrow">
+                                                    </button>
+                                                </div>
+                                            </h5>
+                                        </div>
+                                        <div id="collapseThree" class="collapse show" aria-labelledby="headingThree"
+                                            data-parent="#accordion">
+                                            <div class="card-body">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Population</th>
+                                                            <th>Genotypes</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>European</td>
+                                                            <td>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="A;A">
+                                                                    <div
+                                                                        style="display:inline-block;width:40%;height:100%;background-color:#4e79a7;">
+                                                                    </div>
+                                                                </span>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="A;G">
+                                                                    <div
+                                                                        style="display:inline-block;width:30%;height:100%;background-color:#f28e2b;">
+                                                                    </div>
+                                                                </span>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="G;G">
+                                                                    <div
+                                                                        style="display:inline-block;width:30%;height:100%;background-color:#e15759;">
+                                                                    </div>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>Han Chinese</td>
+                                                            <td>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="A;A">
+                                                                    <div
+                                                                        style="display:inline-block;width:40%;height:100%;background-color:#4e79a7;">
+                                                                    </div>
+                                                                </span>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="A;G">
+                                                                    <div
+                                                                        style="display:inline-block;width:30%;height:100%;background-color:#f28e2b;">
+                                                                    </div>
+                                                                </span>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="G;G">
+                                                                    <div
+                                                                        style="display:inline-block;width:30%;height:100%;background-color:#e15759;">
+                                                                    </div>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>Japanese Tokyo</td>
+                                                            <td>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="A;A">
+                                                                    <div
+                                                                        style="display:inline-block;width:40%;height:100%;background-color:#4e79a7;">
+                                                                    </div>
+                                                                </span>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="A;G">
+                                                                    <div
+                                                                        style="display:inline-block;width:30%;height:100%;background-color:#f28e2b;">
+                                                                    </div>
+                                                                </span>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="G;G">
+                                                                    <div
+                                                                        style="display:inline-block;width:30%;height:100%;background-color:#e15759;">
+                                                                    </div>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>Yoruba African</td>
+                                                            <td>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="A;A">
+                                                                    <div
+                                                                        style="display:inline-block;width:40%;height:100%;background-color:#4e79a7;">
+                                                                    </div>
+                                                                </span>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="A;G">
+                                                                    <div
+                                                                        style="display:inline-block;width:30%;height:100%;background-color:#f28e2b;">
+                                                                    </div>
+                                                                </span>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="G;G">
+                                                                    <div
+                                                                        style="display:inline-block;width:30%;height:100%;background-color:#e15759;">
+                                                                    </div>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>African ancestry in Southwest USA</td>
+                                                            <td>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="A;A">
+                                                                    <div
+                                                                        style="display:inline-block;width:40%;height:100%;background-color:#4e79a7;">
+                                                                    </div>
+                                                                </span>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="A;G">
+                                                                    <div
+                                                                        style="display:inline-block;width:30%;height:100%;background-color:#f28e2b;">
+                                                                    </div>
+                                                                </span>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="G;G">
+                                                                    <div
+                                                                        style="display:inline-block;width:30%;height:100%;background-color:#e15759;">
+                                                                    </div>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>Chinese in Metropolitan Denver, Colorado</td>
+                                                            <td>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="A;A">
+                                                                    <div
+                                                                        style="display:inline-block;width:40%;height:100%;background-color:#4e79a7;">
+                                                                    </div>
+                                                                </span>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="A;G">
+                                                                    <div
+                                                                        style="display:inline-block;width:30%;height:100%;background-color:#f28e2b;">
+                                                                    </div>
+                                                                </span>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="G;G">
+                                                                    <div
+                                                                        style="display:inline-block;width:30%;height:100%;background-color:#e15759;">
+                                                                    </div>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>Gujarati Indians in Houston, Texas</td>
+                                                            <td>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="A;A">
+                                                                    <div
+                                                                        style="display:inline-block;width:40%;height:100%;background-color:#4e79a7;">
+                                                                    </div>
+                                                                </span>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="A;G">
+                                                                    <div
+                                                                        style="display:inline-block;width:30%;height:100%;background-color:#f28e2b;">
+                                                                    </div>
+                                                                </span>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="G;G">
+                                                                    <div
+                                                                        style="display:inline-block;width:30%;height:100%;background-color:#e15759;">
+                                                                    </div>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>Luhya in Webuye, Kenya</td>
+                                                            <td>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="A;A">
+                                                                    <div
+                                                                        style="display:inline-block;width:40%;height:100%;background-color:#4e79a7;">
+                                                                    </div>
+                                                                </span>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="A;G">
+                                                                    <div
+                                                                        style="display:inline-block;width:30%;height:100%;background-color:#f28e2b;">
+                                                                    </div>
+                                                                </span>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="G;G">
+                                                                    <div
+                                                                        style="display:inline-block;width:30%;height:100%;background-color:#e15759;">
+                                                                    </div>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>Mexican ancestry in Los Angeles, California</td>
+                                                            <td>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="A;A">
+                                                                    <div
+                                                                        style="display:inline-block;width:40%;height:100%;background-color:#4e79a7;">
+                                                                    </div>
+                                                                </span>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="A;G">
+                                                                    <div
+                                                                        style="display:inline-block;width:30%;height:100%;background-color:#f28e2b;">
+                                                                    </div>
+                                                                </span>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="G;G">
+                                                                    <div
+                                                                        style="display:inline-block;width:30%;height:100%;background-color:#e15759;">
+                                                                    </div>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>Maasai in Kinyawa, Kenya</td>
+                                                            <td>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="A;A">
+                                                                    <div
+                                                                        style="display:inline-block;width:40%;height:100%;background-color:#4e79a7;">
+                                                                    </div>
+                                                                </span>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="A;G">
+                                                                    <div
+                                                                        style="display:inline-block;width:30%;height:100%;background-color:#f28e2b;">
+                                                                    </div>
+                                                                </span>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="G;G">
+                                                                    <div
+                                                                        style="display:inline-block;width:30%;height:100%;background-color:#e15759;">
+                                                                    </div>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>Toscani in Italia</td>
+                                                            <td>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="A;A">
+                                                                    <div
+                                                                        style="display:inline-block;width:40%;height:100%;background-color:#4e79a7;">
+                                                                    </div>
+                                                                </span>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="A;G">
+                                                                    <div
+                                                                        style="display:inline-block;width:30%;height:100%;background-color:#f28e2b;">
+                                                                    </div>
+                                                                </span>
+                                                                <span class="badge badge-primary badge-pill"
+                                                                    title="G;G">
+                                                                    <div
+                                                                        style="display:inline-block;width:30%;height:100%;background-color:#e15759;">
+                                                                    </div>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Fin de sección "SNP Genotype comparative" -->
-
-                                <!-- Sección "Related publications" -->
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="mb-0">
-                                            <button class="btn btn-link" data-toggle="collapse"
-                                                data-target="#collapseTwo" aria-expanded="true"
-                                                aria-controls="collapseTwo">
-                                                Related publication
-                                            </button>
-                                            <i class="fas fa-chevron-up float-right"></i>
-                                        </h5>
-                                    </div>
-
-                                    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
-                                        data-parent="#accordion">
-                                        <div class="card-body">
-                                            <table class="table">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">PMID</th>
-                                                        <th scope="col">Title</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>1234567</td>
-                                                        <td>Title of publication 1</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>2345678</td>
-                                                        <td>Title of publication 2</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>3456789</td>
-                                                        <td>Title of publication 3</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div> <!-- card-body -->
-                                    </div>
-                                </div>
-                                <!-- End of section "Related publications" -->
-
-                                <!-- "Population diversity" section -->
-                                <div class="card">
-                                    <div class="card-header" id="headingThree">
-                                        <h5 class="mb-0">
-                                            <button class="btn btn-link collapsed" data-toggle="collapse"
-                                                data-target="#collapseThree" aria-expanded="false"
-                                                aria-controls="collapseThree">
-                                                Population diversity
-                                            </button>
-                                        </h5>
-                                    </div>
-                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
-                                        data-parent="#accordion">
-                                        <div class="card-body">
-                                            <ul class="list-group">
-                                                <li
-                                                    class="list-group-item d-flex justify-content-between align-items-center">
-                                                    European
-                                                    <span class="badge badge-primary badge-pill" title="A;A">
-                                                        <div
-                                                            style="display:inline-block;width:40%;height:100%;background-color:#4e79a7;">
-                                                        </div>
-                                                    </span>
-                                                    <span class="badge badge-primary badge-pill" title="A;G">
-                                                        <div
-                                                            style="display:inline-block;width:30%;height:100%;background-color:#f28e2b;">
-                                                        </div>
-                                                    </span>
-                                                    <span class="badge badge-primary badge-pill" title="G;G">
-                                                        <div
-                                                            style="display:inline-block;width:30%;height:100%;background-color:#e15759;">
-                                                        </div>
-                                                    </span>
-                                                </li>
-                                                <li
-                                                    class="list-group-item d-flex justify-content-between align-items-center">
-                                                    Han Chinese
-                                                    <span class="badge badge-primary badge-pill" title="A;A">
-                                                        <div
-                                                            style="display:inline-block;width:55%;height:100%;background-color:#4e79a7;">
-                                                        </div>
-                                                    </span>
-                                                    <span class="badge badge-primary badge-pill" title="A;G">
-                                                        <div
-                                                            style="display:inline-block;width:35%;height:100%;background-color:#f28e2b;">
-                                                        </div>
-                                                    </span>
-                                                    <span class="badge badge-primary badge-pill" title="G;G">
-                                                        <div
-                                                            style="display:inline-block;width:10%;height:100%;background-color:#e15759;">
-                                                        </div>
-                                                    </span>
-                                                </li>
-                                                <li
-                                                    class="list-group-item d-flex justify-content-between align-items-center">
-                                                    Japanese Tokyo
-                                                    <span class="badge badge-primary badge-pill" title="A;A">
-                                                        <div
-                                                            style="display:inline-block;width:53%;height:100%;background-color:#4e79a7;">
-                                                        </div>
-                                                    </span>
-                                                    <span class="badge badge-primary badge-pill" title="A;G">
-                                                        <div
-                                                            style="display:inline-block;width:37%;height:100%;background-color:#f28e2b;">
-                                                        </div>
-                                                    </span>
-                                                    <span class="badge badge-primary badge-pill" title="G;G">
-                                                        <div
-                                                            style="display:inline-block;width:10%;height:100%;background-color:#e15759;">
-                                                        </div>
-                                                    </span>
-                                                </li>
-                                                <li
-                                                    class="list-group-item d-flex justify-content-between align-items-center">
-                                                    Yoruba African
-                                                    <span class="badge badge-primary badge-pill" title="A;A">
-                                                        <div
-                                                            style="display:inline-block;width:10%;height:100%;background-color:#4e79a7;">
-                                                        </div>
-                                                    </span>
-                                                    <span class="badge badge-primary badge-pill" title="A;G">
-                                                        <div
-                                                            style="display:inline-block;width:55%;height:100%;background-color:#f28e2b;">
-                                                        </div>
-                                                    </span>
-                                                    <span class="badge badge-primary badge-pill" title="G;G">
-                                                        <div
-                                                            style="display:inline-block;width:35%;height:100%;background-color:#e15759;">
-                                                        </div>
-                                                    </span>
-                                                </li>
-                                                <li
-                                                    class="list-group-item d-flex justify-content-between align-items-center">
-                                                    African ancestry in Southwest USA
-                                                    <span class="badge badge-primary badge-pill" title="A;A">
-                                                        <div
-                                                            style="display:inline-block;width:10%;height:100%;background-color:#4e79a7;">
-                                                        </div>
-                                                    </span>
-                                                    <span class="badge badge-primary badge-pill" title="A;G">
-                                                        <div
-                                                            style="display:inline-block;width:55%;height:100%;background-color:#f28e2b;">
-                                                        </div>
-                                                    </span>
-                                                    <span class="badge badge-primary badge-pill" title="G;G">
-                                                        <div
-                                                            style="display:inline-block;width:35%;height:100%;background-color:#e15759;">
-                                                        </div>
-                                                    </span>
-                                                </li>
-                                                <li
-                                                    class="list-group-item d-flex justify-content-between align-items-center">
-                                                    Chinese in Metropolitan Denver, Colorado
-                                                    <span class="badge badge-primary badge-pill" title="A;A">
-                                                        <div
-                                                            style="display:inline-block;width:10%;height:100%;background-color:#4e79a7;">
-                                                        </div>
-                                                    </span>
-                                                    <span class="badge badge-primary badge-pill" title="A;G">
-                                                        <div
-                                                            style="display:inline-block;width:55%;height:100%;background-color:#f28e2b;">
-                                                        </div>
-                                                    </span>
-                                                    <span class="badge badge-primary badge-pill" title="G;G">
-                                                        <div
-                                                            style="display:inline-block;width:35%;height:100%;background-color:#e15759;">
-                                                        </div>
-                                                    </span>
-                                                </li>
-                                                <li
-                                                    class="list-group-item d-flex justify-content-between align-items-center">
-                                                    Gujarati Indians in Houston, Texas
-                                                    <span class="badge badge-primary badge-pill" title="A;A">
-                                                        <div
-                                                            style="display:inline-block;width:10%;height:100%;background-color:#4e79a7;">
-                                                        </div>
-                                                    </span>
-                                                    <span class="badge badge-primary badge-pill" title="A;G">
-                                                        <div
-                                                            style="display:inline-block;width:55%;height:100%;background-color:#f28e2b;">
-                                                        </div>
-                                                    </span>
-                                                    <span class="badge badge-primary badge-pill" title="G;G">
-                                                        <div
-                                                            style="display:inline-block;width:35%;height:100%;background-color:#e15759;">
-                                                        </div>
-                                                    </span>
-                                                </li>
-                                                <li
-                                                    class="list-group-item d-flex justify-content-between align-items-center">
-                                                    Luhya in Webuye, Kenya
-                                                    <span class="badge badge-primary badge-pill" title="A;A">
-                                                        <div
-                                                            style="display:inline-block;width:10%;height:100%;background-color:#4e79a7;">
-                                                        </div>
-                                                    </span>
-                                                    <span class="badge badge-primary badge-pill" title="A;G">
-                                                        <div
-                                                            style="display:inline-block;width:55%;height:100%;background-color:#f28e2b;">
-                                                        </div>
-                                                    </span>
-                                                    <span class="badge badge-primary badge-pill" title="G;G">
-                                                        <div
-                                                            style="display:inline-block;width:35%;height:100%;background-color:#e15759;">
-                                                        </div>
-                                                    </span>
-                                                </li>
-                                                <li
-                                                    class="list-group-item d-flex justify-content-between align-items-center">
-                                                    Mexican ancestry in Los Angeles, California
-                                                    <span class="badge badge-primary badge-pill" title="A;A">
-                                                        <div
-                                                            style="display:inline-block;width:10%;height:100%;background-color:#4e79a7;">
-                                                        </div>
-                                                    </span>
-                                                    <span class="badge badge-primary badge-pill" title="A;G">
-                                                        <div
-                                                            style="display:inline-block;width:55%;height:100%;background-color:#f28e2b;">
-                                                        </div>
-                                                    </span>
-                                                    <span class="badge badge-primary badge-pill" title="G;G">
-                                                        <div
-                                                            style="display:inline-block;width:35%;height:100%;background-color:#e15759;">
-                                                        </div>
-                                                    </span>
-                                                </li>
-                                                <li
-                                                    class="list-group-item d-flex justify-content-between align-items-center">
-                                                    Maasai in Kinyawa, Kenya
-                                                    <span class="badge badge-primary badge-pill" title="A;A">
-                                                        <div
-                                                            style="display:inline-block;width:10%;height:100%;background-color:#4e79a7;">
-                                                        </div>
-                                                    </span>
-                                                    <span class="badge badge-primary badge-pill" title="A;G">
-                                                        <div
-                                                            style="display:inline-block;width:55%;height:100%;background-color:#f28e2b;">
-                                                        </div>
-                                                    </span>
-                                                    <span class="badge badge-primary badge-pill" title="G;G">
-                                                        <div
-                                                            style="display:inline-block;width:35%;height:100%;background-color:#e15759;">
-                                                        </div>
-                                                    </span>
-                                                </li>
-                                                <li
-                                                    class="list-group-item d-flex justify-content-between align-items-center">
-                                                    Toscani in Italia
-                                                    <span class="badge badge-primary badge-pill" title="A;A">
-                                                        <div
-                                                            style="display:inline-block;width:10%;height:100%;background-color:#4e79a7;">
-                                                        </div>
-                                                    </span>
-                                                    <span class="badge badge-primary badge-pill" title="A;G">
-                                                        <div
-                                                            style="display:inline-block;width:55%;height:100%;background-color:#f28e2b;">
-                                                        </div>
-                                                    </span>
-                                                    <span class="badge badge-primary badge-pill" title="G;G">
-                                                        <div
-                                                            style="display:inline-block;width:35%;height:100%;background-color:#e15759;">
-                                                        </div>
-                                                    </span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End of section "Population Diversity -->
                             </div>
                         </div>
                     </div>
@@ -373,9 +445,12 @@
     <div id="footer"></div>
 
     <script src="./vendor/jquery/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
     <script src="./js/components/components.js"></script>
     <script src="./js/components/verify.js"></script>
     <!-- <script src="./js/components/snpRequest.js"></script> -->
 </body>
+
 </html>

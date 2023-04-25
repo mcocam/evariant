@@ -9,6 +9,22 @@ class FastaController:
     def __init__(self) -> None:
         self.dao = FastaDao()
 
+    # ----------------------------------------------------------------
+    async def get_fasta(self, id):
+
+        data = {}
+
+        try:
+            result = self.dao.get_fasta_by_id(id)
+            data = list(result[0])
+
+        except Exception as e:
+            print(f"Get fasta info error: {e}")
+
+        return data
+
+
+    # ----------------------------------------------------------------
     async def add_fasta(self, new_fasta) -> bool:
 
         new_fasta_added: bool = False
@@ -19,3 +35,12 @@ class FastaController:
             print(e)
 
         return new_fasta_added
+    
+    # ----------------------------------------------------------------
+
+
+# Process Fasta
+# Que todos sean nucleotides
+# multi o simple
+# Multi que tenga secuencia, insertar de una
+# que tenga secuencia, ... y otros campos

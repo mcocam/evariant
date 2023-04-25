@@ -69,6 +69,24 @@ $().ready(() => {
 
 /**-------------------- FUNCTION OF DRAG AND DROP ---------------------------- */
 
+// FUNCION ENVIAR ARCHIVO
+const sendFile = (file) =>{
+  
+  const body = new FormData();
+
+  body.append("file",file);
+
+  fetch("api/files/add_fasta", {
+      method: "POST",
+      body: body,
+      headers: {
+          "Access-Control-Allow-Origin": "*"
+      }
+  })
+  .then(r => console.log(r.json()))
+
+}
+
 /**
  * Function handleDragOver
  * Handle the drag action
@@ -102,16 +120,16 @@ function handleFileSelect(evt) {
     if (f.name.split('.').pop() !== 'fasta') {
       continue;
     }
-
     fastaFile = f;
     break;
   }
   
   if (fastaFile) {
-    // Do something with the fasta file
-    alert('Se ha cargado el archivo: ' + fastaFile.name);
     console.log('Se ha cargado el archivo: ' + fastaFile.name);
 
+    // Enviar el archivo al servidor
+    sendFile(fastaFile);
+    
   } else {
     alert('No se ha seleccionado un archivo .fasta');
   }
@@ -119,4 +137,4 @@ function handleFileSelect(evt) {
 
 
 
-
+//----------------------------------------------------------------
