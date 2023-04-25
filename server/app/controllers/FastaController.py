@@ -1,4 +1,6 @@
 from models.persist.FastaDao import FastaDao
+from models.utils.SnpHandler import SnpHandler
+
 from pydantic import BaseModel
 from models.Fasta import Fasta
 import env
@@ -37,6 +39,13 @@ class FastaController:
         return new_fasta_added
     
     # ----------------------------------------------------------------
+    async def validate_fasta(self, file_fasta) :
+
+        pass
+
+
+
+
 
 
 # Process Fasta
