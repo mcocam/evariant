@@ -12,15 +12,16 @@ class FastaController:
 
     def __init__(self) -> None:
         self.dao = FastaDao()
+        self.snp_handler = SnpHandler()
 
     # ----------------------------------------------------------------
     async def get_fasta(self, id):
 
-        data = {}
+        data = None
 
         try:
-            result = self.dao.get_fasta_by_id(id)
-            data = list(result[0])
+            result = await self.dao.get_fasta_by_id(id)
+            data = result
 
         except Exception as e:
             print(f"Get fasta info error: {e}")
@@ -29,9 +30,9 @@ class FastaController:
 
 
     # ----------------------------------------------------------------
-    async def add_fasta(self, new_fasta) -> bool:
+    async def add_fasta(self, new_fasta) -> int:
 
-        new_fasta_added: bool = False
+        new_fasta_added: int = 0
 
         try:
             new_fasta_added = self.dao.add_new_fasta(new_fasta)
@@ -60,6 +61,11 @@ class FastaController:
 
             # Validate that it has found the content in the header
             if genome and chromosome and strand and position:
+                
+                genome_exists: bool = self.snp_handler.check_if_assembly_exists(genome)
+                
+                if not genome_exists:
+                    return False, None, None, None, None, None
 
                 # Find the string on the line following the header
                 sequence_pattern = r'\n([ACGTNacgtn\s]*)'

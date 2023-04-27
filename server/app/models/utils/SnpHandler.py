@@ -60,6 +60,7 @@ class SnpHandler:
         try:
             response: Response = get(endpoint,params)
             ref_seq = response.json()["dna"]
+            
         except Exception as e:
             print(f"SnpHandler, get_reference_seq error: {e}")
         
@@ -71,7 +72,8 @@ class SnpHandler:
         difference: dict = {
             "position": None,
             "reference_nucleotide": None,
-            "variant_nucleotide": None
+            "variant_nucleotide": None,
+            "chromosome": None
         }
         
         start_position: int = single_fasta.getStartLoc()
@@ -87,17 +89,17 @@ class SnpHandler:
                 difference["position"] = position
                 difference["reference_nucleotide"] = reference_nucleotide
                 difference["variant_nucleotide"] = variant_nucleotide
+                difference["chromosome"] = single_fasta.getChromosome()
                 
                 differences.append(difference)
-                
         return differences
                 
         
                 
-    def get_snp_by_positions(self, differences: list[dict], single_fasta: SingleFasta) -> list[str]:
+    def get_snp_by_positions(self, differences: list[dict], single_fasta: SingleFasta) -> list[Snp]:
         
         snp_refs: list[str] = []
-        snps: list = []
+        snps: list[Snp] = []
         
         Entrez.email = "test@test.com"
         specie_query: str = f"{single_fasta.getAssembly()}"
@@ -113,13 +115,13 @@ class SnpHandler:
             
             for difference in differences:
             
-                snp_query: str = f"3[CHR] AND {specie_name}[ORGN] AND {difference['position']}:{difference['position']}[CPOS]"
+                snp_query: str = f"{difference['chromosome'].replace('chr','')}[CHR] AND {specie_name}[ORGN] AND {difference['position']}:{difference['position']}[CPOS]"
                 handler = Entrez.esearch(db="snp",term=snp_query)
                 record = Entrez.read(handler)
                 ids = record["IdList"]
                 
                 handler.close()
-                    
+                print(record)
                 for id in ids:
                     snp_handler = Entrez.esummary(db = "snp", id = id)
                     snp_summary = Entrez.read(snp_handler)

@@ -80,6 +80,9 @@ class SnpDao:
         Returns:
         - True if the SNP was added successfully, False otherwise.
         """
+        
+        inserted_rows: int = 0
+        
         new_snp_added = False
         query = insert(self.snp_table).values(
             ref_snp=snp.ref_snp,
@@ -92,10 +95,10 @@ class SnpDao:
             response = cursor.execute(query)
             cursor.commit()
             if response.rowcount > 0:
-                new_snp_added = True
+                inserted_rows = response.rowcount
         except Exception as e:
             print(e)
-        return new_snp_added
+        return inserted_rows
 
 
 

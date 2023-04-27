@@ -32,11 +32,10 @@ class FastaDao:
             query = self.fasta_table.select().where(self.fasta_table.c.id == id)
             cursor = self.connection.connect()
             rows = cursor.execute(query)
+            raw_data = rows.fetchone()
 
-            raw_data = list[dict] = [row for row in rows]
-
-            if raw_data:
-                response["data"] = self.__parse_fasta(list(raw_data[0]))
+            if len(raw_data)>0:
+                response["data"] = self.__parse_fasta(raw_data)
                 response["error"] = False
                 response["message"] = "Fasta Found!"
 
@@ -51,13 +50,13 @@ class FastaDao:
     
 
     # ADD FASTA 
-    def add_new_fasta(self,fasta: Fasta) -> bool:
+    def add_new_fasta(self,fasta: Fasta) -> int:
         """  Add a new Fasta to database
         Enters -> Object Fasta
         return -> bool
         """
 
-        new_fasta_added: bool = False
+        new_fasta_added: int = 0
         query = insert(self.fasta_table).values(
             title = fasta.title,
             raw_fasta = fasta.raw_fasta,
@@ -70,7 +69,7 @@ class FastaDao:
             response = cursor.execute(query)
             cursor.commit()
             if response.rowcount > 0:
-                new_fasta_added = True
+                new_fasta_added = response.inserted_primary_key[0]
 
         except Exception as e:
             print(e)

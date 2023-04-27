@@ -88,7 +88,7 @@ class SnpController:
 
 
 
-    async def save_snps_to_db(self, fasta_id: int, positions: List[int]) -> bool:
+    async def save_snps_to_db(self, snp: Snp) -> bool:
         """
         Retrieves SNPs from a FASTA file by a list of positions and saves them to the database.
         
@@ -102,12 +102,8 @@ class SnpController:
 
         
         # Retrieve SNPs from the FASTA file by positions
-        snps = SnpHandler.get_snp_by_positions(fasta_id, positions)
         
         # Save SNPs to the database
-        success = True
-        for snp in snps:
-            if not await self.dao.add_new_snp(snp):
-                success = False
+        response = await self.dao.add_new_snp(snp)
         
-        return success
+        return response

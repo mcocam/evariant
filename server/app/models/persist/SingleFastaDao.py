@@ -24,19 +24,18 @@ class SingleFastaDao:
         self.single_fasta_table:   Table  = single_fasta_table
         self.response: dict[str,any] = {"error": True, "message": "", "data": SingleFasta}
 
-    async def get_single_fasta_by_id(self, id: int) -> list[str] :
+    async def get_single_fasta_by_id(self, id: int) -> SingleFasta :
 
         response = self.response
 
         try:
-            query = self.fasta_table.select().where(self.fasta_table.c.id == id)
+            query = self.single_fasta_table.select().where(self.single_fasta_table.c.fasta_id == id)
             cursor = self.connection.connect()
             rows = cursor.execute(query)
-
-            raw_data = list[dict] = [row for row in rows]
+            raw_data = rows.fetchone()
 
             if raw_data:
-                response["data"] = self.__parse_single_fasta(list(raw_data[0]))
+                response["data"] = self.__parse_single_fasta(raw_data)
                 response["error"] = False
                 response["message"] = "Single Fasta Found!"
 
@@ -59,8 +58,10 @@ class SingleFastaDao:
         return -> bool
         """
 
-        new_single_fasta_added: bool = False
+        inserted_response: int = 0
+
         query = insert(self.single_fasta_table).values(
+            fasta_id = single_fasta.fasta_id,
             sequence = single_fasta.sequence,
             assembly = single_fasta.assembly,
             chromosome = single_fasta.chromosome,
@@ -74,12 +75,12 @@ class SingleFastaDao:
             response = cursor.execute(query)
             cursor.commit()
             if response.rowcount > 0:
-                new_single_fasta_added = True
+                inserted_response = response.inserted_primary_key[0]
 
         except Exception as e:
             print(e)
 
-        return new_single_fasta_added
+        return inserted_response
 
     
     def __parse_single_fasta(self,raw_data: list[any] ) -> SingleFasta:
