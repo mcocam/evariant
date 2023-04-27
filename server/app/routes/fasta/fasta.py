@@ -3,7 +3,6 @@ from fastapi import APIRouter, Response, Depends, File, UploadFile
 from uvicorn import run
 from fastapi.middleware.cors import CORSMiddleware
 
-from models.validators.new_fasta import New_fasta
 from controllers.FastaController import FastaController
 from models.Fasta import Fasta
 from routes.users.session import cookie, SessionData, verifier
