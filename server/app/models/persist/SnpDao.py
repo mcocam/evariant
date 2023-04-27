@@ -7,6 +7,7 @@ from sqlalchemy import Table, MetaData, Column, Integer, String, insert, select
 from typing import List
 from datetime import datetime
 
+
 snps_table_model: Table = Table(
     "snps",
     MetaData(),
@@ -97,7 +98,6 @@ class SnpDao:
         return new_snp_added
 
 
-    from datetime import datetime
 
 
     # async def create_snp(self, snp: Snp) -> Snp:
