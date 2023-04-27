@@ -20,6 +20,12 @@ router: APIRouter = APIRouter(
 async def get_file(file: UploadFile = File(...), session_data: SessionData = Depends(verifier)):
     content = await file.read()
     print(content)
+
+    # 
+
+
+
+
     return {"data": "Content uploaded successfully"}
 
 if __name__ == "__main__":
