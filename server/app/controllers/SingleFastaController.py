@@ -27,7 +27,7 @@ class SingleFastaController:
             sections = first_line.split(';')    # assembly;chromosome;strand;positions;
             positions = sections[3].split(":")
 
-            sf = SingleFasta(fasta.get_id(), seq, sections[0], sections[1], sections[2], positions[0], positions[1])
+            sf = SingleFasta(fasta.get_id(), seq.upper(), sections[0], sections[1], sections[2], positions[0], positions[1])
 
             inserted_id: int = self.dao.add_new_single_fasta(sf)
         except Exception as e:

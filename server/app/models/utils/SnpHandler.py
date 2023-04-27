@@ -61,9 +61,13 @@ class SnpHandler:
             response: Response = get(endpoint,params)
             ref_seq = response.json()["dna"]
             
+            if len(ref_seq) > 0:
+                ref_seq = ref_seq.upper()
+            
         except Exception as e:
             print(f"SnpHandler, get_reference_seq error: {e}")
         
+
         return ref_seq
     
     def identify_differences(self, ref_seq:str, single_fasta: SingleFasta) -> list[dict]:
@@ -112,7 +116,7 @@ class SnpHandler:
             specie_summary = Entrez.read(specie_handler)
             specie_name = specie_summary["DocumentSummarySet"]["DocumentSummary"][0]["SpeciesName"]
             handler.close()
-            
+            print(differences)
             for difference in differences:
             
                 snp_query: str = f"{difference['chromosome'].replace('chr','')}[CHR] AND {specie_name}[ORGN] AND {difference['position']}:{difference['position']}[CPOS]"
@@ -120,8 +124,10 @@ class SnpHandler:
                 record = Entrez.read(handler)
                 ids = record["IdList"]
                 
+                #print(ids)
+                
                 handler.close()
-                print(record)
+                
                 for id in ids:
                     snp_handler = Entrez.esummary(db = "snp", id = id)
                     snp_summary = Entrez.read(snp_handler)
