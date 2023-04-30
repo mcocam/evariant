@@ -29,11 +29,16 @@ function list_request(){
     })
 };
 
+function showResults(fasta_id) {
+    window.location.href = "/request_results.html?fasta_id=" + fasta_id;
+}
 
 
 $().ready(() => {
+
     $('#btn-request').on('click', () => {
         
         list_request();
     });
-})
+    
+});

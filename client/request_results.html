@@ -27,12 +27,13 @@
                     <h1 class="fw-bold">2023-03-20 SNP Finder Request</h1>
                     <p class=""> Lorem ipsum dolor sit amet consectetur adipiscing elit. </p>
                 </div>
+                <div id="results_body"></div>
                 <div class="container">
                     <div class="accordion" id="accordion">
                         <div class="card snp-result-card">
                             <div class="card-header d-flex">
                                 <h5 class="mb-0 fw-bolder align-items-center d-flex justify-content-between w-100">
-                                    <span>rs1234</span>
+                                    <span id="snp-ref">rs1234</span>
                                     <div class="d-flex justify-content-end align-items-center">
                                         <span class="me-3">Genotype A;A</span>
                                         <button class="btn btn-link" data-toggle="collapse" data-target="#collapseMain"
@@ -451,6 +452,9 @@
         crossorigin="anonymous"></script>
     <script src="./js/components/components.js"></script>
     <script src="./js/components/verify.js"></script>
+    <script src="./js/components/snp_request_results.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <!-- <script src="./js/components/snpRequest.js"></script> -->
 </body>
 

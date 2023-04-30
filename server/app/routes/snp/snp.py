@@ -34,12 +34,16 @@ async def get_snp_results(fasta_id: str, session_data: SessionData = Depends(ver
         # Get the request associated with the fasta_id
         fasta_controller = FastaController()
         request = await fasta_controller.get_fasta(fasta_id)
+        request = request['data']
+        fasta_user_id = request.get_user_id()
+        print(fasta_user_id)
         # Verify if the user has access to the 
-        if session_data.id != request.get_user_id():
+        if session_data.id != fasta_user_id:
         #if session_data.id != request["user_id"]:
             raise HTTPException(status_code=403, detail="User does not have access to the request.")
 
         snps = await snp_controller.get_snps_by_fasta_id(fasta_id)
+        
         return snps
     
     except HTTPException:

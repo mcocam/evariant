@@ -79,10 +79,10 @@ class SnpController:
         fasta_snps: list[Snp] = []
         
         try:
-            fasta_snps = self.dao.get_snps_by_fasta_id(fasta_id)
+            fasta_snps = await self.dao.get_snps_by_fasta_id(fasta_id)
 
         except Exception as e:
-            print(f"create_snps_by_fasta_id: {e}")
+            print(f"get_snps_by_fasta_id: {e}")
 
         return fasta_snps
 
