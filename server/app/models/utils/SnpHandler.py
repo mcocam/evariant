@@ -116,7 +116,6 @@ class SnpHandler:
             specie_summary = Entrez.read(specie_handler)
             specie_name = specie_summary["DocumentSummarySet"]["DocumentSummary"][0]["SpeciesName"]
             handler.close()
-            print(differences)
             for difference in differences:
             
                 snp_query: str = f"{difference['chromosome'].replace('chr','')}[CHR] AND {specie_name}[ORGN] AND {difference['position']}:{difference['position']}[CPOS]"

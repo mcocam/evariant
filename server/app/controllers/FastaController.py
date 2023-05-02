@@ -58,6 +58,16 @@ class FastaController:
         match = re.search(header_pattern,fasta)
         if match:
             genome, chromosome, strand, position = match.group(1,2,3,4)
+            
+            splitted_fasta = fasta.split("\n")
+            
+            sequences = [line for line in splitted_fasta if len(re.findall(r">.*",line.strip())) == 0 and len(line) > 0 ]
+            for seq in sequences:
+                seq_temp = seq.replace(" ","").strip()
+                invalid_nucleotides_search = re.findall("([^ATCGatcg])",seq_temp)
+                
+                if len(invalid_nucleotides_search) > 0:
+                    return False, None, None, None, None, None
 
             # Validate that it has found the content in the header
             if genome and chromosome and strand and position:
