@@ -109,81 +109,37 @@ async def get_file(file: UploadFile = File(...), session_data: SessionData = Dep
 
 
 
+@router.get("/requests", dependencies= [Depends(cookie)])
+async def requests_snp(session_data: SessionData = Depends(verifier)):
+
+    response: dict[str,any] = {
+        "error": True,
+        "message": "911",  # No results found
+        "data": ""
+    }
+
+    try:
+        fasta_Controller: FastaController = FastaController()
+
+        # Logged in User ID
+        user_id = session_data.id
+        # fasta id of the app "SNP Finder"
+        single_fasta: int = 1
+
+        # Get data
+        data = await fasta_Controller.get_fasta_info(user_id, single_fasta)
+        print(f"llega al fasta {data}")
+
+        if data:
+            response["error"] = False
+            response["message"] = "912" # Data obtained successfully
+            response["data"] = data
+        else:
+            response["message"] = "911" # No results found
 
 
+    except Exception as e:
+        print(e)
+        response["message"] = "913" #error exception
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    # response: dict[str,any] = {
-    #     "error": True,
-    #     "message": "904",
-    #     "data": ""
-    # }
-
-    # fastaController: FastaController = FastaController()
-# response: dict[str,any] = {
-    #     "error": True,
-    #     "message": "904",
-    #     "data": ""
-    # }
-
-    # fastaController: FastaController = FastaController()
-
-    # try:
-    #     fasta: Fasta = Fasta(new_file.title,
-    #                          new_file.raw_fasta,
-    #                          new_file.type,
-    #                          new_file.user_id)
-        
-    #     new_file_added: bool = await fastaController.register_fasta(fasta)
-
-    #     if new_file_added:
-    #         response["message"] = "900"
-    #         response["error"] = False
-        
-    # except Exception as e:
-    #     print(f"Add Fasta Exception: {e}")
-    #     response["message"] = "909"
-
-    # return response
-
-
-    # try:
-    #     fasta: Fasta = Fasta(new_file.title,
-    #                          new_file.raw_fasta,
-    #                          new_file.type,
-    #                          new_file.user_id)
-        
-    #     new_file_added: bool = await fastaController.register_fasta(fasta)
-
-    #     if new_file_added:
-    #         response["message"] = "900"
-    #         response["error"] = False
-        
-    # except Exception as e:
-    #     print(f"Add Fasta Exception: {e}")
-    #     response["message"] = "909"
-
-    # return response
-
+    return response

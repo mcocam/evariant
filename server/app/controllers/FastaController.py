@@ -80,51 +80,35 @@ class FastaController:
 
 
     # The function checks if the file is a single fasta or a multi fasta
+    # @param fasta
+    # @return num_sequences: int, Return 0 if there is more than one sequence, 1 if there is only one
     async def get_type_fasta(self, fasta) -> int:
 
-        # Separar el archivo en secuencias
+        # Separate the file into sequences
         sequences = fasta.split('>')[1:]
-        # Contar el número de secuencias
+        # Count the number of sequences
         num_sequences = len(sequences)
         
-        # Devolver 0 si hay más de una secuencia, 1 si hay una sola
         return 0 if num_sequences > 1 else 1
-
-
-
-
-
-
-
-# Pruebas
-# if __name__ == '__main__':
-#     fasta = '>hg38;chr3;1;8762635:8762739\nCTCGGGCACAGCATTCATGGAAAGGAAAGGTGTACGGGACATGCCCGAGGATCCTCAGTCCCACAGAAAC AGGGAGGGGCTGGGAAGCTCATTCTACAGATGGGG'
-#     fasta_incorrect = '>GRCh38;1;1:50\natgatacacgcgggcgaccgcgcagtcaaYcttcaacatgtaaccctagacgccctgaat\nagctatgtccacacttcctcatttctgcctcccagataccagagcccgcggcgttgggct\ncacataccagaattccScgttcttacctaa'
-#     multi_fasta = '>random coding sequence 9 consisting of 300 bases.\natgatctgtcttcttccctccgtgcacatgcgttgcatgtatatagcatcaatacccttt\ntgttccactaatgtggcggtgcatgaggctgttcgcatgagccgtatacagcgattcttg\naatttggagtacaaaacaatggaacccccatatagaactccgaataccatatcctgcatt\nggcggaaggaacccgtgggcacggtctcccttacgaagctacttaagaatgcttggcaaa\ntcgtgctatcctctgcgagagagtatcaggtcaattcaactcgtttcctctattccctag\n\n>random coding sequence 10 consisting of 300 bases.\natgagacactccgtaatttccagcaagacgaatt'
     
-#     fastaC: FastaController = FastaController()
-    
-#     # Tipo de Fasta
-#     type_fasta = fastaC.get_type_fasta(fasta)
 
-#     print(f"Tipo de fasta: {type_fasta}")
+    # Get Info Fasta
+    # @param user_id:int
+    # @param type:int
+    # @return data: list[list]
+    #----------------------------------------------------------------
+    async def get_fasta_info(self, user_id: int, single_fasta: int) :
 
-#     if type_fasta == 1 :
+        info_fasta: list[dict] = []
+        data: list[str] = []
 
-#         is_fasta, genome, chromosome, strand, position, sequence = fastaC.is_valid_fasta(fasta)
-#         if is_fasta:
-#             print(f"Fasta Semple. Genoma de reference:{genome} Chromosome: {chromosome} Hebra: {strand} y las posiciones: {position}")
-#             print(f"Secuencia: {sequence}")
-#         else:
-#             print("No es un archivo fasta simple válido.")
-#     elif type_fasta == 0:
-#         print("Es un multi fasta")
-#     else:
-#         print("No es un formato fasta valido5")
+        try:
+            # Get Info Fasta from DAO
+            info_fasta: list[dict] =  await self.dao.get_info(user_id, single_fasta)
+            # Convert to list of string
+            data = [str(d) for d in info_fasta]
+            print(f"LLegan al controlador:  {data}")
 
-
-# Process Fasta
-# Que todos sean nucleotides
-# multi o simple
-# Multi que tenga secuencia, insertar de una
-# que tenga secuencia, ... y otros campos
+        except Exception as e:
+            print(f"FastaController Exception: {e}")
+        return data

@@ -77,7 +77,30 @@ class FastaDao:
         return new_fasta_added
     
 
-    
+    # Get fastas table information by user id and fasta type
+    # @param user_id:int
+    # @param type:int
+    # @return info_fasta: list[list]
+    #----------------------------------------------------------------
+    async def get_info(self, user_id: int, type_fasta) -> list[list]:
+
+        info_fasta: list[list] = []
+        
+        try:
+            query = self.fasta_table.select().where(
+                self.fasta_table.c.user_id == user_id and 
+                self.fasta_table.c.type == type_fasta)
+            cursor = self.connection.connect()
+            rows = cursor.execute(query)
+
+            info_fasta: list[list] = [row for row in rows]
+
+        except Exception as e:
+            print(f'exception dao{e}')
+
+        return info_fasta    
+
+    #
     def __parse_fasta(self,raw_data: list[any] ) -> Fasta:
 
         fasta_id:       int         = raw_data[0]
