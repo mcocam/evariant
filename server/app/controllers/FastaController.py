@@ -117,7 +117,7 @@ class FastaController:
             info_fasta: list[dict] =  await self.dao.get_info(user_id, single_fasta)
             # Convert to list of string
             data = [str(d) for d in info_fasta]
-            print(f"LLegan al controlador:  {data}")
+            #print(f"LLegan al controlador:  {data}")
 
         except Exception as e:
             print(f"FastaController Exception: {e}")
