@@ -6,6 +6,11 @@ Error Codes
 909 -> Served has failed, try later
 
 -- SNP FINDER
+
+-- Show Request
 911 -> No results found
 912 -> Data obtained successfully
 913 -> error exception
+
+-- snp Process Codes
+915 -> fasta incorrect

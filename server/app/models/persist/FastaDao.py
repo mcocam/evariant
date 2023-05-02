@@ -2,10 +2,11 @@
 # Communication with the database
 # @author: Ani Valle
 
+import datetime
+from datetime import datetime
 from models.Fasta import Fasta
 from db.get_connection import get_connection
 from sqlalchemy import Engine, Table, MetaData, Column, Integer, String, DateTime, insert
-from datetime import datetime
 
 fasta_table:   Table = Table(
     "fastas",
@@ -14,9 +15,10 @@ fasta_table:   Table = Table(
     Column("title",String),
     Column("raw_fasta",String),
     Column("type",Integer),
-    Column("creation_date",DateTime,nullable=True),
+    Column("creation_date",DateTime, nullable=True),
     Column("user_id",Integer)
 )
+
 
 class FastaDao:
     def __init__(self) -> None:
