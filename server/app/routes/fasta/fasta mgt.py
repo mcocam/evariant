@@ -143,3 +143,38 @@ async def requests_snp(session_data: SessionData = Depends(verifier)):
         response["message"] = "913" #error exception
 
     return response
+
+@router.get("/delete_fasta", dependencies= [Depends(cookie)])
+async def del_file(session_data: SessionData = Depends(verifier)):
+
+    response: dict[str,any] = {
+        "error": True,
+        "message": "911",  # No results found
+        "data": ""
+    }
+
+    try:
+        fasta_Controller: FastaController = FastaController()
+
+        # Logged in User ID
+        user_id = session_data.id
+        # fasta id of the app "SNP Finder"
+        single_fasta: int = 1
+
+        # Get data
+        data = await fasta_Controller.get_fasta_info(user_id, single_fasta)
+        print(f"llega al fasta {data}")
+
+        if data:
+            response["error"] = False
+            response["message"] = "912" # Data obtained successfully
+            response["data"] = data
+        else:
+            response["message"] = "911" # No results found
+
+
+    except Exception as e:
+        print(e)
+        response["message"] = "913" #error exception
+
+    return response

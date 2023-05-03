@@ -123,7 +123,7 @@ async def login(credentials: Credentials, res: Response):
     return response
 
 @router.post("/verify", dependencies=[Depends(cookie)])
-async def verify():
+async def verify(session_data: SessionData = Depends(verifier)):
     return HTTPException(status_code=200, detail="Session is correct")
 
 @router.post("/logout")

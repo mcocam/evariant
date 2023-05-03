@@ -12,7 +12,7 @@ class SingleFasta:
                  chromosome:    str,
                  strand:        int,
                  start_loc:     int,
-                 end_loc:       int,
+                 end_loc:       int
                  ) -> None:
         
         self.fasta_id = fasta_id

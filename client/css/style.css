@@ -6,7 +6,7 @@ html {
 nav {
     /* UI Properties */
     background: #FFFFFF 0% 0% no-repeat padding-box;
-    opacity: 0.8;
+    opacity: 0.95;
 }
 
 .tex-color{
@@ -36,6 +36,9 @@ nav {
     background-size: 100%;
 }
 
+#btn-myProfile {
+    white-space: nowrap;
+}
 
 /* STYLES LANDING PAGE */
 body {

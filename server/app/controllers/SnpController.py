@@ -7,6 +7,7 @@ from pydantic import BaseModel
 from models.Snp import Snp
 import env
 import os
+from models.utils.SnpHandler import SnpHandler
 
 class SnpController:
     
@@ -78,12 +79,31 @@ class SnpController:
         fasta_snps: list[Snp] = []
         
         try:
-            fasta_snps = self.dao.get_snps_by_fasta_id(fasta_id)
+            fasta_snps = await self.dao.get_snps_by_fasta_id(fasta_id)
 
         except Exception as e:
-            print(f"create_snps_by_fasta_id: {e}")
+            print(f"get_snps_by_fasta_id: {e}")
 
         return fasta_snps
 
 
-    # update, delete functions needed??
+
+    async def save_snps_to_db(self, snp: Snp) -> bool:
+        """
+        Retrieves SNPs from a FASTA file by a list of positions and saves them to the database.
+        
+        Args:
+        - fasta_id: An integer representing the ID of the FASTA file to retrieve SNPs from.
+        - positions: A list of integers representing the positions to retrieve SNPs for.
+        
+        Returns:
+        - A boolean indicating if the SNPs were successfully saved to the database.
+        """
+
+        
+        # Retrieve SNPs from the FASTA file by positions
+        
+        # Save SNPs to the database
+        response = await self.dao.add_new_snp(snp)
+        
+        return response

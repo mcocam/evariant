@@ -1,7 +1,16 @@
 Error Codes
 
-904 -> Invalid Credentials
-902 -> User already exists
 900 -> Session On
-
+902 -> User already exists
+904 -> Invalid Credentials
 909 -> Served has failed, try later
+
+-- SNP FINDER
+
+-- Show Request
+911 -> No results found
+912 -> Data obtained successfully
+913 -> error exception
+
+-- snp Process Codes
+915 -> fasta incorrect

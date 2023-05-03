@@ -7,6 +7,7 @@ from sqlalchemy import Table, MetaData, Column, Integer, String, insert, select
 from typing import List
 from datetime import datetime
 
+
 snps_table_model: Table = Table(
     "snps",
     MetaData(),
@@ -14,7 +15,7 @@ snps_table_model: Table = Table(
     Column("ref_snp", String, unique=True),
     Column("fasta_id", Integer),
     Column("ref_nucleotide", String),
-    Column("var_nucleotide", String),
+    Column("var_nucleotide", String)
 )
 
 class SnpDao:
@@ -59,11 +60,12 @@ class SnpDao:
         - A list of Snp objects containing the data from each row, or an empty list if none found.
         """
         snps = []
-        query = select([self.snp_table]).where(self.snp_table.c.fasta_id == fasta_id)
+        query = self.snp_table.select().where(self.snp_table.c.fasta_id == fasta_id)
+
         cursor = self.connection.connect()
         rows = cursor.execute(query)
         for row in rows:
-            snp = self.__parse_snp(row)
+            snp = await self.__parse_snp(row)
             snps.append(snp)
         return snps
     
@@ -79,6 +81,9 @@ class SnpDao:
         Returns:
         - True if the SNP was added successfully, False otherwise.
         """
+        
+        inserted_rows: int = 0
+        
         new_snp_added = False
         query = insert(self.snp_table).values(
             ref_snp=snp.ref_snp,
@@ -91,64 +96,11 @@ class SnpDao:
             response = cursor.execute(query)
             cursor.commit()
             if response.rowcount > 0:
-                new_snp_added = True
+                inserted_rows = response.rowcount
         except Exception as e:
             print(e)
-        return new_snp_added
+        return inserted_rows
 
-
-    from datetime import datetime
-
-
-    # async def create_snp(self, snp: Snp) -> Snp:
-    #     """
-    #     Creates a new SNP record in the database.
-
-    #     Args:
-    #         snp: A Snp object containing information about the SNP.
-
-    #     Returns:
-    #         The newly created Snp object.
-    #     """
-    #     snp.creation_date = datetime.now()
-    #     with self.connection.begin() as conn:
-    #         ins = self.snp_table.insert().values(
-    #             ref_snp=snp.ref_snp,
-    #             fasta_id=snp.fasta_id,
-    #             ref_nucleotide=snp.ref_nucleotide,
-    #             var_nucleotide=snp.var_nucleotide,
-    #             creation_date=snp.creation_date
-    #         )
-    #         result = await conn.execute(ins)
-    #         snp.id = result.inserted_primary_key[0]
-    #     return snp
-
-
-    # async def update_snp(self, snp_id: int, snp: Snp) -> Snp:
-    #     """
-    #     Updates an existing SNP record in the database.
-
-    #     Args:
-    #         snp_id: The ID of the SNP record to update.
-    #         snp: A Snp object containing the updated information.
-
-    #     Returns:
-    #         The updated Snp object.
-    #     """
-    #     snp.creation_date = datetime.now()
-    #     with self.connection.begin() as conn:
-    #         upd = self.snp_table.update().\
-    #             where(self.snp_table.c.id == snp_id).\
-    #             values(
-    #                 ref_snp=snp.ref_snp,
-    #                 fasta_id=snp.fasta_id,
-    #                 ref_nucleotide=snp.ref_nucleotide,
-    #                 var_nucleotide=snp.var_nucleotide,
-    #                 creation_date=snp.creation_date
-    #             )
-    #         await conn.execute(upd)
-    #     snp.id = snp_id
-    #     return snp
 
 
     @staticmethod
