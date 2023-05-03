@@ -1,3 +1,4 @@
+import datetime
 import re
 from requests import get, Response
 from models.persist.FastaDao import FastaDao
@@ -109,15 +110,23 @@ class FastaController:
     #----------------------------------------------------------------
     async def get_fasta_info(self, user_id: int, single_fasta: int) :
 
-        info_fasta: list[dict] = []
-        data: list[str] = []
-
+        info_fasta: list[list] = []
         try:
             # Get Info Fasta from DAO
-            info_fasta: list[dict] =  await self.dao.get_info(user_id, single_fasta)
-            # Convert to list of string
-            data = [str(d) for d in info_fasta]
-            #print(f"LLegan al controlador:  {data}")
+            info_fasta: list[list] =  await self.dao.get_info(user_id, single_fasta)
+
+            data: list[list] = []
+            for t in info_fasta:
+                fasta_row: list[str] = []
+
+                for i in t:
+                    if type(i) == datetime.datetime:
+                        fasta_row.append(i.strftime('%d/%m/%Y %H:%M'))
+                    else:
+                        fasta_row.append(str(i))
+                data.append(fasta_row)
+
+            print(data)
 
         except Exception as e:
             print(f"FastaController Exception: {e}")
