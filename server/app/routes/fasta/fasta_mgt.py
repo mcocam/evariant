@@ -3,7 +3,7 @@ from fastapi import APIRouter, Response, Depends, File, UploadFile
 from uvicorn import run
 from fastapi.middleware.cors import CORSMiddleware
 
-from controllers.FastaController import FastaController
+from controllers.FastaController_mgt import FastaController_mgt
 from controllers.SingleFastaController import SingleFastaController
 from controllers.SnpController import SnpController
 
@@ -145,7 +145,7 @@ async def requests_snp(session_data: SessionData = Depends(verifier)):
     return response
 
 @router.get("/delete_fasta", dependencies= [Depends(cookie)])
-async def del_file(session_data: SessionData = Depends(verifier)):
+async def del_file(id: int, session_data: SessionData = Depends(verifier)):
 
     response: dict[str,any] = {
         "error": True,
@@ -154,15 +154,13 @@ async def del_file(session_data: SessionData = Depends(verifier)):
     }
 
     try:
-        fasta_Controller: FastaController = FastaController()
+        fasta_Controller: FastaController_mgt = FastaController_mgt()
 
         # Logged in User ID
         user_id = session_data.id
-        # fasta id of the app "SNP Finder"
-        single_fasta: int = 1
 
         # Get data
-        data = await fasta_Controller.get_fasta_info(user_id, single_fasta)
+        data = await fasta_Controller.del_fasta(user_id, id)
         print(f"llega al fasta {data}")
 
         if data:
