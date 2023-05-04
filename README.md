@@ -42,6 +42,12 @@ docker compose up -d --build
 The files are live-upload to docker container, but if you notice no change are displayed,
 rerun the command again.
 
+## Reqirements
+
+In order to run phylogenetic tree generator, clustalW2 must be installed on the system.
+Tutorial:
+https://bioinformaticsreview.com/20210126/how-to-install-clustalw2-on-ubuntu/
+
 ## Deployment
 
 The app is automatically deployed when a change is pushed on the main branch via github actions.
