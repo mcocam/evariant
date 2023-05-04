@@ -6,7 +6,7 @@ import datetime
 from datetime import datetime
 from models.Fasta import Fasta
 from db.get_connection import get_connection
-from sqlalchemy import Engine, Table, MetaData, Column, Integer, String, DateTime, insert
+from sqlalchemy import Engine, Table, MetaData, Column, Integer, String, DateTime, insert, and_
 
 fasta_table:   Table = Table(
     "fastas",
@@ -90,8 +90,10 @@ class FastaDao:
         
         try:
             query = self.fasta_table.select().where(
-                self.fasta_table.c.user_id == user_id and 
-                self.fasta_table.c.type == type_fasta)
+                and_(
+                    self.fasta_table.c.user_id == user_id,
+                    self.fasta_table.c.type == type_fasta
+                ))
             cursor = self.connection.connect()
             rows = cursor.execute(query)
 
