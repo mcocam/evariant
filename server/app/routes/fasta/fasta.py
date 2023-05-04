@@ -1,3 +1,4 @@
+import string
 from typing import Annotated
 from fastapi import APIRouter, Response, Depends, File, UploadFile
 from uvicorn import run
@@ -43,6 +44,7 @@ async def get_file(file: UploadFile = File(...), session_data: SessionData = Dep
         
         ## Upload Fasta
         content = await file.read()
+        requests_title = file.filename
         content = content.decode("utf-8")
         
         fasta_type: int = await fasta_controller.get_type_fasta(content)
@@ -59,7 +61,7 @@ async def get_file(file: UploadFile = File(...), session_data: SessionData = Dep
                 position_split: list[int] = [int(position) for position in position.split(":")]
                 sequence: str = is_valid_fasta[5]
                 
-                fasta: Fasta = Fasta(title=uuid4(),
+                fasta: Fasta = Fasta(title=requests_title,
                                      raw_fasta=content,
                                      type=1,
                                      user_id=session_data.id)
@@ -128,7 +130,7 @@ async def requests_snp(session_data: SessionData = Depends(verifier)):
 
         # Get data
         data = await fasta_Controller.get_fasta_info(user_id, single_fasta)
-        print(f"llega al fasta {data}")
+        # print(f"llega al fasta {data}")
 
         if data:
             response["error"] = False
