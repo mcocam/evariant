@@ -126,8 +126,6 @@ class FastaController:
                         fasta_row.append(str(i))
                 data.append(fasta_row)
 
-            print(data)
-
         except Exception as e:
             print(f"FastaController Exception: {e}")
         return data

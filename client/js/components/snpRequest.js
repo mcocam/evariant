@@ -1,4 +1,7 @@
-//
+/**
+ * @file This file contains functions to send a file to the server and style the process
+ * @autora Ani Valle
+ */
 
 $().ready(() => { 
 
@@ -6,7 +9,7 @@ $().ready(() => {
     // show step 2 and hide step 1
     $("#btn_next_step1").on("click", () => { 
         $("#snp_step2").show();
-        $("#snp_step1").hide();
+        $("#snp_step1").hide();        
     });
 
     // show step 1 and hide step 2
@@ -25,16 +28,9 @@ $().ready(() => {
         $("#div_progress").hide();
     });
 
-    // Ejemplo de actualizar el progress bar
-    const progressBar = document.getElementById('progress-bar');
-    const progressValue = document.getElementById('progress-value');
 
-    function actualizarBarraDeProgreso(valor) {
-        progressBar.value = valor;
-        progressValue.textContent = valor;
-    }
-    // Ejemplo de uso
-    actualizarBarraDeProgreso(50);
+    /**-------------------- GET REQUEST TITLE ---------------------------- */
+
 
 
     
@@ -64,17 +60,29 @@ $().ready(() => {
     });
     fileInput.addEventListener('change', handleFileSelect, false);
 
+
+    /**-------------------- PROGRESS BAR ---------------------------- */
+    // Ejemplo de actualizar el progress bar
+    const progressBar = document.getElementById('progress-bar');
+    const progressValue = document.getElementById('progress-value');
+
+    function actualizarBarraDeProgreso(valor) {
+        progressBar.value = valor;
+        progressValue.textContent = valor;
+    }
+    // Ejemplo de uso
+    actualizarBarraDeProgreso(50);
     
 });
 
 /**-------------------- FUNCTION OF DRAG AND DROP ---------------------------- */
 
 // FUNCION ENVIAR ARCHIVO
-const sendFile = (file) =>{
+const sendFile = (file, request_title) =>{
   
   const body = new FormData();
-
-  body.append("file",file);
+  body.append("file",file, request_title);
+  //body.append("title", request_title);
 
   fetch("api/files/add_fasta", {
       method: "POST",
@@ -84,7 +92,6 @@ const sendFile = (file) =>{
       }
   })
   .then(r => console.log(r.json()))
-
 }
 
 /**
@@ -124,14 +131,16 @@ function handleFileSelect(evt) {
     break;
   }
   
+  // If it is a .fasta file it will be sent to the server
   if (fastaFile) {
-    console.log('Se ha cargado el archivo: ' + fastaFile.name);
 
-    // Enviar el archivo al servidor
-    sendFile(fastaFile);
-    
+    // Get request title
+    var request_title = $("#request_title").val();
+    // Send the file to the server
+    sendFile(fastaFile, request_title);
+  // Otherwise an alert will be displayed.
   } else {
-    alert('No se ha seleccionado un archivo .fasta');
+    alert('The file you have selected is not allowed. \nSelect a .fasta file');
   }
 }
 

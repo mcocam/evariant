@@ -15,7 +15,6 @@ function list_request(){
     .then(function (response) {
         // Format the response
         const request_snps = response.data.data;
-        console.log("Mostrar request" + request_snps); // DELETE CONSOLE LOG
 
         // CREATE TABLE request
         var thead = $("<thead><tr class='border-botton border-3' > <th scope='col'>ID</th> <th scope='col'>Date</th> <th scope='col'>Title</th> <th scope='col'></th><th scope='col'></th><th scope='col'></th></tr></thead>");

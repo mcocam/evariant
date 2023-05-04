@@ -14,16 +14,16 @@ function loginFunction(body){
             //If the request is successful, display a message to the user
             switch(response.data.message) {
                 case "900":
-                    $(loginMessage).text('Session On');
+                    $(loginMessage).html('<p class="text-center fw-bold text-success">Session On<p>');
                     setTimeout(function() {
                         location.reload();
-                      }, 1000);
+                      }, 500);
                     break;
                 case "904":
-                    $(loginMessage).text('Invalid Credentials');
+                    $(loginMessage).html('<p class="text-center fw-bold text-danger">Invalid Credentials</p>');
                     break;
                 case "909":
-                    $(loginMessage).text('Served has failed, try later');
+                    $(loginMessage).text('<p class="text-center fw-bold text-warning">Served has failed, try later</p>');
                     break;
                 default:
                     $(loginMessage).text('');
