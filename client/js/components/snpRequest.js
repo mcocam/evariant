@@ -28,11 +28,6 @@ $().ready(() => {
         $("#div_progress").hide();
     });
 
-
-    /**-------------------- GET REQUEST TITLE ---------------------------- */
-
-
-
     
     /**-------------------- DRAG AND DROP ---------------------------- */
 
@@ -94,6 +89,8 @@ const sendFile = (file, request_title) =>{
   .then(r => console.log(r.json()))
 }
 
+
+//----------------------------------------------------------------
 /**
  * Function handleDragOver
  * Handle the drag action
@@ -106,6 +103,7 @@ function handleDragOver(evt) {
   evt.dataTransfer.dropEffect = 'copy';
 }
 
+//----------------------------------------------------------------
 /**
  * Function handleFileSelect
  * It handles the selected file
@@ -133,17 +131,59 @@ function handleFileSelect(evt) {
   
   // If it is a .fasta file it will be sent to the server
   if (fastaFile) {
-
     // Get request title
     var request_title = $("#request_title").val();
     // Send the file to the server
     sendFile(fastaFile, request_title);
-  // Otherwise an alert will be displayed.
+
   } else {
+  // Otherwise an alert will be displayed.
     alert('The file you have selected is not allowed. \nSelect a .fasta file');
   }
 }
 
+//----------------------------------------------------------------
+function validateRequestTitle() {
+  // Collect Valued email
+  request_title = $("#request_title").val();
 
+  // Regext Validate Title
+  var regex = new RegExp(/^(?=.*[a-zA-Z0-9()>< ])[a-zA-Z0-9()>< ]{5,30}$/);
+  if (regex.test(request_title)) {
+    $("#msgTitle").html("");
+    return true; // No hay errores
+  }else{
+    $("#msgTitle").html("<p>The title must have at least 5 characters and a maximum of 30. \nParentheses and symbols greater than and less than are allowed..</p>");
+  }
+}
+
+// ACTIVATE BUTTON 1
+["#request_title"].forEach((i) => { 
+  $(i).on("change", () => {
+    handleTitleButton()
+  })
+})
+const handleTitleButton = () => {
+  let state = [];
+
+  ["#request_title"].forEach((input, index) => {
+    const value = $(input).val();
+      let isOK = false;
+
+      if(index === 0){
+        isOK = validateRequestTitle();
+      }
+    state.push(isOK);
+  });
+
+  if(state.some(data => data === false)){
+    //Desactivar
+    $('#btn_next_step1').prop('disabled', true);
+  }else{
+    //Activar
+    $('#btn_next_step1').prop('disabled', false);
+  }
+}
 
 //----------------------------------------------------------------
+
