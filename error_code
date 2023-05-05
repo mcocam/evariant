@@ -10,8 +10,9 @@ Error Codes
 -- snp Process Codes
 911 -> fasta incorrect
 912 -> procesando fasta
+913 -> Error al añadir el fasta (exception)
 
 -- Show Request
-913 -> No results found
-914 -> Data obtained successfully
-915 -> error exception
+914 -> No results found
+915 -> Data obtained successfully
+916 -> error exception
