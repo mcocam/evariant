@@ -7,10 +7,11 @@ Error Codes
 
 -- SNP FINDER
 
--- Show Request
-911 -> No results found
-912 -> Data obtained successfully
-913 -> error exception
-
 -- snp Process Codes
-915 -> fasta incorrect
+911 -> fasta incorrect
+912 -> procesando fasta
+
+-- Show Request
+913 -> No results found
+914 -> Data obtained successfully
+915 -> error exception

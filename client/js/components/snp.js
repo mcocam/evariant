@@ -40,13 +40,13 @@ function list_request(){
 
         // Display messages to the user based on the response from the server
         switch(response.data.message) {
-            case "912":
+            case "915":
                 console.log(response.data.data)
                 break;
-            case "911":
+            case "914":
                 $(snpMessage).text('No results found');
                 break;
-            case "913":
+            case "916":
                 $(snpMessage).text('error de la exception');
                 break;
             default:

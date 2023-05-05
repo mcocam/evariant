@@ -86,7 +86,24 @@ const sendFile = (file, request_title) =>{
           "Access-Control-Allow-Origin": "*"
       }
   })
-  .then(r => console.log(r.json()))
+  .then(response => response.json())
+  .then(data => {
+    //console.log(data);
+    message = data.message;
+    //Display a message to the user
+    switch (message) {
+      case "911":
+        $("#msgRequest").html('<p class="text-center fs-6 fw-bold text-danger">.FASTA file Incorrect</p>');
+        break;
+      case "912":
+        $("#msgRequest").html('<p class="text-center fs-6 fw-bold text-success"> Successfully Processed </p>');
+        break;
+      case "913":
+        $("#msgRequest").html('<p class="text-center fs-6 fw-bold text-warning"> Served has failed, try later </p>');
+        break;
+    }
+  })
+  .catch(error => console.error(error));
 }
 
 
