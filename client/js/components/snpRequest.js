@@ -22,7 +22,7 @@ $().ready(() => {
 
     // Collect item
     var dropZone = document.getElementById('drag-drop-zone');
-    var fileInput = document.getElementById('file-input');
+    var fileInput = document.getElementById('snp-file');
 
     // When dragging a file add the active class
     dropZone.addEventListener('dragover', handleDragOver, false);

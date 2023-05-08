@@ -111,7 +111,7 @@ body {
 
 
 /* SNP FINDER */
-#btn-snp {
+.btn-new-request {
     float: right;
     align-items: end;
     color: #3B8AB2;
@@ -187,7 +187,7 @@ body {
   }
 
 
-#file-input {
+.file-input {
     position: absolute;
     top: 0;
     left: 0;
