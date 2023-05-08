@@ -16,6 +16,10 @@ function list_request(){
         // Format the response
         const request_snps = response.data.data;
 
+        request_snps.sort(function (a,b) {
+            return b[0] - a[0];
+        });
+
         // CREATE TABLE request
         var thead = $("<thead><tr class='border-botton border-3' > <th scope='col'>ID</th> <th scope='col'>Date</th> <th scope='col'>Title</th> <th scope='col'></th><th scope='col'></th><th scope='col'></th></tr></thead>");
 

@@ -197,23 +197,38 @@ body {
     cursor: pointer;
 }
 
-/* PROGRESS BAR*/
+/* SPINNER */
+.loader {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: block;
+    margin:25px auto;
+    position: relative;
+    background: #012E3D;
+    box-shadow: -24px 0 #012E3D, 24px 0 #012E3D;
+    box-sizing: border-box;
+    animation: shadowPulse 2s linear infinite;
+  }
   
-#div_progress {
-    border: #D8E1E5 1px solid;
-    border-color: #D8E1E5;
-    height: 6em;
-}
+  @keyframes shadowPulse {
+    33% {
+      background: #012E3D;
+      box-shadow: -24px 0 #B7E7FF, 24px 0 #012E3D;
+    }
+    66% {
+      background: #B7E7FF;
+      box-shadow: -24px 0 #012E3D 24px 0 #012E3D;
+    }
+    100% {
+      background: #012E3D;
+      box-shadow: -24px 0 #012E3D, 24px 0 #B7E7FF;
+    }
+  }
 
-#progress-bar {
-    width: 80%;
-    color: #012E3D;
-}
 
 
 /* REQUEST RESULTS */
-
-
 
 .snp-result-card {
     border: none;
