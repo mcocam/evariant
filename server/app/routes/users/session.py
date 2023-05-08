@@ -8,6 +8,7 @@ from fastapi_sessions.backends.implementations import InMemoryBackend
 from uuid import UUID, uuid4
 import env
 import os
+from datetime import timedelta
 
 class SessionData(BaseModel):
     email: str
@@ -15,7 +16,7 @@ class SessionData(BaseModel):
     surname: str
     id: int
 
-cookie_params = CookieParameters()
+cookie_params = CookieParameters(max_age = 15 * 60) # 15 minutes expiration
 backend = InMemoryBackend[UUID, SessionData]()
 
 # Uses UUID
@@ -42,7 +43,7 @@ class BasicVerifier(SessionVerifier[UUID, SessionData]):
         identifier: str,
         auto_error: bool,
         backend: InMemoryBackend[UUID, SessionData],
-        auth_http_exception: HTTPException,
+        auth_http_exception: HTTPException
     ):
         self._identifier = identifier
         self._auto_error = auto_error
