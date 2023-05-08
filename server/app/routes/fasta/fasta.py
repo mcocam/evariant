@@ -89,11 +89,11 @@ async def get_file(file: UploadFile = File(...), session_data: SessionData = Dep
                             
                             
                         response["error"] = False 
-                        response["message"] = f"Number of SNPs detected: {detected_snps}"
-                        response["data"] = ""
+                        response["message"] = "912"
+                        response["data"] = f"Number of SNPs detected: {detected_snps}"
                         
             else:
-                response["message"] = "915"
+                response["message"] = "911"
             
             pass
         elif fasta_type == 0:
@@ -102,9 +102,7 @@ async def get_file(file: UploadFile = File(...), session_data: SessionData = Dep
         
     except Exception as e:
         print(f"Add fasta error: {e}")
-    
-    
-    
+        response["message"] = "913" # Add fasta error
     #print(content)
     
     return response
@@ -116,7 +114,7 @@ async def requests_snp(session_data: SessionData = Depends(verifier)):
 
     response: dict[str,any] = {
         "error": True,
-        "message": "911",  # No results found
+        "message": "914",  # No results found
         "data": ""
     }
 
@@ -134,14 +132,14 @@ async def requests_snp(session_data: SessionData = Depends(verifier)):
 
         if data:
             response["error"] = False
-            response["message"] = "912" # Data obtained successfully
+            response["message"] = "915" # Data obtained successfully
             response["data"] = data
         else:
-            response["message"] = "911" # No results found
+            response["message"] = "914" # No results found
 
 
     except Exception as e:
         print(e)
-        response["message"] = "913" #error exception
+        response["message"] = "916" #error exception
 
     return response

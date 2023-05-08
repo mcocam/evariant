@@ -11,7 +11,7 @@ function loginFunction(body){
         .post('/api/users/login', body)
         .then(response => {
 
-            //If the request is successful, display a message to the user
+            //Display a message to the user
             switch(response.data.message) {
                 case "900":
                     $(loginMessage).html('<p class="text-center fw-bold text-success">Session On<p>');

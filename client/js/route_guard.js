@@ -6,9 +6,9 @@ validSession
         console.log("Guard: Session ok!");
     } else {
         console.log("Guard: Session down!");
-        window.location.href = './index.html';
+        window.location.href = './index.html?modal=true';
     }
     })
     .catch(e => {
-        window.location.href = './index.html';
+        window.location.href = './index.html?modal=true';
     });

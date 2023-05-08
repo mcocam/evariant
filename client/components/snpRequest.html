@@ -9,6 +9,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
+
             <!-- STEP1 -->
            <div id="snp_step1">
                 
@@ -35,12 +36,11 @@
            </div>
 
 
-
             <!-- STEP2 -->
             <div id="snp_step2" style="display:none;">
 
                 <div class="modal-body">
-                    <p class="ms-3 light-text">STEP 2: Give your request a title.</p>
+                    <p class="ms-3 light-text">STEP 2: Upload fasta files to this request.</p>
         
 
                     <!-- DRAG AND DROP -->
@@ -57,32 +57,19 @@
                     
                     </div>
 
+                    <!-- Error Message Request -->
+                    <div id="msgRequest"></div>
 
-                    <!-- PROGRESS BAR -->
-                    <div id="div_progress" style="display:none;" class="m-4 p-3">
-
-                        <div class="row">
-                            <p class="fs-6 fw-bold col-10">fastafilename1.fasta </p>
-                            <button type="button" id="btn_progress" class="btn-close col" aria-label="Close"></button>
-                        </div>
-                        <p class="fs-6 light-text">2,4 MB</p>
-                        
-                        <div class="row m-1">
-                            <progress id="progress-bar" max="100" value="0" class="col-6"> </progress>
-                            <p class="col light-text"> <span id="progress-value" >0</span>% </p>
-                        </div>
-
-                    </div>
+                    <!-- SPINNER -->
+                    <span id="snp_spinner" class="loader" style="display:none;"></span>
 
                     <!-- FOOTER STEP 2 -->
                     <div class="modal-footer justify-content-around">
                         <button type="button" class="btn btn-outline-light btn-snpCancel fs-6 fw-bold px-5" id="btn_back_step2"> Back </button>
-                        <button type="button" class="btn btn-info btn-snpNext fs-6 fw-bold px-5" id="btn_next_step2" disabled>Next</button>
+                        <button type="button" class="btn btn-info btn-snpNext fs-6 fw-bold px-5" data-bs-dismiss="modal" aria-label="Close" id="snp_done" onclick="location.reload()" disabled>Done</button>
                     </div>
-
-                    
+  
             </div>
-            
         </div>
     </div>
 
