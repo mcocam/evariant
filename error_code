@@ -24,3 +24,6 @@ Error Codes
 922 -> Server has failed
 
 -- Phylo Process Codes
+925 -> Multi fasta incorrect
+926 -> Process successfully
+927 -> Server has failed

@@ -7,7 +7,7 @@ function list_request_phylo(){
     const phyloMessage = $('#result-phylo');
 
     axios
-    .get('/api/')
+    .get('/api/phylo/requests')
     .then(function(response) {
         // Get data
         const requests_phylo = response.data.data;

@@ -56,7 +56,7 @@ function validateRequestTitle() {
     phylo_title = $("#phylo_title").val();
   
     // Regext Validate Title
-    var regex = new RegExp(/^(?=.*[a-zA-Z0-9()>< ])[a-zA-Z0-9()>< ]{5,30}$/);
+    var regex = new RegExp(/^(?=.*[a-zA-Z0-9()>< ])[a-zA-Z0-9()><\- ]{5,30}$/);
     if (regex.test(phylo_title)) {
       $("#pMsgTitle").html("");
       return true; // No hay errores
@@ -110,7 +110,7 @@ const sendFile = (file, phylo_title) =>{
     body.append("file",file, phylo_title);
   
     // Make a fetch request to the api/files/add_fasta endpoint with the POST method, request body, and request headers.
-    fetch("api/files/add_multi_fasta", {
+    fetch("api/phylo/add_multi_fasta", {
         method: "POST",
         body: body,
         headers: {
@@ -126,6 +126,7 @@ const sendFile = (file, phylo_title) =>{
         case "925":
           // Display an error message if the .fasta file is incorrect.
           $("#msgRequestPhylo").html('<p class="text-center fs-6 fw-bold text-danger">.FASTA file Incorrect</p>');
+          $("#phylo_spinner").hide();
           break;
         case "926":
           // Display a success message if the .fasta file was processed successfully.
@@ -137,7 +138,11 @@ const sendFile = (file, phylo_title) =>{
         case "927":
           // Display a warning message if the server failed.
           $("#msgRequestPhylo").html('<p class="text-center fs-6 fw-bold text-warning"> Served has failed, try later </p>');
+          $("#phylo_spinner").hide();
           break;
+        default:
+          $("#msgRequestPhylo").html('<p></p>');
+          $("#phylo_spinner").hide();
       }
     })
     .catch(error => console.error(error));

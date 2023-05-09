@@ -57,7 +57,7 @@ function validateRequestTitle() {
   request_title = $("#request_title").val();
 
   // Regext Validate Title
-  var regex = new RegExp(/^(?=.*[a-zA-Z0-9()>< ])[a-zA-Z0-9()>< ]{5,30}$/);
+  var regex = new RegExp(/^(?=.*[a-zA-Z0-9()>< ])[a-zA-Z0-9()><\- ]{5,30}$/);
   if (regex.test(request_title)) {
     $("#msgTitle").html("");
     return true; // No hay errores
