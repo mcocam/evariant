@@ -1,8 +1,4 @@
-import string
-from typing import Annotated
-from fastapi import APIRouter, Response, Depends, File, UploadFile
-from uvicorn import run
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi import APIRouter, Depends, File, UploadFile
 
 from controllers.FastaController import FastaController
 from controllers.SingleFastaController import SingleFastaController
@@ -15,7 +11,6 @@ from models.Snp import Snp
 from models.utils.SnpHandler import SnpHandler
 
 from routes.users.session import cookie, SessionData, verifier
-from uuid import uuid4 # Genera un texto random
 
 
 router: APIRouter = APIRouter(

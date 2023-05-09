@@ -1,6 +1,6 @@
-from server.app.models.PhyloTree import PhyloTree
+from models.PhyloTree import PhyloTree
 from db.get_connection import get_connection
-from sqlalchemy import Engine, Table, MetaData, Column, Integer, String, DateTime, insert, select, and_
+from sqlalchemy import Table, MetaData, Column, String, insert, select, and_
 from models.persist.FastaDao import fasta_table
 
 phylo_table: Table = Table(
