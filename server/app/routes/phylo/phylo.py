@@ -13,9 +13,9 @@ async def get_phylos():
     
     phylo_dao: PhyloDao = PhyloDao()
     
-    prova = phylo_dao.get_phylo_by_fasta_id(4)
+    # prova = phylo_dao.get_phylo_by_fasta_id(4)
+    prova = phylo_dao.get_phylos_by_user_id(1)
     
-    print(prova)
     
     
     pass
