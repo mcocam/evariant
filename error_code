@@ -17,6 +17,7 @@ Error Codes
 914 -> No results found
 915 -> Data obtained successfully
 916 -> Server has failed
+917 -> Data deleted successfully
 
 -- Show Request Phylo
 920 -> Data obtained successfully

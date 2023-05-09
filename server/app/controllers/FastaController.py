@@ -42,6 +42,16 @@ class FastaController:
 
         return new_fasta_added
     
+    # ----------------------------------------------------------------
+    async def del_fasta(self, id) -> int:
+
+        try:
+            new_fasta_added = self.dao.add_new_fasta(new_fasta)
+        except Exception as e:
+            print(e)
+
+        return new_fasta_added
+    
 
     # The function checks if it is a valid single FASTA
     # @Parameters fasta, a simple FASTA.

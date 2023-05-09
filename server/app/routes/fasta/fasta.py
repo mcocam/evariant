@@ -138,3 +138,36 @@ async def requests_snp(session_data: SessionData = Depends(verifier)):
         response["message"] = "916" #error exception
 
     return response
+
+@router.get("/delete_fasta", dependencies= [Depends(cookie)])
+async def requests_snp(id: int, session_data: SessionData = Depends(verifier)):
+
+    response: dict[str,any] = {
+        "error": True,
+        "message": "914",  # No results found
+        "data": ""
+    }
+
+    try:
+        fasta_Controller: FastaController = FastaController()
+
+        # Logged in User ID
+        user_id = session_data.id
+
+        # Get data
+        data = await fasta_Controller.del_fasta(user_id, id)
+        # print(f"llega al fasta {data}")
+
+        if data:
+            response["error"] = False
+            response["message"] = "917" # Data deleted successfully
+            response["data"] = data
+        else:
+            response["message"] = "914" # No results found
+
+
+    except Exception as e:
+        print(e)
+        response["message"] = "916" #error exception
+
+    return response
