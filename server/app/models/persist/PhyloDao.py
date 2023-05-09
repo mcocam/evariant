@@ -65,4 +65,27 @@ class PhyloDao:
             print(f"Phylo DAO get by user_id: {e}")
             
         return phylos
+    
+    def add_phylo(self, phylo_tree: PhyloTree) -> int:
+        
+        inserted_rows: int = 0
+        
+        try:
+            query = insert(self.phylo_table).values(
+            phylo_xml = phylo_tree.get_xml(),
+            fasta_id = phylo_tree.get_fasta_id()
+            )
+            
+            cursor = self.connection.connect()
+            response = cursor.execute(query)
+            cursor.commit()
+            
+            inserted_rows = response.rowcount
+            
+        except Exception as e:
+            print(f"Insert phylo DAO exception: {e}")
+            
+        return inserted_rows
+        
+
 
