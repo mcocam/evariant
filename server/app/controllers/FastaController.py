@@ -46,11 +46,11 @@ class FastaController:
     async def del_fasta(self, id) -> int:
 
         try:
-            new_fasta_added = self.dao.add_new_fasta(new_fasta)
+            fasta_deleted = self.dao.delete_fasta(id)
         except Exception as e:
             print(e)
 
-        return new_fasta_added
+        return fasta_deleted
     
 
     # The function checks if it is a valid single FASTA

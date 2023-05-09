@@ -137,8 +137,8 @@ async def requests_snp(session_data: SessionData = Depends(verifier)):
 
     return response
 
-@router.get("/delete_fasta", dependencies= [Depends(cookie)])
-async def requests_snp(id: int, session_data: SessionData = Depends(verifier)):
+@router.get("/delete_fasta/{id}", dependencies= [Depends(cookie)])
+async def delete_fasta(id: int, session_data: SessionData = Depends(verifier)):
 
     response: dict[str,any] = {
         "error": True,
@@ -153,7 +153,7 @@ async def requests_snp(id: int, session_data: SessionData = Depends(verifier)):
         user_id = session_data.id
 
         # Get data
-        data = await fasta_Controller.del_fasta(user_id, id)
+        data = await fasta_Controller.del_fasta(id)
         # print(f"llega al fasta {data}")
 
         if data:
