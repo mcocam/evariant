@@ -1,6 +1,7 @@
 Error Codes
 
-900 -> Session On
+-- USER SESSION
+900 -> Operation completed successfully
 902 -> User already exists
 904 -> Invalid Credentials
 909 -> Served has failed, try later
