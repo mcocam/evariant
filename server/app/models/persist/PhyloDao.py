@@ -66,7 +66,7 @@ class PhyloDao:
             
         return phylos
     
-    def add_phylo(self, phylo_tree: PhyloTree) -> int:
+    def insert_phylo(self, phylo_tree: PhyloTree) -> int:
         
         inserted_rows: int = 0
         
