@@ -18,7 +18,7 @@ class PhyloDao:
         self.fasta_table = fasta_table
         self.phylo_table = phylo_table
         
-    def get_phylo_by_fasta_id(self, fasta_id: int) -> list[PhyloTree] | list:
+    def get_phylo_by_fasta_id(self, fasta_id: int) -> list[PhyloTree] or list:
         
         phylos: list = []
         
@@ -39,7 +39,7 @@ class PhyloDao:
             
         return phylos
     
-    def get_phylos_by_user_id(self, user_id: int) -> list[PhyloTree] | list:
+    def get_phylos_by_user_id(self, user_id: int) -> list[PhyloTree] or list:
         
         phylos: list = []
         

@@ -43,7 +43,7 @@ function list_request_phylo(){
             case "920":
                 //Data obtained successfully
                 $(phyloMessage).text('');
-                console.log(response.data.data);
+                // console.log(response.data.data);
                 break;
             case "921":
                 $(phyloMessage).text('No results found');
@@ -60,6 +60,13 @@ function list_request_phylo(){
     })
 };
 
+/**
+ * Redirects the user to a page that displays the results of a request.
+ * @param {number} fasta_id: the ID of the request whose results will be returned.
+ */
+function showResults(fasta_id) {
+    window.location.href = "/phylo_results.html?fasta_id=" + fasta_id;
+}
 
 /**
  * Show 

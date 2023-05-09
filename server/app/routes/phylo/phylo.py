@@ -94,4 +94,31 @@ async def requests_phylo(session_data: SessionData = Depends(verifier)):
 
     return response
 
-    pass
+
+
+@router.post("/results/{fasta_id}", dependencies= [Depends(cookie)])
+async def send_results_phylo(fasta_id: str, session_data: SessionData = Depends(verifier)):
+    
+    response: dict[str,any] = {
+        "error": True,
+        "message": "931",  # No results found
+        "data": ""
+    }
+
+    phylo_controller: PhyloController = PhyloController()
+    
+    try:
+        result_phyloTree = await phylo_controller.get_phylo_by_id(fasta_id)
+
+        if result_phyloTree:
+            response["error"] = False
+            response["message"] = "930" # Data obtained successfully
+            response["data"] = result_phyloTree
+        else:
+            response["message"] = "931" # No results found
+
+    except Exception as e:
+        print(f" Exception Phylo Results {e}")
+        response["message"] = "932" #error exception
+    
+    return response

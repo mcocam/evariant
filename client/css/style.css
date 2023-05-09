@@ -228,7 +228,7 @@ body {
 
 
 
-/* REQUEST RESULTS */
+/* SNP REQUEST RESULTS */
 
 .snp-result-card {
     border: none;
@@ -268,4 +268,11 @@ body {
 #population-div td {
     width: 220px;
     height: 15px;
+}
+
+/* PHYLO REQUEST RESULTS */
+
+#see-result-phylo {
+    height: 100%;
+    border-color: #012E3D;
 }
