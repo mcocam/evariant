@@ -89,10 +89,8 @@ async def get_file(file: UploadFile = File(...), session_data: SessionData = Dep
                         
             else:
                 response["message"] = "911"
-            
-            pass
         elif fasta_type == 0:
-            pass
+            response["message"] = "911"
         
         
     except Exception as e:

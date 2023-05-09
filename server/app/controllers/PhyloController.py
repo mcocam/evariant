@@ -36,10 +36,9 @@ class PhyloController:
                 with open(fasta_file_path, "w") as fasta_file:
                     fasta_file.write(fasta_content)
 
-                clustalw_cline = ClustalwCommandline("clustalw2",
+                clustalw_cline = ClustalwCommandline("clustalw",
                                                 infile = fasta_file_path,
                                                 bootstrap = 10,
-                                                maxiter = 2,
                                                 ktuple = 2,
                                                 pairgap = 3,
                                                 align = True,
