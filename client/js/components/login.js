@@ -16,7 +16,7 @@ function loginFunction(body){
                 case "900":
                     $(loginMessage).html('<p class="text-center fw-bold text-success">Session On<p>');
                     setTimeout(function() {
-                        location.reload();
+                        window.location.href = './index.html';
                       }, 500);
                     break;
                 case "904":
