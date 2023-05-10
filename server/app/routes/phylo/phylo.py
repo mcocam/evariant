@@ -21,7 +21,7 @@ async def get_phylos(file: UploadFile = File(...), session_data: SessionData = D
 
     response: dict = {
         "error": True,
-        "message": "",
+        "message": "925",
         "data": ""
     }
     
@@ -36,9 +36,9 @@ async def get_phylos(file: UploadFile = File(...), session_data: SessionData = D
         request_title = file.filename
         content = content.decode("utf-8")
        
-        fasta_type: int or bool = await phylo_controller.validate_multifasta(content)
+        is_valid_fasta: int or bool = await phylo_controller.validate_multifasta(content)
 
-        if fasta_type == 0:
+        if is_valid_fasta:
 
             fasta: Fasta = Fasta(title=request_title,
                                  raw_fasta=content,
@@ -65,7 +65,7 @@ async def get_phylos(file: UploadFile = File(...), session_data: SessionData = D
                         if add_phylo_response > 0:                    
                             response["error"] = False 
                             response["message"] = "900"
-                            response["data"] = f"Multifasta added and phylo-tree created" 
+                            response["data"] = "Multifasta added and phylo-tree created" 
         else:
             response["message"] = "925" # Multi fasta incorrect
 

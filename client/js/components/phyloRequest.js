@@ -119,33 +119,46 @@ const sendFile = (file, phylo_title) =>{
     })
     .then(response => response.json())
     .then(data => {
-  
+      $("#phylo_spinner").hide();
+      $("#phylo_spinner_text").hide();
+      console.log(data.message);
       // Parse the response as a JSON object.
       // Check the message returned by the server and display a corresponding message to the user.
       switch (data.message) {
         case "925":
           // Display an error message if the .fasta file is incorrect.
           $("#msgRequestPhylo").html('<p class="text-center fs-6 fw-bold text-danger">.FASTA file Incorrect</p>');
-          $("#phylo_spinner").hide();
+
           break;
-        case "926":
+        case "900":
           // Display a success message if the .fasta file was processed successfully.
           $("#msgRequestPhylo").html('<p class="text-center fs-6 fw-bold text-success"> Successfully Processed </p>');
-          $("#phylo_spinner").hide();
+
           // Activate the snp_done button.
           $('#phylo_done').prop('disabled', false);
+
+          setTimeout(() => {
+            location.reload();
+          }, 500)
+
           break;
         case "927":
           // Display a warning message if the server failed.
           $("#msgRequestPhylo").html('<p class="text-center fs-6 fw-bold text-warning"> Served has failed, try later </p>');
-          $("#phylo_spinner").hide();
+
           break;
         default:
           $("#msgRequestPhylo").html('<p></p>');
-          $("#phylo_spinner").hide();
+
       }
     })
-    .catch(error => console.error(error));
+    .catch(error => {
+      $("#phylo_spinner").hide();
+      $("#phylo_spinner_text").hide();
+      console.log(error);
+      $("#msgRequestPhylo").html('<p class="text-danger text-center">Something gone wrong!</p>');
+
+    });
 }
 
 /**-------------------- FUNCTION OF DRAG AND DROP ---------------------------- */
@@ -189,6 +202,7 @@ function handleFileSelect(evt) {
     if (fastaFile) {
       // Get request title
       $("#phylo_spinner").show();
+      $("#phylo_spinner_text").show();
       var phylo_title = $("#phylo_title").val();
       // Send the file to the server
       sendFile(fastaFile, phylo_title);
