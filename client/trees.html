@@ -1,3 +1,4 @@
+<!-- @author Ani Valle -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +17,6 @@
 </head>
 
 <body>
-
     <!-- NAVIGATION BAR -->
     <nav id="nav"></nav>
     <!-- MODALS -->
@@ -26,17 +26,34 @@
     <!-- SECTION -->
     <section>
         <div class="container-fluid">
-            <div class="row">
-                <div class="col mt-5 p-5">
-
-                    <h1 class="text-center fw-bold"> Phylogenetic Trees</h1>
-                    <p class="text-center"> Page under construction</p>
-
+            <div class="row justify-content-around mt-5 mx-5 p-5">
+                <div class="col-md-6">
+                    <h1 class="fw-bold"> Phylogenetic Trees</h1>
+                    <p> Lorem ipsum dolor sit amet consectetur adipiscing elit. </p>
                 </div>
+
+                <div class="col-md-6 justify-content-end ml-5 pl-5">
+                    <button type="button" class="btn btn-info px-3 py-2 fw-bold btn-new-request" id="btn_phylo" data-bs-toggle="modal"
+                        data-bs-target="#newRequestPhylo">
+                        New Request
+                    </button>
+                </div>
+            </div>
+
+            <!-- MESSAGE -->
+            <div id="result-phylo"></div>
+
+            <!-- TABLE -->
+            <div class="table-responsive mx-5 p-5">
+                <table id="table-phylo" class="table"></table>
             </div>
 
         </div>
     </section>
+
+
+    <!-- Modal Phylo Request -->
+    <div id="phyloRequest"></div>
 
 
     <!-- FOOTER -->
@@ -47,6 +64,7 @@
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="./js/components/components.js"></script>
+    <script src="./js/components/phylo.js"></script>
 
 </body>
 

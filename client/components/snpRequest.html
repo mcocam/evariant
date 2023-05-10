@@ -1,3 +1,4 @@
+<!-- @author Ani Valle -->
 <!-- Modal -->
 <div class="modal fade" id="newRequest" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     
@@ -18,9 +19,9 @@
 
                     <form>
                         <fieldset>
-                            <label for="" class="fs-6 fw-bold">Request title</label><br>
+                            <label class="fs-6 fw-bold">Request title</label><br>
                             <input type="text" class="form-control" 
-                            id="request_title"  placeholder="2023-03-20 SNP Finder Request">
+                            id="phylo_title"  placeholder="2023-03-20 SNP Finder Request">
                             
                             <div id="msgTitle" class="fs-6 text-danger"></div>
                             
@@ -50,7 +51,7 @@
                         <img src="./img/Upload_file.svg" alt="Upload File">      
                         <p class="fs-5 fw-bold my-2"> <strong id="text-upload">Click to upload</strong>  or drag and drop</p>
                     
-                        <input type="file" id="file-input" hidden>
+                        <input type="file" class="file-input" id="snp-file" hidden>
                         
                         <p class="fs-6 my-2"><i>Max. file size 20 MB.</i></p>
                         <div class="upload_gallery d-flex flex-wrap justify-content-center gap-3 mb-0"></div>
@@ -69,11 +70,12 @@
                         <button type="button" class="btn btn-info btn-snpNext fs-6 fw-bold px-5" data-bs-dismiss="modal" aria-label="Close" id="snp_done" onclick="location.reload()" disabled>Done</button>
                     </div>
   
+                </div>
             </div>
         </div>
     </div>
-
 </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="./js/components/snpRequest.js"></script>

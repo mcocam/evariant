@@ -29,6 +29,10 @@ const components = [
     {
         id: "#snpRequest",
         path: "./components/snpRequest.html"
+    },
+    {
+        id: "#phyloRequest",
+        path: "./components/phyloRequest.html"
     }
     
 ];

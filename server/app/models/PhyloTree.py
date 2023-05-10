@@ -1,6 +1,6 @@
 
 
-class Phylo:
+class PhyloTree:
     
     def __init__(self,
                  fasta_id: int,

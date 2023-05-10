@@ -1,8 +1,4 @@
-import string
-from typing import Annotated
-from fastapi import APIRouter, Response, Depends, File, UploadFile
-from uvicorn import run
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi import APIRouter, Depends, File, UploadFile
 
 from controllers.FastaController import FastaController
 from controllers.SingleFastaController import SingleFastaController
@@ -15,7 +11,6 @@ from models.Snp import Snp
 from models.utils.SnpHandler import SnpHandler
 
 from routes.users.session import cookie, SessionData, verifier
-from uuid import uuid4 # Genera un texto random
 
 
 router: APIRouter = APIRouter(
@@ -94,10 +89,8 @@ async def get_file(file: UploadFile = File(...), session_data: SessionData = Dep
                         
             else:
                 response["message"] = "911"
-            
-            pass
         elif fasta_type == 0:
-            pass
+            response["message"] = "911"
         
         
     except Exception as e:
@@ -133,6 +126,39 @@ async def requests_snp(session_data: SessionData = Depends(verifier)):
         if data:
             response["error"] = False
             response["message"] = "915" # Data obtained successfully
+            response["data"] = data
+        else:
+            response["message"] = "914" # No results found
+
+
+    except Exception as e:
+        print(e)
+        response["message"] = "916" #error exception
+
+    return response
+
+@router.get("/delete_fasta/{id}", dependencies= [Depends(cookie)])
+async def delete_fasta(id: int, session_data: SessionData = Depends(verifier)):
+
+    response: dict[str,any] = {
+        "error": True,
+        "message": "914",  # No results found
+        "data": ""
+    }
+
+    try:
+        fasta_Controller: FastaController = FastaController()
+
+        # Logged in User ID
+        user_id = session_data.id
+
+        # Get data
+        data = await fasta_Controller.del_fasta(id)
+        # print(f"llega al fasta {data}")
+
+        if data:
+            response["error"] = False
+            response["message"] = "917" # Data deleted successfully
             response["data"] = data
         else:
             response["message"] = "914" # No results found

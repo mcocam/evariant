@@ -22,7 +22,7 @@ $().ready(() => {
 
     // Collect item
     var dropZone = document.getElementById('drag-drop-zone');
-    var fileInput = document.getElementById('file-input');
+    var fileInput = document.getElementById('snp-file');
 
     // When dragging a file add the active class
     dropZone.addEventListener('dragover', handleDragOver, false);
@@ -57,7 +57,7 @@ function validateRequestTitle() {
   request_title = $("#request_title").val();
 
   // Regext Validate Title
-  var regex = new RegExp(/^(?=.*[a-zA-Z0-9()>< ])[a-zA-Z0-9()>< ]{5,30}$/);
+  var regex = new RegExp(/^(?=.*[a-zA-Z0-9()>< ])[a-zA-Z0-9()><\- ]{5,30}$/);
   if (regex.test(request_title)) {
     $("#msgTitle").html("");
     return true; // No hay errores

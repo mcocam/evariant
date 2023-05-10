@@ -123,3 +123,35 @@ class FastaDao:
             id = fasta_id,)
         
         return fasta
+
+# DELETE FASTA 
+    def delete_fasta(self, fasta_id: int) -> int:
+        """  Add a new Fasta to database
+        Enters -> Object Fasta
+        return -> bool
+        """
+
+        fasta_deleted: int = 0
+        # query = self.fasta_table.delete().values(
+        #     id = fasta_id,
+        #     user_id = fasta.user_id
+        # )
+
+        query = self.fasta_table.delete().where(
+            self.fasta_table.c.id == fasta_id
+        )
+
+        try:
+            cursor = self.connection.connect()
+            response = cursor.execute(query)
+            cursor.commit()
+
+            print(dir(response))
+
+            if response.rowcount > 0:
+                fasta_deleted = response.deleted_primary_key[0]
+
+        except Exception as e:
+            print(e)
+
+        return fasta_deleted

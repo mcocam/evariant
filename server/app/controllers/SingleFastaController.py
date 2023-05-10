@@ -35,7 +35,7 @@ class SingleFastaController:
             
         return inserted_id
     
-    async def get_single_fasta_by_id(self, id: int) -> SingleFasta | None:
+    async def get_single_fasta_by_id(self, id: int) -> SingleFasta or None:
         
         data = None
 

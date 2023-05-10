@@ -1,34 +1,30 @@
 /**
- * @file This file contains functions to request and display data related to requests.
- * @autora Ani Valle
+ * @authora Ani Valle
  */
 
-/**
- * Retrieves a list of requests and samples in a table on the web page.
- */
-function list_request(){
-    // Show messages the user
-    const snpMessage = $('#result-request');
+function list_request_phylo(){
+    // Messages
+    const phyloMessage = $('#result-phylo');
 
     axios
-    .get('/api/files/requests')
-    .then(function (response) {
-        // Format the response
-        const request_snps = response.data.data;
-
-        request_snps.sort(function (a,b) {
+    .get('/api/phylo/requests')
+    .then(function(response) {
+        // Get data
+        const requests_phylo = response.data.data;
+        // Arrange the data in reverse order
+        requests_phylo.sort(function(a,b) {
             return b[0] - a[0];
-        });
+        })
 
-        // CREATE TABLE request
+        // CREATE TABLE REQUEST PHYLO
         var thead = $("<thead><tr class='border-botton border-3' > <th scope='col'>ID</th> <th scope='col'>Date</th> <th scope='col'>Title</th> <th scope='col'></th><th scope='col'></th><th scope='col'></th></tr></thead>");
 
-        var tbody = $("<tbody></tbody>");
-        for (var i = 0; i < request_snps.length; i++) {
+        var tbody =  $("<tbody></tbody>");
+        for (var i = 0; i < requests_phylo.length; i++) {
             var row = $("<tr></tr>");
-            var rowData = request_snps[i];
+            var rowData = requests_phylo[i];
 
-            // Add data to the table
+            //Add data to table
             row.append($("<td>" + rowData[0] + "</td>"));
             row.append($("<td>" + rowData[4] + "</td>"));
             row.append($("<td>" + rowData[1] + "</td>"));
@@ -39,40 +35,43 @@ function list_request(){
         }
 
         // Add the table header and body to the HTML page
-        $("#table-request").append(thead);
-        $("#table-request").append(tbody);
+        $("#table-phylo").append(thead);
+        $("#table-phylo").append(tbody);
 
         // Display messages to the user based on the response from the server
         switch(response.data.message) {
-            case "915":
-                // Data obtained successfully
+            case "920":
+                //Data obtained successfully
                 $(phyloMessage).text('');
                 // console.log(response.data.data);
                 break;
-            case "914":
-                $(snpMessage).text('No results found');
+            case "921":
+                $(phyloMessage).text('No results found');
                 break;
-            case "916":
-                $(snpMessage).text('Served has failed, try later');
+            case "922":
+                $(phyloMessage).text('Served has failed, try later');
                 break;
             default:
-                $(snpMessage).text('');
+                $(phyloMessage).text('');
         }
     })
     .catch(e => {
-        console.log(e);
+        console.log(e.message);
     })
 };
+
 /**
  * Redirects the user to a page that displays the results of a request.
  * @param {number} fasta_id: the ID of the request whose results will be returned.
  */
 function showResults(fasta_id) {
-    window.location.href = "/request_results.html?fasta_id=" + fasta_id;
+    window.location.href = "/phylo_results.html?fasta_id=" + fasta_id;
 }
 
+/**
+ * Show 
+ */
 $().ready(() => {
     // Call the list_request function when the document is ready
-    list_request();
-    
+    list_request_phylo();
 });

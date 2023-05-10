@@ -15,7 +15,7 @@ async def register(new_user: New_user):
     
     response: dict[str,any] = {
         "error": True,
-        "message": "904",
+        "message": "909",
         "data": ""
     }
     

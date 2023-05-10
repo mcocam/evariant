@@ -1,18 +1,38 @@
 Error Codes
 
-900 -> Session On
+------------------------------------------------ USER SESSION
+
+900 -> Operation completed successfully
 902 -> User already exists
 904 -> Invalid Credentials
 909 -> Served has failed, try later
 
--- SNP FINDER
 
+------------------------------------------------ SNP FINDER
 -- snp Process Codes
 911 -> fasta incorrect
 912 -> procesando fasta
 913 -> Error al añadir el fasta (exception)
 
--- Show Request
+-- Show Request SNP
 914 -> No results found
 915 -> Data obtained successfully
-916 -> error exception
+916 -> Server has failed
+
+
+------------------------------------------------ PHYLO Trees
+
+-- Show Request Phylo
+920 -> Data obtained successfully
+921 -> No results found
+922 -> Server has failed
+
+-- Phylo Process Codes
+925 -> Multi fasta incorrect
+926 -> Process successfully
+927 -> Server has failed
+
+-- Show Phylo Results
+930 -> Data obtained successfully
+931 -> No results found
+932 -> Server has failed
