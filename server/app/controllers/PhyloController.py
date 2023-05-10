@@ -30,7 +30,7 @@ class PhyloController:
 
         return phyloTree
     
-    async def parse_fasta_to_phylo(self, fasta: Fasta) -> PhyloTree or None:
+    async def parse_fasta_to_phylo(self, fasta: Fasta) -> PhyloTree | None:
         
         phylo = None
         
@@ -46,44 +46,46 @@ class PhyloController:
                 
                 with open(fasta_file_path, "w") as fasta_file:
                     fasta_file.write(fasta_content)
+                    
+                with open(fasta_file_path, "r") as fasta_file:
 
-                clustalw_cline = ClustalwCommandline("clustalw",
-                                                infile = fasta_file_path,
-                                                bootstrap = 10,
-                                                ktuple = 2,
-                                                pairgap = 3,
-                                                align = True,
-                                                quiet = True)
-                stdout, stderr = clustalw_cline()
-                
-                
-                alignment_file_path = list(temp_dir_path.glob("*.aln"))
-                
-                if len(alignment_file_path) == 1:
-                    alignment_file_path = alignment_file_path[0]
-                else:
-                    #return
-                    print("Error")
-                
-                clustal_alignment = AlignIO.read(alignment_file_path, "clustal")
-                
-                calcultaor = DistanceCalculator("identity")
-                distance_matrix = calcultaor.get_distance(clustal_alignment)
-                
-                tree_constructor = DistanceTreeConstructor()
-                phylo_tree = tree_constructor.upgma(distance_matrix)
-                phylo_xml= Phylogeny.from_tree(phylo_tree).as_phyloxml()
-                
-                with open(phylo_file_path, "w") as phylo_file:
-                    Phylo.write(phylo_xml,phylo_file,"phyloxml")
+                    clustalw_cline = ClustalwCommandline("clustalw",
+                                                    infile = fasta_file.name,
+                                                    bootstrap = 10,
+                                                    ktuple = 2,
+                                                    pairgap = 3,
+                                                    align = True,
+                                                    quiet = True)
+                    stdout, stderr = clustalw_cline()
                     
-                phylo_xml_str = ""
-                with open(phylo_file_path, "r") as xml:
-                    phylo_xml_str = xml.read() 
+                    alignment_file_path = list(temp_dir_path.glob("*.aln"))
+
                     
-                phylo = PhyloTree(fasta.get_id(),
-                                  fasta.get_user_id(),
-                                  phylo_xml_str)
+                    if len(alignment_file_path) == 1:
+                        alignment_file_path = alignment_file_path[0]
+                    else:
+                        #return
+                        print("Error")
+                
+                    clustal_alignment = AlignIO.read(alignment_file_path, "clustal")
+                
+                    calcultaor = DistanceCalculator("identity")
+                    distance_matrix = calcultaor.get_distance(clustal_alignment)
+                    
+                    tree_constructor = DistanceTreeConstructor()
+                    phylo_tree = tree_constructor.upgma(distance_matrix)
+                    phylo_xml= Phylogeny.from_tree(phylo_tree).as_phyloxml()
+                    
+                    with open(phylo_file_path, "w") as phylo_file:
+                        Phylo.write(phylo_xml,phylo_file,"phyloxml")
+                        
+                    phylo_xml_str = ""
+                    with open(phylo_file_path, "r") as xml:
+                        phylo_xml_str = xml.read() 
+                        
+                    phylo = PhyloTree(fasta.get_id(),
+                                    fasta.get_user_id(),
+                                    phylo_xml_str)
                     
         except Exception as e:
             print(f"Error on parse fasta to Phylo Controller: {e}")

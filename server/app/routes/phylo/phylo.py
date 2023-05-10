@@ -4,6 +4,8 @@ from models.persist.PhyloDao import PhyloDao
 from controllers.PhyloController import PhyloController
 from controllers.FastaController import FastaController
 from models.Fasta import Fasta
+from controllers.MultiFastaController import MultiFastaController
+from models.PhyloTree import PhyloTree
 
 router: APIRouter = APIRouter(
     prefix="/phylo",
@@ -25,6 +27,7 @@ async def get_phylos(file: UploadFile = File(...), session_data: SessionData = D
     
     phylo_controller: PhyloController = PhyloController()
     fasta_controller: FastaController = FastaController()
+    multifasta_controller: MultiFastaController = MultiFastaController()
     
     try:
 
@@ -44,10 +47,25 @@ async def get_phylos(file: UploadFile = File(...), session_data: SessionData = D
 
             # Fill the table with Multi FASTA
             add_multifasta_response = await fasta_controller.add_fasta(fasta)
-
-            response["error"] = False 
-            response["message"] = "926"
-            response["data"] = f"Add Multifasta Response  {add_multifasta_response }" 
+            
+            if add_multifasta_response > 0:
+                
+                
+                added_fasta_response: list[str] = await fasta_controller.get_fasta(add_multifasta_response)
+                if added_fasta_response["data"]:
+                    new_fasta = added_fasta_response["data"]
+                    multifasta_response = await multifasta_controller.insert_fasta(new_fasta)
+                    
+                    if multifasta_response > 0:
+                        
+                        phylo: PhyloTree = await phylo_controller.parse_fasta_to_phylo(new_fasta)
+                        add_phylo_response: int = phylo_controller.save_phylo_xml(phylo)
+                        
+                        
+                        if add_phylo_response > 0:                    
+                            response["error"] = False 
+                            response["message"] = "900"
+                            response["data"] = f"Multifasta added and phylo-tree created" 
         else:
             response["message"] = "925" # Multi fasta incorrect
 
