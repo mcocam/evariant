@@ -110,15 +110,17 @@ class PhyloController:
     # ----------------------------------------------------------------
     # Validate Multifasta
     async def validate_multifasta(self, multi_fasta):
+        
+        is_correct: bool = False
 
         # Validates that the file is a valid multifasta format
-        if not re.search(r'^>[^\n]+\n[ATCGatcg\n]+$', multi_fasta, flags=re.MULTILINE):
-            return False
+        if multi_fasta.count(">") > 1:
+            is_correct = True
 
         # Valida que las secuencias son nucleótidos
         if re.search(r'[^ATCGatcg\n]+', multi_fasta):
-            return False
+            is_correct = True
 
-        return 0
+        return is_correct
     
     # ------------------------------------------------------

@@ -21,7 +21,7 @@ async def get_phylos(file: UploadFile = File(...), session_data: SessionData = D
 
     response: dict = {
         "error": True,
-        "message": "",
+        "message": "925",
         "data": ""
     }
     
@@ -65,7 +65,7 @@ async def get_phylos(file: UploadFile = File(...), session_data: SessionData = D
                         if add_phylo_response > 0:                    
                             response["error"] = False 
                             response["message"] = "900"
-                            response["data"] = f"Multifasta added and phylo-tree created" 
+                            response["data"] = "Multifasta added and phylo-tree created" 
         else:
             response["message"] = "925" # Multi fasta incorrect
 
