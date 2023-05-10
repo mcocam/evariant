@@ -16,10 +16,21 @@ class PhyloController:
     def __init__(self) -> None:
         self.dao: PhyloDao = PhyloDao()
         
-    async def get_phylo_by_id(self, fasta_id: int) -> list[PhyloTree]:
-        pass
+    async def get_phylo_by_id(self, fasta_id: int) -> dict[str, str]:
+
+        phyloTree: dict[str, str] = []
+
+        try:
+            listPhyloTree = self.dao.get_phylo_by_fasta_id(fasta_id)
+            
+            phyloTree = {"fasta_id": listPhyloTree[0].get_fasta_id(), "xml": listPhyloTree[0].get_xml()}
+            
+        except Exception as e:
+            print(f"PhyloController Exception: {e}")
+
+        return phyloTree
     
-    async def parse_fasta_to_phylo(self, fasta: Fasta) -> PhyloTree | None:
+    async def parse_fasta_to_phylo(self, fasta: Fasta) -> PhyloTree or None:
         
         phylo = None
         

@@ -109,6 +109,7 @@ async def send_results_phylo(fasta_id: str, session_data: SessionData = Depends(
     
     try:
         result_phyloTree = await phylo_controller.get_phylo_by_id(fasta_id)
+        print(result_phyloTree)
 
         if result_phyloTree:
             response["error"] = False
