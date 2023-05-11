@@ -6,7 +6,7 @@ $().ready(() => {
 
     axios.post('/api/phylo/results/' + fasta_id)
         .then(function (response) {
-            xml = response.data.data.xml
+            xml = response.data.data.tree
 
             draw = drawTree(xml);
             // const phylo = "Aquí se mostraran los results";
