@@ -4,7 +4,7 @@ function logoutFunction(){
         .post('/api/users/logout')
         .then(response => {
             console.log(response)
-            location.reload();
+            window.location.href = './index.html';
         })
         .catch(e => {
             console.log(e);

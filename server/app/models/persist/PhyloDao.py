@@ -86,6 +86,30 @@ class PhyloDao:
             print(f"Insert phylo DAO exception: {e}")
             
         return inserted_rows
+    
+
+    def delete_phylo(self, fasta_id: int) -> int:
+
+        phylo_deleted: int = 0
+
+        query = self.phylo_table.delete().where(
+            self.phylo_table.c.fasta_id == fasta_id
+        )
+
+        try:
+            cursor = self.connection.connect()
+            response = cursor.execute(query)
+            cursor.commit()
+
+            print(dir(response))
+
+            if response.rowcount > 0:
+                phylo_deleted = response.deleted_primary_key[0]
+
+        except Exception as e:
+            print(e)
+
+        return phylo_deleted
         
 
 

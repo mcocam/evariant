@@ -103,6 +103,32 @@ class SingleFastaDao:
             end_loc = end_loc)
         
         return fasta
+    
+    def delete_single(self, fasta_id: int) -> int:
 
+        single_deleted: int = 0
+        # query = self.fasta_table.delete().values(
+        #     id = fasta_id,
+        #     user_id = fasta.user_id
+        # )
+
+        query = self.single_fasta_table.delete().where(
+            self.single_fasta_table.c.fasta_id == fasta_id
+        )
+
+        try:
+            cursor = self.connection.connect()
+            response = cursor.execute(query)
+            cursor.commit()
+
+            print(dir(response))
+
+            if response.rowcount > 0:
+                single_deleted = response.deleted_primary_key[0]
+
+        except Exception as e:
+            print(e)
+
+        return single_deleted
 
 

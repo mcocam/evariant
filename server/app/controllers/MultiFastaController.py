@@ -18,3 +18,13 @@ class MultiFastaController:
             print(f"Insert in multifasta controller: {e}")
 
         return new_fasta_added
+    
+
+    async def del_multi(self, fasta_id) -> int:
+
+            try:
+                multi_deleted = self.dao.delete_multi(fasta_id)
+            except Exception as e:
+                print(e)
+
+            return multi_deleted
