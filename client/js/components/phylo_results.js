@@ -2,15 +2,14 @@
 $().ready(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const fasta_id = urlParams.get('fasta_id');
-    const phyloResults = document.getElementById('see_results');
 
     axios.post('/api/phylo/results/' + fasta_id)
         .then(function (response) {
-            xml = response.data.data.tree
+            tree = response.data.data.tree
+            div_id = "#see_results"
 
-            draw = drawTree(xml);
+            draw = drawTree(tree, div_id);
             // const phylo = "Aquí se mostraran los results";
-            phyloResults.appendChild(draw);
 
         })
         .catch(function (error) {
@@ -18,9 +17,15 @@ $().ready(() => {
         });
 })
 
-const drawTree = (xml) => {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(xml, "text/xml");
-    const svg = build(makeCompatTable(phyloxml.parse(doc)));
-    return svg.node();
+const drawTree = (tree, id) => {
+    const tree_canvas = new phylocanvas.PhylocanvasGL(
+        document.querySelector(id),
+          {
+            size: { width: 400, height: 300 },
+            showLabels: true,
+            showLeafLabels: true,
+            source: tree,
+            type: phylocanvas.TreeTypes.Rectangular,
+          },
+        );
 };
