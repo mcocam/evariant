@@ -124,3 +124,12 @@ class PhyloController:
         return is_correct
     
     # ------------------------------------------------------
+
+    async def del_phylo(self, fasta_id) -> int:
+
+            try:
+                phylo_deleted = self.dao.delete_phylo(fasta_id)
+            except Exception as e:
+                print(e)
+
+            return phylo_deleted

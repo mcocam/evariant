@@ -107,3 +107,12 @@ class SnpController:
         response = await self.dao.add_new_snp(snp)
         
         return response
+    
+    async def del_snp(self, fasta_id) -> int:
+
+        try:
+            snp_deleted = self.dao.delete_snp(fasta_id)
+        except Exception as e:
+            print(e)
+
+        return snp_deleted

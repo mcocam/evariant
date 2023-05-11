@@ -47,3 +47,12 @@ class SingleFastaController:
             print(f"Get fasta info error: {e}")
 
         return data
+
+    async def del_single(self, fasta_id) -> int:
+
+            try:
+                single_deleted = self.dao.delete_single(fasta_id)
+            except Exception as e:
+                print(e)
+
+            return single_deleted

@@ -2,11 +2,15 @@ from fastapi import APIRouter, Depends, File, UploadFile
 
 from controllers.FastaController import FastaController
 from controllers.SingleFastaController import SingleFastaController
+from controllers.MultiFastaController import MultiFastaController
 from controllers.SnpController import SnpController
+from controllers.PhyloController import PhyloController
 
 from models.Fasta import Fasta
 from models.SingleFasta import SingleFasta
+from models.MultiFasta import MultiFasta
 from models.Snp import Snp
+from models.PhyloTree import PhyloTree
 
 from models.utils.SnpHandler import SnpHandler
 
@@ -147,13 +151,21 @@ async def delete_fasta(id: int, session_data: SessionData = Depends(verifier)):
     }
 
     try:
-        fasta_Controller: FastaController = FastaController()
+        fasta_controller: FastaController = FastaController()
+        sinle_controller: SingleFastaController = SingleFastaController()
+        multi_controller: MultiFastaController = MultiFastaController()
+        snp_controller: SnpController = SnpController()
+        phylo_controller: PhyloController = PhyloController()
 
         # Logged in User ID
         user_id = session_data.id
 
         # Get data
-        data = await fasta_Controller.del_fasta(id)
+        data = await snp_controller.del_snp(id)
+        data = await phylo_controller.del_phylo(id)
+        data = await sinle_controller.del_single(id)
+        data = await multi_controller.del_multi(id)
+        data = await fasta_controller.del_fasta(id)
         # print(f"llega al fasta {data}")
 
         if data:

@@ -128,3 +128,31 @@ class SnpDao:
         var_nucleotide: str = raw_data[4]
         
         return Snp(snp_id, ref_snp, fasta_id, ref_nucleotide, var_nucleotide)
+    
+
+    def delete_snp(self, fasta_id: int) -> int:
+
+        snp_deleted: int = 0
+        # query = self.fasta_table.delete().values(
+        #     id = fasta_id,
+        #     user_id = fasta.user_id
+        # )
+
+        query = self.snp_table.delete().where(
+            self.snp_table.c.fasta_id == fasta_id
+        )
+
+        try:
+            cursor = self.connection.connect()
+            response = cursor.execute(query)
+            cursor.commit()
+
+            print(dir(response))
+
+            if response.rowcount > 0:
+                snp_deleted = response.deleted_primary_key[0]
+
+        except Exception as e:
+            print(e)
+
+        return snp_deleted
