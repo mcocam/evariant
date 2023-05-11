@@ -34,7 +34,7 @@ function list_request(){
             row.append($("<td>" + rowData[1] + "</td>"));
             row.append($("<td>" + "<button type='button' class='btn btn-default fw-bold fs-5 table-btn-style'> Edit </button>"+ "</td>"));
             row.append($("<td>" + "<button type='button' class='btn btn-default fw-bold fs-5 table-btn-style see-results-button'+ onclick='showResults(" +rowData[0]+ ")'> See Results </button>"+ "</td>"));
-            row.append($("<td>" + "<button type='button' class='btn btn-default fw-bold fs-5 table-btn-style'> Delete </button>"+ "</td>"));
+            row.append($("<td>" + "<button type='button' class='btn btn-default fw-bold fs-5 table-btn-style' onclick='deleteFasta(" +rowData[0]+ ")'> Delete </button>"+ "</td>"));
             tbody.append(row);
         }
 
@@ -69,6 +69,24 @@ function list_request(){
  */
 function showResults(fasta_id) {
     window.location.href = "/request_results.html?fasta_id=" + fasta_id;
+}
+
+/**
+ * Deletes the specified fasta.
+ * @param {number} fasta_id: the ID of the fasta that will be deleted.
+ */
+function deleteFasta(fasta_id) {
+
+    axios
+        .get(`/api/files/delete_fasta/` + fasta_id)
+        .then(response => {
+            console.log(response)
+            window.location.href = './snp.html';
+        })
+        .catch(e => {
+            console.log(e);
+            return false;
+        });
 }
 
 $().ready(() => {
