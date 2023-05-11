@@ -28,6 +28,20 @@ class FastaController:
             print(f"Get fasta info error: {e}")
 
         return data
+    
+    # ----------------------------------------------------------------
+    async def get_fasta_owner(self, id):
+
+        data = None
+
+        try:
+            result = await self.dao.get_fasta_by_id(id)
+            data: Fasta = result['data']
+
+        except Exception as e:
+            print(f"Get fasta info error: {e}")
+
+        return data.get_user_id()
 
 
     # ----------------------------------------------------------------

@@ -160,6 +160,13 @@ async def delete_fasta(id: int, session_data: SessionData = Depends(verifier)):
         # Logged in User ID
         user_id = session_data.id
 
+        # Check if fasta belongs to user
+        fasta_owner = await fasta_controller.get_fasta_owner(id)
+
+        if(fasta_owner != user_id):
+            response["message"] = "904" # Invalid credentials
+            return response
+
         # Get data
         data = await snp_controller.del_snp(id)
         data = await phylo_controller.del_phylo(id)
