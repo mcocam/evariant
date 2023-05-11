@@ -5,12 +5,12 @@ class PhyloTree:
     def __init__(self,
                  fasta_id: int,
                  user_id: int,
-                 xml: str
+                 newick: str
                  ) -> None:
         
         self.fasta_id   = fasta_id
         self.user_id    = user_id,
-        self.xml        = xml
+        self.newick        = newick
         
     def get_fasta_id(self) -> int:
         return self.fasta_id 
@@ -18,8 +18,8 @@ class PhyloTree:
     def get_user_id(self) -> int:
         return self.user_id
     
-    def get_xml(self) -> str:
-        return self.xml 
+    def get_newick(self) -> str:
+        return self.newick 
     
     def set_fasta_id(self, fasta_id: int) -> None:
         self.fasta_id = fasta_id
@@ -27,5 +27,5 @@ class PhyloTree:
     def set_user_id(self, user_id: int) -> None:
         self.user_id = user_id
         
-    def set_xml(self, xml: str) -> None:
-        self.xml = xml
+    def set_xml(self, newick: str) -> None:
+        self.newick = newick

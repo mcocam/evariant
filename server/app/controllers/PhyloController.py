@@ -23,7 +23,7 @@ class PhyloController:
         try:
             listPhyloTree = self.dao.get_phylo_by_fasta_id(fasta_id)
             
-            phyloTree = {"fasta_id": listPhyloTree[0].get_fasta_id(), "xml": listPhyloTree[0].get_xml()}
+            phyloTree = {"fasta_id": listPhyloTree[0].get_fasta_id(), "tree": listPhyloTree[0].get_newick()}
             
         except Exception as e:
             print(f"PhyloController Exception: {e}")
@@ -42,7 +42,7 @@ class PhyloController:
                 temp_dir_path: Path = Path(temp_dir)
                 
                 fasta_file_path = temp_dir_path/"fasta.fasta"
-                phylo_file_path = temp_dir_path/"phylo.xml"
+                phylo_file_path = temp_dir_path/"phylo.nwk"
                 
                 with open(fasta_file_path, "w") as fasta_file:
                     fasta_file.write(fasta_content)
@@ -74,25 +74,25 @@ class PhyloController:
                     
                     tree_constructor = DistanceTreeConstructor()
                     phylo_tree = tree_constructor.upgma(distance_matrix)
-                    phylo_xml= Phylogeny.from_tree(phylo_tree).as_phyloxml()
+                    phylo_newick= Phylogeny.from_tree(phylo_tree)
                     
                     with open(phylo_file_path, "w") as phylo_file:
-                        Phylo.write(phylo_xml,phylo_file,"phyloxml")
+                        Phylo.write(phylo_newick,phylo_file,"newick")
                         
-                    phylo_xml_str = ""
-                    with open(phylo_file_path, "r") as xml:
-                        phylo_xml_str = xml.read() 
+                    phylo_newick_str = ""
+                    with open(phylo_file_path, "r") as newick:
+                        phylo_newick_str = newick.read() 
                         
                     phylo = PhyloTree(fasta.get_id(),
                                     fasta.get_user_id(),
-                                    phylo_xml_str)
+                                    phylo_newick_str)
                     
         except Exception as e:
             print(f"Error on parse fasta to Phylo Controller: {e}")
         
         return phylo
     
-    def save_phylo_xml(self, phylo: PhyloTree) -> int:
+    def save_phylo(self, phylo: PhyloTree) -> int:
         
         saved_rows: int = 0
         try:
@@ -100,7 +100,7 @@ class PhyloController:
             saved_rows = response
             
         except Exception as e:
-            print(f"Save phylo XML controller error: {e}")
+            print(f"Save phylo Newick controller error: {e}")
             
         return saved_rows
     
