@@ -46,7 +46,7 @@ function list_request(){
         switch(response.data.message) {
             case "915":
                 // Data obtained successfully
-                $(phyloMessage).text('');
+                $(snpMessage).text('');
                 // console.log(response.data.data);
                 break;
             case "914":
