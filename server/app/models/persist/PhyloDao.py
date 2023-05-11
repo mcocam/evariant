@@ -6,7 +6,7 @@ from models.persist.FastaDao import fasta_table
 phylo_table: Table = Table(
     "clusters",
     MetaData(),
-    Column("phylo_xml"),
+    Column("phylo_newick"),
     Column("fasta_id")
 )
 
@@ -72,7 +72,7 @@ class PhyloDao:
         
         try:
             query = insert(self.phylo_table).values(
-            phylo_xml = phylo_tree.get_xml(),
+            phylo_newick = phylo_tree.get_newick(),
             fasta_id = phylo_tree.get_fasta_id()
             )
             

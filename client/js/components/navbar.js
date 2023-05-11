@@ -2,7 +2,6 @@ $().ready(() => {
 
     $("#btn-register").show();
     $("#btn-login").show();
-    $("#btn-myProfile").hide();
     $("#btn-logout").hide();
 
     try{
@@ -11,12 +10,10 @@ $().ready(() => {
         if (d.status === 200) {
             $("#btn-register").hide();
             $("#btn-login").hide();
-            $("#btn-myProfile").show();
             $("#btn-logout").show();
         } else {
             $("#btn-register").show();
             $("#btn-login").show();
-            $("#btn-myProfile").hide();
             $("#btn-logout").hide();
         }
     })
@@ -24,7 +21,6 @@ $().ready(() => {
         console.log(e);
         $("#btn-register").show();
         $("#btn-login").show();
-        $("#btn-myProfile").hide();
         $("#btn-logout").hide();
     });
 
