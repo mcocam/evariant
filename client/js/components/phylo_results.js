@@ -21,7 +21,7 @@ const drawTree = (tree, id) => {
     const tree_canvas = new phylocanvas.PhylocanvasGL(
         document.querySelector(id),
           {
-            size: { width: 400, height: 300 },
+            size: { width: 500, height: 500 },
             showLabels: true,
             showLeafLabels: true,
             source: tree,

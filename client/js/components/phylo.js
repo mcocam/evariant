@@ -21,7 +21,7 @@ function list_request_phylo() {
                 })
 
                 // CREATE TABLE REQUEST PHYLO
-                var thead = $("<thead><tr class='border-botton border-3' > <th scope='col'>ID</th> <th scope='col'>Date</th> <th scope='col'>Title</th> <th scope='col'></th><th scope='col'></th><th scope='col'></th></tr></thead>");
+                var thead = $("<thead><tr class='border-botton border-3' > <th scope='col'>ID</th> <th scope='col'>Date</th> <th scope='col'>Title</th><th></th><th></th></tr></thead>");
 
                 var tbody = $("<tbody></tbody>");
                 for (var i = 0; i < requests_phylo.length; i++) {
@@ -32,7 +32,6 @@ function list_request_phylo() {
                     row.append($("<td>" + rowData[0] + "</td>"));
                     row.append($("<td>" + rowData[4] + "</td>"));
                     row.append($("<td>" + rowData[1] + "</td>"));
-                    row.append($("<td>" + "<button type='button' class='btn btn-default fw-bold fs-5 table-btn-style'> Edit </button>" + "</td>"));
                     row.append($("<td>" + "<button type='button' class='btn btn-default fw-bold fs-5 table-btn-style see-results-button'+ onclick='showResults(" + rowData[0] + ")'> See Results </button>" + "</td>"));
                     row.append($("<td>" + "<button type='button' class='btn btn-default fw-bold fs-5 table-btn-style' onclick='deleteFasta(" + rowData[0] + ")'> Delete </button>" + "</td>"));
                     tbody.append(row);
