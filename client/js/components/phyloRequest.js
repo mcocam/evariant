@@ -113,6 +113,7 @@ const sendFile = (file, phylo_title) =>{
     fetch("api/phylo/add_multi_fasta", {
         method: "POST",
         body: body,
+        timeout: 0,
         headers: {
             "Access-Control-Allow-Origin": "*"
         }
