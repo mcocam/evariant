@@ -51,10 +51,10 @@ class PhyloController:
 
                     clustalw_cline = ClustalwCommandline("clustalw",
                                                     infile = fasta_file.name,
-                                                    bootstrap = 10,
-                                                    ktuple = 2,
-                                                    pairgap = 3,
+                                                    bootstrap = 1,
+                                                    numiter = 2,
                                                     align = True,
+                                                    quicktree=True,
                                                     quiet = True)
                     stdout, stderr = clustalw_cline()
                     
@@ -114,7 +114,7 @@ class PhyloController:
         is_correct: bool = False
 
         # Validates that the file is a valid multifasta format
-        if multi_fasta.count(">") > 1:
+        if multi_fasta.count(">") > 1 and multi_fasta.count(">") < 11:
             is_correct = True
 
         # Valida que las secuencias son nucleótidos
