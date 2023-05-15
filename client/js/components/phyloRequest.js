@@ -29,6 +29,7 @@ $().ready(() => {
     $(dropZone).on("dragover", function(event) {
       event.preventDefault();
       $(this).addClass("active");
+      $("#msgRequestPhylo").html('<p></p>');
     });
 
     // When a file is dropped remove the active class
@@ -36,11 +37,15 @@ $().ready(() => {
     $(dropZone).on("drop", function(event) {
       event.preventDefault();
       $(this).removeClass("active");
+      $("#msgRequestPhylo").html('<p></p>');
+
     });
 
     // Action on click
     dropZone.addEventListener('click', function() {
       fileInput.click();
+      $("#msgRequestPhylo").html('<p></p>');
+
     });
     fileInput.addEventListener('change', handleFileSelect, false);
 
@@ -120,15 +125,18 @@ const sendFile = (file, phylo_title) =>{
     })
     .then(response => response.json())
     .then(data => {
+
       $("#phylo_spinner").hide();
       $("#phylo_spinner_text").hide();
+      $('#btn_back_phylo').prop('disabled', false);
+
       console.log(data.message);
       // Parse the response as a JSON object.
       // Check the message returned by the server and display a corresponding message to the user.
       switch (data.message) {
         case "925":
           // Display an error message if the .fasta file is incorrect.
-          $("#msgRequestPhylo").html('<p class="text-center fs-6 fw-bold text-danger">.FASTA file Incorrect</p>');
+          $("#msgRequestPhylo").html('<p class="text-center fs-6 fw-bold text-danger"> Incorrect Multifasta file. </p>');
 
           break;
         case "900":
@@ -201,9 +209,13 @@ function handleFileSelect(evt) {
     }
     // If it is a .fasta file it will be sent to the server
     if (fastaFile) {
-      // Get request title
+
+      $('#btn_back_phylo').prop('disabled', true);
+      // Show spinner and text
       $("#phylo_spinner").show();
       $("#phylo_spinner_text").show();
+      
+      // Get request title
       var phylo_title = $("#phylo_title").val();
       // Send the file to the server
       sendFile(fastaFile, phylo_title);

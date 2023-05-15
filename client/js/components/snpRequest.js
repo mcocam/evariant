@@ -29,6 +29,8 @@ $().ready(() => {
     $(dropZone).on("dragover", function(event) {
       event.preventDefault();
       $(this).addClass("active");
+      $("#msgRequest").html('<p></p>');
+
     });
 
     // When a file is dropped remove the active class
@@ -36,11 +38,13 @@ $().ready(() => {
     $(dropZone).on("drop", function(event) {
       event.preventDefault();
       $(this).removeClass("active");
+      $("#msgRequest").html('<p></p>');
     });
 
     // Action on click
     dropZone.addEventListener('click', function() {
       fileInput.click();
+      $("#msgRequest").html('<p></p>');
     });
     fileInput.addEventListener('change', handleFileSelect, false);
 
@@ -124,13 +128,14 @@ const sendFile = (file, request_title) =>{
     console.log(data);
     $("#snp_spinner").hide();
     $("#snp_spinner_text").hide();
+    $('#btn_back_step2').prop('disabled', false);
 
     // Parse the response as a JSON object.
     // Check the message returned by the server and display a corresponding message to the user.
     switch (data.message) {
       case "911":
         // Display an error message if the .fasta file is incorrect.
-        $("#msgRequest").html('<p class="text-center fs-6 fw-bold text-danger">.FASTA file Incorrect</p>');
+        $("#msgRequest").html('<p class="text-center fs-6 fw-bold text-danger"> Single Fasta Incorrect</p>');
         
         break;
       case "912":
@@ -205,6 +210,8 @@ function handleFileSelect(evt) {
   // If it is a .fasta file it will be sent to the server
   if (fastaFile) {
     // Get request title
+    $('#btn_back_step2').prop('disabled', true);
+
     $("#snp_spinner").show();
     $("#snp_spinner_text").show();
     var request_title = $("#request_title").val();
