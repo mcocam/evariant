@@ -30,7 +30,7 @@ class PhyloController:
 
         return phyloTree
     
-    async def parse_fasta_to_phylo(self, fasta: Fasta) -> PhyloTree | None:
+    def parse_fasta_to_phylo(self, fasta: Fasta) -> PhyloTree | None:
         
         phylo = None
         
@@ -51,10 +51,10 @@ class PhyloController:
 
                     clustalw_cline = ClustalwCommandline("clustalw",
                                                     infile = fasta_file.name,
-                                                    bootstrap = 10,
-                                                    ktuple = 2,
-                                                    pairgap = 3,
+                                                    bootstrap = 1,
+                                                    numiter = 2,
                                                     align = True,
+                                                    quicktree=True,
                                                     quiet = True)
                     stdout, stderr = clustalw_cline()
                     
@@ -113,12 +113,13 @@ class PhyloController:
         
         is_correct: bool = False
 
+        print(multi_fasta.count(">"))
         # Validates that the file is a valid multifasta format
         if multi_fasta.count(">") > 1:
             is_correct = True
 
         # Valida que las secuencias son nucleótidos
-        if re.search(r'[^ATCGatcg\n]+', multi_fasta):
+        if re.search(r'[^ATCGatcg\n]+', multi_fasta) and is_correct:
             is_correct = True
 
         return is_correct

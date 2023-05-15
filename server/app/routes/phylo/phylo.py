@@ -58,7 +58,7 @@ async def get_phylos(file: UploadFile = File(...), session_data: SessionData = D
                     
                     if multifasta_response > 0:
                         
-                        phylo: PhyloTree = await phylo_controller.parse_fasta_to_phylo(new_fasta)
+                        phylo: PhyloTree = phylo_controller.parse_fasta_to_phylo(new_fasta)
                         add_phylo_response: int = phylo_controller.save_phylo(phylo)
                         
                         
@@ -127,7 +127,6 @@ async def send_results_phylo(fasta_id: str, session_data: SessionData = Depends(
     
     try:
         result_phyloTree = await phylo_controller.get_phylo_by_id(fasta_id)
-        print(result_phyloTree)
 
         if result_phyloTree:
             response["error"] = False
