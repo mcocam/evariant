@@ -113,9 +113,8 @@ class PhyloController:
         
         is_correct: bool = False
 
-        print(multi_fasta.count(">"))
         # Validates that the file is a valid multifasta format
-        if multi_fasta.count(">") > 1:
+        if multi_fasta.count(">") > 1 and multi_fasta.count(">") < 11:
             is_correct = True
 
         # Valida que las secuencias son nucleótidos

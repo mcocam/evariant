@@ -1,6 +1,5 @@
-from fastapi import APIRouter, Response, Depends, HTTPException, File, UploadFile
+from fastapi import APIRouter, Depends, File, UploadFile
 from routes.users.session import cookie, SessionData, verifier
-from models.persist.PhyloDao import PhyloDao
 from controllers.PhyloController import PhyloController
 from controllers.FastaController import FastaController
 from models.Fasta import Fasta
