@@ -121,6 +121,9 @@ const sendFile = (file, request_title) =>{
   })
   .then(response => response.json())
   .then(data => {
+    console.log(data);
+    $("#snp_spinner").hide();
+    $("#snp_spinner_text").hide();
 
     // Parse the response as a JSON object.
     // Check the message returned by the server and display a corresponding message to the user.
@@ -128,21 +131,37 @@ const sendFile = (file, request_title) =>{
       case "911":
         // Display an error message if the .fasta file is incorrect.
         $("#msgRequest").html('<p class="text-center fs-6 fw-bold text-danger">.FASTA file Incorrect</p>');
+        
         break;
       case "912":
         // Display a success message if the .fasta file was processed successfully.
         $("#msgRequest").html('<p class="text-center fs-6 fw-bold text-success"> Successfully Processed </p>');
-        $("#snp_spinner").hide();
+
         // Activate the snp_done button.
         $('#snp_done').prop('disabled', false);
+
+        setTimeout(() => {
+          location.reload();
+        }, 500)
+
         break;
       case "913":
         // Display a warning message if the server failed.
         $("#msgRequest").html('<p class="text-center fs-6 fw-bold text-warning"> Served has failed, try later </p>');
         break;
+      default:
+        $("#msgRequest").html('<p></p>');
     }
   })
-  .catch(error => console.error(error));
+  .catch(error => {
+    $("#snp_spinner").hide();
+    $("#snp_spinner_text").hide();
+    console.log(error)
+    $("#msgRequest").html('<p class="text-danger text-center">Something gone wrong!</p>');
+
+  });
+  
+
 }
 
 
@@ -187,6 +206,7 @@ function handleFileSelect(evt) {
   if (fastaFile) {
     // Get request title
     $("#snp_spinner").show();
+    $("#snp_spinner_text").show();
     var request_title = $("#request_title").val();
     // Send the file to the server
     sendFile(fastaFile, request_title);
