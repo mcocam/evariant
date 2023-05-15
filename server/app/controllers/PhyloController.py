@@ -30,7 +30,7 @@ class PhyloController:
 
         return phyloTree
     
-    async def parse_fasta_to_phylo(self, fasta: Fasta) -> PhyloTree | None:
+    def parse_fasta_to_phylo(self, fasta: Fasta) -> PhyloTree | None:
         
         phylo = None
         
@@ -113,12 +113,13 @@ class PhyloController:
         
         is_correct: bool = False
 
+        print(multi_fasta.count(">"))
         # Validates that the file is a valid multifasta format
-        if multi_fasta.count(">") > 1 and multi_fasta.count(">") < 11:
+        if multi_fasta.count(">") > 1:
             is_correct = True
 
         # Valida que las secuencias son nucleótidos
-        if re.search(r'[^ATCGatcg\n]+', multi_fasta):
+        if re.search(r'[^ATCGatcg\n]+', multi_fasta) and is_correct:
             is_correct = True
 
         return is_correct
