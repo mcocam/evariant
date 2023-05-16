@@ -17,7 +17,16 @@ class MultiFastaDao:
         self.connection: Engine = get_connection()
         self.multi_fasta_table: Table = multi_fastas
     
+    #----------------------------------------------------------------
     def insert_fasta_id(self, multi_fasta: MultiFasta) -> int:
+        """Inserts a new entry to the multifasta table in the database
+
+        Args:
+            multi_fasta (MultiFasta): A Multifasta object to be added to de database
+
+        Returns:
+            int: The id of the newly added entry
+        """
         
         inserted_response: int = 0
 
@@ -37,7 +46,16 @@ class MultiFastaDao:
 
         return inserted_response
     
+    #----------------------------------------------------------------
     def delete_multi(self, fasta_id: int) -> int:
+        """Removes a fasta from the database
+
+        Args:
+            fasta_id (int): The id of the fasta to delete
+
+        Returns:
+            int: A code from the list indicating if the operation was successful, or what failed exactly
+        """
 
         multi_deleted: int = 0
 
@@ -52,10 +70,10 @@ class MultiFastaDao:
 
             print(dir(response))
 
-            if response.rowcount > 0:
-                multi_deleted = response.deleted_primary_key[0]
+            if (response.rowcount <= 0):
+                multi_deleted = 900
 
         except Exception as e:
-            print(e)
+            multi_deleted = e
 
         return multi_deleted

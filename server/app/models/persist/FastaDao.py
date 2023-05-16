@@ -158,7 +158,7 @@ class FastaDao:
 
     #----------------------------------------------------------------
     def delete_fasta(self, fasta_id: int) -> int:
-        """Remove a fasta from the database
+        """Removes a fasta from the database
 
         Args:
             fasta_id (int): The id of the fasta to delete
