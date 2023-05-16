@@ -56,14 +56,12 @@ async def get_phylos(file: UploadFile = File(...), session_data: SessionData = D
                     
                     if multifasta_response > 0:
                         
-                        phylo: PhyloTree = phylo_controller.parse_fasta_to_phylo(new_fasta)
-                        add_phylo_response: int = phylo_controller.save_phylo(phylo)
+                        clustalo_job: PhyloTree = phylo_controller.parse_fasta_to_phylo(new_fasta)
                         
-                        
-                        if add_phylo_response > 0:                    
+                        if clustalo_job > 0:                    
                             response["error"] = False 
                             response["message"] = "900"
-                            response["data"] = "Multifasta added and phylo-tree created" 
+                            response["data"] = "File is being processed" 
         else:
             response["message"] = "925" # Multi fasta incorrect
 

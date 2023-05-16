@@ -64,10 +64,6 @@ class FastaDao:
 
     #----------------------------------------------------------------
     def add_new_fasta(self,fasta: Fasta) -> int:
-        """  Add a new Fasta to database
-        Enters -> Object Fasta
-        return -> bool
-        """
         """Add a new Fasta to database
 
         Args:
@@ -158,7 +154,7 @@ class FastaDao:
 
     #----------------------------------------------------------------
     def delete_fasta(self, fasta_id: int) -> int:
-        """Remove a fasta from the database
+        """Removes a fasta from the database
 
         Args:
             fasta_id (int): The id of the fasta to delete
