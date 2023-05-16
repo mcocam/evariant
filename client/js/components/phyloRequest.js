@@ -1,6 +1,6 @@
 /**
- * @file This file contains functions to send a file to the server and style the process
- * @autora Ani Valle
+ * Code Summary:
+ * This file contains functions to send a file to the server and style the process
  */
 
 //----------------------------------------------------------------
@@ -64,7 +64,7 @@ function validateRequestTitle() {
     var regex = new RegExp(/^(?=.*[a-zA-Z0-9()>< ])[a-zA-Z0-9()><\- ]{5,30}$/);
     if (regex.test(phylo_title)) {
       $("#pMsgTitle").html("");
-      return true; // No hay errores
+      return true; // No errors
     }else{
       $("#pMsgTitle").html("<p>The title must have at least 5 characters and a maximum of 30. \nParentheses and symbols greater than and less than are allowed..</p>");
     }
@@ -79,26 +79,29 @@ function validateRequestTitle() {
     $(i).on("change", () => {
       handleTitleButton()
     })
-  })
-  const handleTitleButton = () => {
-    let state = [];
-  
-    ["#phylo_title"].forEach((input, index) => {
-      const value = $(input).val();
-        let isOK = false;
-        if(index === 0){
-          isOK = validateRequestTitle();
-        }
-      state.push(isOK);
-    });
-  
-    if(state.some(data => data === false)){
-      //Desactivar
-      $('#btn_step1').prop('disabled', true);
-    }else{
-      //Activar
-      $('#btn_step1').prop('disabled', false);
-    }
+})
+
+// Function to handle the state of the sign-in button
+const handleTitleButton = () => {
+  let state = [];
+
+  // Validate title inputs
+  ["#phylo_title"].forEach((input, index) => {
+    const value = $(input).val();
+      let isOK = false;
+      if(index === 0){
+        isOK = validateRequestTitle();
+      }
+    state.push(isOK);
+  });
+
+  if(state.some(data => data === false)){
+    // Disable the sign-in button
+    $('#btn_step1').prop('disabled', true);
+  }else{
+    // Enable the sign-in button
+    $('#btn_step1').prop('disabled', false);
+  }
 }
 
 /**-------------------- ENVIAR ARCHIVO ---------------------------- */

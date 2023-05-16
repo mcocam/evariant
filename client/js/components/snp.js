@@ -1,6 +1,6 @@
 /**
- * @file This file contains functions to request and display data related to requests.
- * @autora Ani Valle
+ * Code Summary:
+ * This file contains functions to request and display data related to requests.
  */
 
 /**
@@ -50,7 +50,6 @@ function list_request() {
                     case "915":
                         // Data obtained successfully
                         $(snpMessage).text('');
-                        // console.log(response.data.data);
                         break;
                     case "914":
                         $(snpMessage).text('No results found');
@@ -99,5 +98,4 @@ function deleteFasta(fasta_id) {
 $().ready(() => {
     // Call the list_request function when the document is ready
     list_request();
-
 });

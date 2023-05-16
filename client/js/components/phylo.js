@@ -1,7 +1,14 @@
 /**
- * @authora Ani Valle
+ * Code Summary:
+ * This code fetches phylogenetic requests from the server, populates a table with the data,
+ * and provides functionality to view results or delete a request.
  */
 
+
+/**
+ * Function list_request_phylo
+ * Fetches phylogenetic requests from the server, populates a table with the data, and handles messages.
+ */
 function list_request_phylo() {
     // Messages
     const phyloMessage = $('#result-phylo');
@@ -46,7 +53,6 @@ function list_request_phylo() {
                     case "920":
                         //Data obtained successfully
                         $(phyloMessage).text('');
-                        // console.log(response.data.data);
                         break;
                     case "921":
                         $(phyloMessage).text('No results found');
@@ -65,8 +71,10 @@ function list_request_phylo() {
 };
 
 /**
+ * Function showResults
  * Redirects the user to a page that displays the results of a request.
- * @param {number} fasta_id: the ID of the request whose results will be returned.
+ *
+ * @param {number} fasta_id - The ID of the request whose results will be returned.
  */
 function showResults(fasta_id) {
     window.location.href = "/phylo_results.html?fasta_id=" + fasta_id;
@@ -82,7 +90,6 @@ function deleteFasta(fasta_id) {
         axios
             .get(`/api/files/delete_fasta/` + fasta_id)
             .then(response => {
-                console.log(response)
                 window.location.href = './trees.html';
             })
             .catch(e => {
@@ -93,7 +100,7 @@ function deleteFasta(fasta_id) {
 }
 
 /**
- * Show 
+ * Show Table
  */
 $().ready(() => {
     // Call the list_request function when the document is ready

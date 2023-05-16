@@ -1,5 +1,12 @@
+/**
+ * Code Summary:
+ * 
+ * 
+ */
+
 $().ready(() => {
 
+    // Get the 'fasta_id' parameter from the URL
     const urlParams = new URLSearchParams(window.location.search);
     const fasta_id = urlParams.get('fasta_id');
 
@@ -9,20 +16,25 @@ $().ready(() => {
             
             const resultsBody = document.getElementById('results_body');
 
+            // Iterate through each SNP and create a table row for it
             for (let i = 0; i < snps.length; i++) {
                 const snp = snps[i];
                 const row = document.createElement('tr');
                 const fastaId = document.createElement('td');
                 const refNucleotide = document.createElement('td');
                 const varNucleotide = document.createElement('td');
+                
+                // Set the values for each table cell
                 fastaId.innerText = snp.fasta_id;
                 refNucleotide.innerText = snp.ref_nucleotide;
                 varNucleotide.innerText = snp.var_nucleotide;
 
+                // Append the cells to the row
                 row.appendChild(fastaId);
                 row.appendChild(refNucleotide);
                 row.appendChild(varNucleotide);
 
+                // Append the row to the table body
                 resultsBody.appendChild(row);
             }
         })
