@@ -12,6 +12,7 @@ from Bio.Phylo.PhyloXML import Phylogeny
 import re
 
 import subprocess
+import threading
 
 
 class PhyloController:
@@ -33,72 +34,17 @@ class PhyloController:
 
         return phyloTree
     
-    def parse_fasta_to_phylo(self, fasta: Fasta) -> PhyloTree | None:
+    def parse_fasta_to_phylo(self, fasta: Fasta) -> bool:
         
-        phylo = None
+        is_processing = False
         
-        try:
-            fasta_content = fasta.get_raw_fasta()
+        thread = threading.Thread(target=PhyloController.do_clustalo_alignment, args=(self, fasta))
+        thread.start()
         
-            with TemporaryDirectory() as temp_dir:
+        if thread.is_alive():
+            is_processing = True 
         
-                temp_dir_path: Path = Path(temp_dir)
-                
-                fasta_file_path = temp_dir_path/"fasta.fasta"
-                phylo_file_path = temp_dir_path/"phylo.nwk"
-                
-                with open(fasta_file_path, "w") as fasta_file:
-                    fasta_file.write(fasta_content)
-                    
-                clustalo_cline = ClustalOmegaCommandline(
-                    infile = fasta_file_path,
-                    outfile = temp_dir_path/"output.fasta",
-                    iterations=1, 
-                    max_hmm_iterations=1, 
-                    distmat_full_iter=True,
-                    max_guidetree_iterations = 1,
-                    verbose=True,
-                    threads = 1,
-                    seqtype = "DNA"
-                    )
-                cmd_string = str(clustalo_cline)
-                
-                nice_cmd = f"nice -n 19 {cmd_string}"
-                subprocess.run(nice_cmd, shell=True)
-                    
-                alignment_file_path = list(temp_dir_path.glob("output.fasta"))
-
-                    
-                if len(alignment_file_path) == 1:
-                    alignment_file_path = alignment_file_path[0]
-                else:
-                    #return
-                    print("Error")
-                
-                clustal_alignment = AlignIO.read(alignment_file_path, "fasta")
-            
-                calcultaor = DistanceCalculator("identity")
-                distance_matrix = calcultaor.get_distance(clustal_alignment)
-                
-                tree_constructor = DistanceTreeConstructor()
-                phylo_tree = tree_constructor.upgma(distance_matrix)
-                phylo_newick= Phylogeny.from_tree(phylo_tree)
-                
-                with open(phylo_file_path, "w") as phylo_file:
-                    Phylo.write(phylo_newick,phylo_file,"newick")
-                    
-                phylo_newick_str = ""
-                with open(phylo_file_path, "r") as newick:
-                    phylo_newick_str = newick.read() 
-                    
-                phylo = PhyloTree(fasta.get_id(),
-                                fasta.get_user_id(),
-                                phylo_newick_str)
-                    
-        except Exception as e:
-            print(f"Error on parse fasta to Phylo Controller: {e}")
-        
-        return phylo
+        return is_processing
     
     def save_phylo(self, phylo: PhyloTree) -> int:
         
@@ -122,7 +68,7 @@ class PhyloController:
         is_correct: bool = False
 
         # Validates that the file is a valid multifasta format
-        if multi_fasta.count(">") > 1 and multi_fasta.count(">") < 11:
+        if multi_fasta.count(">") > 1:
             is_correct = True
 
         # Valida que las secuencias son nucleótidos
@@ -141,3 +87,67 @@ class PhyloController:
                 print(e)
 
             return phylo_deleted
+        
+    def do_clustalo_alignment(self, fasta: Fasta):
+        
+        
+        try:
+            fasta_content = fasta.get_raw_fasta()
+        
+            with TemporaryDirectory() as temp_dir:
+        
+                temp_dir_path: Path = Path(temp_dir)
+                
+                print(temp_dir_path)
+                
+                fasta_file_path = temp_dir_path/"fasta.fasta"
+                phylo_file_path = temp_dir_path/"phylo.nwk"
+                
+                with open(fasta_file_path, "w") as fasta_file:
+                    fasta_file.write(fasta_content)
+                    
+                clustalo_cline = ClustalOmegaCommandline(
+                                        infile = temp_dir_path/"fasta.fasta",
+                                        outfile = temp_dir_path/"output.fasta",
+                                        threads = 4,
+                                        seqtype = "DNA"
+                                        )
+                
+                cmd_string = str(clustalo_cline)
+
+                nice_cmd = f"nice -n 19 {cmd_string}"
+                    
+                subprocess.run(nice_cmd, shell=True)
+                    
+                alignment_file_path = list(temp_dir_path.glob("output.fasta"))
+                    
+                if len(alignment_file_path) == 1:
+                    alignment_file_path = alignment_file_path[0]
+                else:
+                    raise Exception("Incorrect alignment")
+                
+                clustal_alignment = AlignIO.read(alignment_file_path, "fasta")
+            
+                calcultaor = DistanceCalculator("identity")
+                distance_matrix = calcultaor.get_distance(clustal_alignment)
+                
+                tree_constructor = DistanceTreeConstructor()
+                phylo_tree = tree_constructor.upgma(distance_matrix)
+                phylo_newick= Phylogeny.from_tree(phylo_tree)
+                
+                with open(phylo_file_path, "w") as phylo_file:
+                    Phylo.write(phylo_newick,phylo_file,"newick")
+                    
+                phylo_newick_str = ""
+                with open(phylo_file_path, "r") as newick:
+                    phylo_newick_str = newick.read() 
+                    
+                phylo = PhyloTree(fasta.get_id(),
+                                fasta.get_user_id(),
+                                phylo_newick_str)
+                
+                self.save_phylo(phylo)
+                    
+        except Exception as e:
+            print(f"Error on ClustalO: {e}")
+        

@@ -8,7 +8,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 RUN apt-get update && apt-get install -y \
     build-essential \
-    clustalw
+    clustalo
 
 COPY requirements.txt .
 RUN pip install --upgrade pip
