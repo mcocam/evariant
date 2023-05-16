@@ -18,7 +18,16 @@ class PhyloDao:
         self.fasta_table = fasta_table
         self.phylo_table = phylo_table
         
+    #----------------------------------------------------------------
     def get_phylo_by_fasta_id(self, fasta_id: int) -> list[PhyloTree] or list:
+        """Returns a phylo entry identified by the given id
+
+        Args:
+            fasta_id (int): The fasta id of the desired phylo
+
+        Returns:
+            list[str]:  If found, returns the phylo in a list.
+        """
         
         phylos: list = []
         
@@ -39,7 +48,16 @@ class PhyloDao:
             
         return phylos
     
+    #----------------------------------------------------------------
     def get_phylos_by_user_id(self, user_id: int) -> list[PhyloTree] or list:
+        """Get all phylos belonging to the specified user
+
+        Args:
+            user_id (int): The owner's id
+
+        Returns:
+            list[list]: A list of all PhyloTree objects belonging to the specified user.
+        """
         
         phylos: list = []
         
@@ -66,7 +84,16 @@ class PhyloDao:
             
         return phylos
     
+    #----------------------------------------------------------------
     def insert_phylo(self, phylo_tree: PhyloTree) -> int:
+        """Add a new PhyloTree to database
+
+        Args:
+            phylo_tree (PhyloTree): The new PhyloTree to add to the database
+
+        Returns:
+            int: The number of rows added to the table
+        """
         
         inserted_rows: int = 0
         
@@ -88,7 +115,16 @@ class PhyloDao:
         return inserted_rows
     
 
+    #----------------------------------------------------------------
     def delete_phylo(self, fasta_id: int) -> int:
+        """Removes a phylo from the database
+
+        Args:
+            fasta_id (int): The id of the fasta to which the phylo to delete belongs
+
+        Returns:
+            int: A code from the list indicating if the operation was successful, or what failed exactly
+        """
 
         phylo_deleted: int = 0
 
@@ -103,11 +139,11 @@ class PhyloDao:
 
             print(dir(response))
 
-            if response.rowcount > 0:
-                phylo_deleted = response.deleted_primary_key[0]
+            if (response.rowcount <= 0):
+                phylo_deleted = 900
 
         except Exception as e:
-            print(e)
+            phylo_deleted = e
 
         return phylo_deleted
         

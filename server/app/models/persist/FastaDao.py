@@ -64,10 +64,6 @@ class FastaDao:
 
     #----------------------------------------------------------------
     def add_new_fasta(self,fasta: Fasta) -> int:
-        """  Add a new Fasta to database
-        Enters -> Object Fasta
-        return -> bool
-        """
         """Add a new Fasta to database
 
         Args:
