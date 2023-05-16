@@ -1,6 +1,6 @@
 /**
- * @file This file contains functions to send a file to the server and style the process
- * @autora Ani Valle
+ * Code Summary:
+ * This file contains functions to send a file to the server and style the process.
  */
 
 $().ready(() => { 

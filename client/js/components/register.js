@@ -1,6 +1,14 @@
 /**
+ * Code Summary:
+ * This file contains the process to register a new user to the web.
+ * Validates each input and shows comments to the user, if they are correct,
+ * activate the button and let the user register.
+ */
+
+
+/**
  * This function sends a POST request to the server to create and store a new user in the database with the provided info.
- * @param {const} body 
+ * @param {const} body - The user data to be sent to the server.
  */
 function registerFunction(body) {
 
@@ -10,7 +18,6 @@ function registerFunction(body) {
     axios
         .post('/api/users/register', body)
         .then(response => {
-
             //Display a message to the user
             switch (response.data.message) {
                 case "900":
@@ -28,18 +35,18 @@ function registerFunction(body) {
                 default:
                     $(registerMessage).text('');
             }
-
         })
         .catch(e => {
             console.log(e);
             return false;
         });
-
-
 };
 
 /** ---------------------- REGISTER ACTION ----------------------------- */
 
+/**
+ * Handles the click event of the register button and calls the registerFunction to register a new user.
+ */
 $().ready(() => {
 
     $("#registerButton").on("click", () => {
@@ -63,12 +70,18 @@ $().ready(() => {
 
 /** ----------------------  ACTIVATE BUTTON ----------------------------- */
 
+/**
+ * Handles the change event of the input fields and enables/disables the register button based on the input validity.
+ */
 ["#registerName", "#registerSurname", "#registerEmail", "#registerPassword"].forEach((i) => {
     $(i).on("change", () => {
         handleRegisterButton()
     })
 })
 
+/**
+ * Enables or disables the register button based on the validity of the input fields.
+ */
 const handleRegisterButton = () => {
 
     let state = [];
@@ -76,21 +89,6 @@ const handleRegisterButton = () => {
     ["#registerName", "#registerSurname", "#registerEmail", "#registerPassword"].forEach((input, index) => {
         const value = $(input).val();
         let isOk = false;
-
-        // switch (index) {
-        //     case 0:
-        //         isOk = validateName();
-        //         break;
-        //     case 1:
-        //         isOk = validateSurname();
-        //         break;
-        //     case 2:
-        //         isOk = validateEmail();
-        //         break;
-        //     case 3:
-        //         isOk = validatePassword();
-        //         break;
-        // }
 
         if(index === 0){
             isOk = validateName();
@@ -106,24 +104,23 @@ const handleRegisterButton = () => {
     });
 
     if (state.some(data => data === false)) {
-        // Desactivar
+        // Disable register button
         $('#registerButton').prop('disabled', true);
-
     } else {
-        // Activar
+        // Enable register button
         $('#registerButton').prop('disabled', false);
-
     }
 
     /** -------------------------------- VALIDATION FUNCTIONS ------------------------ */
 
-
-    // Validate name format and length
+    /**
+     * Validation Functions:
+     * Validate the format and length of name, surname, email, and password inputs.
+     */
     function validateName() {
 
         // Collect input Name
         nam = $("#registerName").val();
-
         // Regex Validate Name
         var regex = new RegExp(/^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[' -][a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/);
 
@@ -141,7 +138,6 @@ const handleRegisterButton = () => {
 
         // Collect input Surname
         var surname = $("#registerSurname").val();
-
         // Regex Validate Surname
         var regex = new RegExp(/^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[' -][a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/);
 
@@ -159,7 +155,6 @@ const handleRegisterButton = () => {
 
         // Collect Valued email
         email = $("#registerEmail").val();
-
         // Regext Validate Email
         var regex = new RegExp(/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/);
 
@@ -177,7 +172,6 @@ const handleRegisterButton = () => {
 
         // Collect Valued Password
         psw = $("#registerPassword").val();
-
         // Regext Validate Password
         var regex = new RegExp(/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/);
         if (regex.test(psw)) {
@@ -187,7 +181,5 @@ const handleRegisterButton = () => {
             $("#msgPswRegister").html("<p>The password must have between 8 and 16 characters, at least one digit, at least one lower case and at least one upper case.</p>")
             return false; // Hay errores
         }
-
     }
-
 }
