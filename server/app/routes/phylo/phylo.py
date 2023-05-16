@@ -49,7 +49,6 @@ async def get_phylos(file: UploadFile = File(...), session_data: SessionData = D
             
             if add_multifasta_response > 0: 
                 
-                
                 added_fasta_response: list[str] = await fasta_controller.get_fasta(add_multifasta_response)
                 if added_fasta_response["data"]:
                     new_fasta = added_fasta_response["data"]
