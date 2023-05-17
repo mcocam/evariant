@@ -24,7 +24,16 @@ class SingleFastaDao:
         self.single_fasta_table:   Table  = single_fasta_table
         self.response: dict[str,any] = {"error": True, "message": "", "data": SingleFasta}
 
+    #----------------------------------------------------------------
     async def get_single_fasta_by_id(self, id: int) -> SingleFasta :
+        """Returns the SingleFasta identified by the given id
+
+        Args:
+            id (int): The id number of the desired fasta
+
+        Returns:
+            SingleFasta: A SingleFasta object
+        """
 
         response = self.response
 
@@ -49,14 +58,16 @@ class SingleFastaDao:
         return response
     
 
-    # ADD SINGLE FASTA 
+    #----------------------------------------------------------------
     def add_new_single_fasta(self,single_fasta: SingleFasta) -> bool:
+        """Add a new Single Fasta to database
 
-        """  
-        Add a new Single Fasta to database
-        Enters -> Object Single Fasta
-        return -> bool
-        """
+        Args:
+            single_fasta (SingleFasta): A SingleFasta object
+
+        Returns:
+            bool: Indicates if the operation was successful
+        """      
 
         inserted_response: int = 0
 
@@ -82,8 +93,16 @@ class SingleFastaDao:
 
         return inserted_response
 
-    
+    #----------------------------------------------------------------
     def __parse_single_fasta(self,raw_data: list[any] ) -> SingleFasta:
+        """Takes a list of the fasta's sections and parses them into a SingleFasta object
+
+        Args:
+            raw_data (list[any]): A list with all sections
+
+        Returns:
+            SingleFasta: A SingleFasta object
+        """
 
         fasta_id:       int         = raw_data[0]
         sequence:       str         = raw_data[1]
@@ -104,13 +123,18 @@ class SingleFastaDao:
         
         return fasta
     
+    #----------------------------------------------------------------
     def delete_single(self, fasta_id: int) -> int:
+        """Removes a single fasta from the database
+
+        Args:
+            fasta_id (int): The id of the fasta to delete
+
+        Returns:
+            int: A code from the list indicating if the operation was successful, or what failed exactly
+        """
 
         single_deleted: int = 0
-        # query = self.fasta_table.delete().values(
-        #     id = fasta_id,
-        #     user_id = fasta.user_id
-        # )
 
         query = self.single_fasta_table.delete().where(
             self.single_fasta_table.c.fasta_id == fasta_id
@@ -123,11 +147,11 @@ class SingleFastaDao:
 
             print(dir(response))
 
-            if response.rowcount > 0:
-                single_deleted = response.deleted_primary_key[0]
+            if (response.rowcount <= 0):
+                single_deleted = 900
 
         except Exception as e:
-            print(e)
+            single_deleted = e
 
         return single_deleted
 
