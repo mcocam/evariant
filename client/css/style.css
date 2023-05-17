@@ -270,9 +270,15 @@ body {
     height: 15px;
 }
 
+/* PHYLO FASTA FILES TABLE */
+.disabled_row{
+    background-color: #F1F6F9;
+}
+
 /* PHYLO REQUEST RESULTS */
 
 #see-result-phylo {
     height: 100%;
     border-color: #012E3D;
 }
+
