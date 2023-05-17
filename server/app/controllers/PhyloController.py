@@ -107,7 +107,7 @@ class PhyloController:
                 clustalo_cline = ClustalOmegaCommandline(
                                         infile = temp_dir_path/"fasta.fasta",
                                         outfile = temp_dir_path/"output.fasta",
-                                        threads = 4,
+                                        threads = 1,
                                         seqtype = "DNA"
                                         )
                 

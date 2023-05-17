@@ -20,10 +20,6 @@ services:
     command: uvicorn main:app --host 0.0.0.0 --port 5053 --reload --root-path /api/
     links: 
       - "db"
-    deploy:
-        resources:
-            limits:
-              cpus: "4"
     volumes:
       - ./server/app:/app
     ports:
