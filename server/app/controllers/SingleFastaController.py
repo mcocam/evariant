@@ -1,10 +1,7 @@
 # from models.persist.FastaDao import FastaDao
 from models.persist.SingleFastaDao import SingleFastaDao
-from pydantic import BaseModel
 from models.Fasta import Fasta
 from models.SingleFasta import SingleFasta
-import env
-import os
 
 
 class SingleFastaController:

@@ -1,11 +1,9 @@
 # Class Snp
 # @author: Melania Prado
 
-from fastapi import APIRouter, Response, Depends, HTTPException
-from models.validators.new_user import New_user
+from fastapi import APIRouter, Depends, HTTPException
 from controllers.SnpController import SnpController
 from controllers.FastaController import FastaController
-from models.Snp import Snp
 from routes.users.session import cookie, SessionData, verifier
 
 router: APIRouter = APIRouter(

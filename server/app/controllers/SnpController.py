@@ -1,13 +1,8 @@
 # Class Snp
 # @author: Melania Prado
 
-from typing import List
 from models.persist.SnpDao import SnpDao
-from pydantic import BaseModel
 from models.Snp import Snp
-import env
-import os
-from models.utils.SnpHandler import SnpHandler
 
 class SnpController:
     

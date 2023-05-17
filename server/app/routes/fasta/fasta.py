@@ -8,9 +8,7 @@ from controllers.PhyloController import PhyloController
 
 from models.Fasta import Fasta
 from models.SingleFasta import SingleFasta
-from models.MultiFasta import MultiFasta
 from models.Snp import Snp
-from models.PhyloTree import PhyloTree
 
 from models.utils.SnpHandler import SnpHandler
 

@@ -1,18 +1,15 @@
 import datetime
 import re
-from requests import get, Response
 from models.persist.FastaDao import FastaDao
 from models.utils.SnpHandler import SnpHandler
-
-from pydantic import BaseModel
 from models.Fasta import Fasta
-import env
-import os
+from models.persist.PhyloDao import PhyloDao
 
 class FastaController:
 
     def __init__(self) -> None:
         self.dao = FastaDao()
+        self.phylo_dao = PhyloDao()
         self.snp_handler = SnpHandler()
 
     # ----------------------------------------------------------------
@@ -138,16 +135,22 @@ class FastaController:
         try:
             # Get Info Fasta from DAO
             info_fasta: list[list] =  await self.dao.get_info(user_id, single_fasta)
+            
 
             data: list[list] = []
             for t in info_fasta:
                 fasta_row: list[str] = []
+                
+                associated_phylo = self.phylo_dao.get_phylo_by_fasta_id(t[0])
 
                 for i in t:
                     if type(i) == datetime.datetime:
                         fasta_row.append(i.strftime('%d/%m/%Y %H:%M'))
                     else:
                         fasta_row.append(str(i))
+                        
+                fasta_row.append(len(associated_phylo))
+                
                 data.append(fasta_row)
 
         except Exception as e:
