@@ -1,13 +1,8 @@
 import datetime
 import re
-from requests import get, Response
 from models.persist.FastaDao import FastaDao
 from models.utils.SnpHandler import SnpHandler
-
-from pydantic import BaseModel
 from models.Fasta import Fasta
-import env
-import os
 
 class FastaController:
 
