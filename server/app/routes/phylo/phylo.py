@@ -136,3 +136,6 @@ async def send_results_phylo(fasta_id: str, session_data: SessionData = Depends(
         response["message"] = "932" #error exception
     
     return response
+
+    
+    

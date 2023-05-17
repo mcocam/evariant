@@ -8,13 +8,10 @@
 // Perform session validation
 validSession
     .then(d => {
-    console.log(d);
     if (d.status === 200) {
         // Session is valid, do nothing
-        console.log("Guard: Session ok!");
     } else {
         // Session is invalid, redirect to index.html with modal=true
-        console.log("Guard: Session down!");
         window.location.href = './index.html?modal=true';
     }
     })

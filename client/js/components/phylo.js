@@ -28,25 +28,36 @@ function list_request_phylo() {
                 })
 
                 // CREATE TABLE REQUEST PHYLO
-                var thead = $("<thead><tr class='border-botton border-3' > <th scope='col'>ID</th> <th scope='col'>Date</th> <th scope='col'>Title</th><th></th><th></th></tr></thead>");
+                var thead = $("<thead><tr class='border-botton border-3' > <th scope='col'>ID</th> <th scope='col'>Date</th> <th scope='col'>Title</th> <th></th> <th></th> <th></th> </thead>");
 
                 var tbody = $("<tbody></tbody>");
                 for (var i = 0; i < requests_phylo.length; i++) {
-                    var row = $("<tr></tr>");
                     var rowData = requests_phylo[i];
+
+                    const isFileProcessed = rowData[6] == 0 ? false : true; 
+
+                    const initialStatus = isFileProcessed ?  "File processed succesfully" : "Processing input, please wait";
+                    const initialIcon = isFileProcessed ? '✔' : '🕑';
+                    const buttonsClass = isFileProcessed ? '' : 'disabled';
+                    const initialClass = isFileProcessed ? '' : 'disabled_row'
+
+                    var row = $(`<tr id=${rowData[0]} class='${initialClass}'></tr>`);
 
                     //Add data to table
                     row.append($("<td>" + rowData[0] + "</td>"));
                     row.append($("<td>" + rowData[4] + "</td>"));
                     row.append($("<td>" + rowData[1] + "</td>"));
-                    row.append($("<td>" + "<button type='button' class='btn btn-default fw-bold fs-5 table-btn-style see-results-button'+ onclick='showResults(" + rowData[0] + ")'> See Results </button>" + "</td>"));
-                    row.append($("<td>" + "<button type='button' class='btn btn-default fw-bold fs-5 table-btn-style' onclick='deleteFasta(" + rowData[0] + ")'> Delete </button>" + "</td>"));
+                    row.append($(`<td >` + `<button type='button' class='btn btn-default fw-bold fs-5 table-btn-style see-results-button ${buttonsClass}'+ onclick='showResults(` + rowData[0] + ")'> See Results </button>" + "</td>"));
+                    row.append($(`<td>` + `<button  type='button' class='btn btn-default fw-bold fs-5 table-btn-style ${buttonsClass}' onclick='deleteFasta(" + rowData[0] + ")'> Delete </button>` + "</td>"));
+                    row.append($(`<td id='status'><span title= '${initialStatus}' >${initialIcon}</span></td>`))
                     tbody.append(row);
+
                 }
 
                 // Add the table header and body to the HTML page
                 $("#table-phylo").append(thead);
                 $("#table-phylo").append(tbody);
+
 
                 // Display messages to the user based on the response from the server
                 switch (response.data.message) {

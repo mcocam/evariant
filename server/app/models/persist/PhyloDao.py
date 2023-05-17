@@ -39,9 +39,9 @@ class PhyloDao:
             phylo_row = cursor.execute(query_phylo).fetchone()
             fasta_row = cursor.execute(query_fasta).fetchone()
             
-            phylo = PhyloTree(phylo_row[1],fasta_row[0],phylo_row[0])
-            
-            phylos.append(phylo)
+            if(phylo_row is not None):
+                phylo = PhyloTree(phylo_row[1],fasta_row[0],phylo_row[0])
+                phylos.append(phylo)
             
         except Exception as e:
             print(f"Phylo DAO get by fasta_id: {e}")

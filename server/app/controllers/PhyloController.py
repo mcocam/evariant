@@ -98,8 +98,6 @@ class PhyloController:
         
                 temp_dir_path: Path = Path(temp_dir)
                 
-                print(temp_dir_path)
-                
                 fasta_file_path = temp_dir_path/"fasta.fasta"
                 phylo_file_path = temp_dir_path/"phylo.nwk"
                 

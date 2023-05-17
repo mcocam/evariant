@@ -1,7 +1,7 @@
-/**
- * Validates the user's session cookie by sending a POST request to the server.
- * @returns {Promise<Response>} A promise that resolves to the response of the server.
- */
+
+//Validates the user's session cookie by sending a POST request to the server.
+//@returns {Promise<Response>} A promise that resolves to the response of the server.
+ 
 async function validateCookie() {
 
     try {
@@ -15,4 +15,4 @@ async function validateCookie() {
 };
 
 // Call the validateCookie function and store the promise in validSession
-const validSession = validateCookie();
+let validSession = validateCookie();
