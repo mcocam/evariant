@@ -151,8 +151,6 @@ class SnpDao:
             response = cursor.execute(query)
             cursor.commit()
 
-            print(dir(response))
-
             if (response.rowcount <= 0):
                 snp_deleted = 900
 
