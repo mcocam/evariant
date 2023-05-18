@@ -48,7 +48,7 @@ function list_request_phylo() {
                     row.append($("<td>" + rowData[4] + "</td>"));
                     row.append($("<td>" + rowData[1] + "</td>"));
                     row.append($(`<td >` + `<button type='button' class='btn btn-default fw-bold fs-5 table-btn-style see-results-button ${buttonsClass}'+ onclick='showResults(` + rowData[0] + ")'> See Results </button>" + "</td>"));
-                    row.append($(`<td>` + `<button  type='button' class='btn btn-default fw-bold fs-5 table-btn-style ${buttonsClass}' onclick='deleteFasta(" + rowData[0] + ")'> Delete </button>` + "</td>"));
+                    row.append($(`<td>` + `<button  type='button' class='btn btn-default fw-bold fs-5 table-btn-style' onclick='deleteFasta(${rowData[0]})'> Delete </button>` + "</td>"));
                     row.append($(`<td id='status'><span title= '${initialStatus}' >${initialIcon}</span></td>`))
                     tbody.append(row);
 
@@ -105,7 +105,7 @@ function deleteFasta(fasta_id) {
             })
             .catch(e => {
                 console.log(e);
-                return false;
+                window.location.href = './trees.html';
             });
     }
 }

@@ -174,8 +174,6 @@ class FastaDao:
             response = cursor.execute(query)
             cursor.commit()
 
-            print(dir(response))
-
             if (response.rowcount <= 0):
                 fasta_deleted = 900
 
