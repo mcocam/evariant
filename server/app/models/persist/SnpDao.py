@@ -102,7 +102,7 @@ class SnpDao:
         return inserted_rows
 
 
-
+    # ----------------------------------------------------------------
     @staticmethod
     async def __parse_snp(raw_data: List[any]) -> Snp:
         """
@@ -129,7 +129,7 @@ class SnpDao:
         
         return Snp(snp_id, ref_snp, fasta_id, ref_nucleotide, var_nucleotide)
     
-
+    # ----------------------------------------------------------------
     def delete_snp(self, fasta_id: int) -> int:
         """Removes an snp from the database
 
