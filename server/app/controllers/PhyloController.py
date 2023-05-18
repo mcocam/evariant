@@ -111,7 +111,10 @@ class PhyloController:
                                         infile = temp_dir_path/"fasta.fasta",
                                         outfile = temp_dir_path/"output.fasta",
                                         threads = 2,
-                                        seqtype = "DNA"
+                                        seqtype = "DNA",
+                                        max_guidetree_iterations = 1,
+                                        max_hmm_iterations=100,
+                                        iterations=1
                                         )
                 
                 cmd_string = str(clustalo_cline)
