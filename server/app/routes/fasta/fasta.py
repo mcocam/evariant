@@ -58,6 +58,11 @@ async def get_file(file: UploadFile = File(...), session_data: SessionData = Dep
                 position_split: list[int] = [int(position) for position in position.split(":")]
                 sequence: str = is_valid_fasta[5]
                 
+                # If there are any incoherences with lenght
+                if position_split[1]-position_split[0] != len(sequence)-1:
+                    response["message"] = "911"
+                    return response
+                
                 fasta: Fasta = Fasta(title=requests_title,
                                      raw_fasta=content,
                                      type=1,
