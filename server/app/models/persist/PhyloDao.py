@@ -137,8 +137,6 @@ class PhyloDao:
             response = cursor.execute(query)
             cursor.commit()
 
-            print(dir(response))
-
             if (response.rowcount <= 0):
                 phylo_deleted = 900
 

@@ -131,12 +131,16 @@ class SnpDao:
     
 
     def delete_snp(self, fasta_id: int) -> int:
+        """Removes an snp from the database
+
+        Args:
+            fasta_id (int): The id of the fasta to delete
+
+        Returns:
+            int: A code from the list indicating if the operation was successful, or what failed exactly
+        """
 
         snp_deleted: int = 0
-        # query = self.fasta_table.delete().values(
-        #     id = fasta_id,
-        #     user_id = fasta.user_id
-        # )
 
         query = self.snp_table.delete().where(
             self.snp_table.c.fasta_id == fasta_id
@@ -147,12 +151,10 @@ class SnpDao:
             response = cursor.execute(query)
             cursor.commit()
 
-            print(dir(response))
-
-            if response.rowcount > 0:
-                snp_deleted = response.deleted_primary_key[0]
+            if (response.rowcount <= 0):
+                snp_deleted = 900
 
         except Exception as e:
-            print(e)
+            snp_deleted = e
 
         return snp_deleted

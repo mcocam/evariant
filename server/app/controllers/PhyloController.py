@@ -1,4 +1,6 @@
-from models.persist.PhyloDao import PhyloDao
+from models.persist.PhyloDao import PhyloDao 
+from models.persist.FastaDao import FastaDao
+from models.persist.MultiFastaDao import MultiFastaDao
 from models.PhyloTree import PhyloTree
 from models.Fasta import Fasta
 from tempfile import TemporaryDirectory
@@ -19,6 +21,8 @@ class PhyloController:
     
     def __init__(self) -> None:
         self.dao: PhyloDao = PhyloDao()
+        self.fasta_dao: FastaDao = FastaDao()
+        self.multi_fasta_dao: MultiFastaDao = MultiFastaDao()
         
     async def get_phylo_by_id(self, fasta_id: int) -> dict[str, str]:
 
@@ -57,9 +61,7 @@ class PhyloController:
             print(f"Save phylo Newick controller error: {e}")
             
         return saved_rows
-    
-    async def remove_phylos(self, fastas_id: list[Fasta]) -> int:
-        pass 
+
 
     # ----------------------------------------------------------------
     # Validate Multifasta
@@ -83,6 +85,7 @@ class PhyloController:
 
             try:
                 phylo_deleted = self.dao.delete_phylo(fasta_id)
+                
             except Exception as e:
                 print(e)
 
@@ -107,7 +110,7 @@ class PhyloController:
                 clustalo_cline = ClustalOmegaCommandline(
                                         infile = temp_dir_path/"fasta.fasta",
                                         outfile = temp_dir_path/"output.fasta",
-                                        threads = 1,
+                                        threads = 2,
                                         seqtype = "DNA"
                                         )
                 
@@ -147,5 +150,8 @@ class PhyloController:
                 self.save_phylo(phylo)
                     
         except Exception as e:
+            self.dao.delete_phylo(fasta.get_id())
+            self.fasta_dao.delete_fasta(fasta.get_id())
+            self.multi_fasta_dao.delete_multi(fasta.get_id())
             print(f"Error on ClustalO: {e}")
         

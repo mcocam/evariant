@@ -145,8 +145,6 @@ class SingleFastaDao:
             response = cursor.execute(query)
             cursor.commit()
 
-            print(dir(response))
-
             if (response.rowcount <= 0):
                 single_deleted = 900
 
