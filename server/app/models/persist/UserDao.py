@@ -28,7 +28,16 @@ class UserDao:
         self.response: dict[str,any] = {"error": True, "message": "", "data": User}
         self.salt: str = bytes(os.environ["PASS_SECRET"],'"utf-8')
 
+    # ----------------------------------------------------------------
     async def get_user_by_id(self, id: int) -> list[str]:
+        """Returns the information of the user with the provided id
+
+        Args:
+            id (int): The id of the desired user
+
+        Returns:
+            list[str]: A list with the user's information
+        """
 
         response = self.response
 
@@ -54,8 +63,17 @@ class UserDao:
 
         return response
 
-
+    # ----------------------------------------------------------------
     def check_user_credentials(self,email: str, password: str) -> bool:
+        """Checks if a user has presented the correct credentials
+
+        Args:
+            email (str): User's email input
+            password (str): User's password input
+
+        Returns:
+            bool: If the credentials are correct or not
+        """
         
         password_utf8: str = password.encode("utf-8")
         password_hash: str = hashpw(password_utf8,self.salt)
@@ -85,7 +103,16 @@ class UserDao:
 
         return is_ok
     
+    # ----------------------------------------------------------------
     def get_user_by_email(self, email: str) -> list[dict]:
+        """Returns the information of the user with the provided email
+
+        Args:
+            email (str): The email of the desired user
+
+        Returns:
+            list[str]: A list with the user's information
+        """
         
         user: list[dict] = []
         
@@ -106,7 +133,16 @@ class UserDao:
         
         return user
     
+    # ----------------------------------------------------------------
     def add_new_user(self,user: User) -> bool:
+        """Adds a new user to the database
+
+        Args:
+            user (User): A User object
+
+        Returns:
+            bool: Whether the operation was successful or not
+        """
         
         new_user_added: bool = False
         query = insert(self.user_table).values(
@@ -131,7 +167,16 @@ class UserDao:
         return new_user_added
 
 
+    # ----------------------------------------------------------------
     def __parse_user(self, raw_data: list[any]) -> User:
+        """Reads a list of the information of a user, and parses it automatically into a User object
+
+        Args:
+            raw_data (list[any]): A list of the user's information
+
+        Returns:
+            User: The same information converted into a User object
+        """
 
         user_id:        int         = raw_data[0]
         email:          str         = raw_data[1]

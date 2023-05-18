@@ -1,13 +1,14 @@
 from models.PhyloTree import PhyloTree
 from db.get_connection import get_connection
-from sqlalchemy import Table, MetaData, Column, String, insert, select, and_
+from sqlalchemy import Table, MetaData, Column, String, insert, select, and_, Integer, DateTime
 from models.persist.FastaDao import fasta_table
 
 phylo_table: Table = Table(
     "clusters",
     MetaData(),
-    Column("phylo_newick"),
-    Column("fasta_id")
+    Column("phylo_newick", String),
+    Column("fasta_id", Integer),
+    Column("creation_date",DateTime, nullable=True)
 )
 
 

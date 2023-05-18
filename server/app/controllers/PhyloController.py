@@ -111,7 +111,10 @@ class PhyloController:
                                         infile = temp_dir_path/"fasta.fasta",
                                         outfile = temp_dir_path/"output.fasta",
                                         threads = 2,
-                                        seqtype = "DNA"
+                                        seqtype = "DNA",
+                                        max_guidetree_iterations = 1,
+                                        max_hmm_iterations=100,
+                                        iterations=1
                                         )
                 
                 cmd_string = str(clustalo_cline)
@@ -150,8 +153,9 @@ class PhyloController:
                 self.save_phylo(phylo)
                     
         except Exception as e:
-            self.dao.delete_phylo(fasta.get_id())
-            self.fasta_dao.delete_fasta(fasta.get_id())
-            self.multi_fasta_dao.delete_multi(fasta.get_id())
+            print(fasta.get_id())
+            print(self.dao.delete_phylo(fasta.get_id()))
+            print(self.fasta_dao.delete_fasta(fasta.get_id()))
+            print(self.multi_fasta_dao.delete_multi(fasta.get_id()))
             print(f"Error on ClustalO: {e}")
         
