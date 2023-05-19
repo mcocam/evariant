@@ -14,8 +14,10 @@ from Bio.Phylo.PhyloXML import Phylogeny
 import re
 
 import subprocess
-import threading
+#from threading import Thread, Event
+from multiprocessing import Process
 
+active_threads: dict[Process] = {}
 
 class PhyloController:
     
@@ -23,6 +25,7 @@ class PhyloController:
         self.dao: PhyloDao = PhyloDao()
         self.fasta_dao: FastaDao = FastaDao()
         self.multi_fasta_dao: MultiFastaDao = MultiFastaDao()
+        
         
     async def get_phylo_by_id(self, fasta_id: int) -> dict[str, str]:
 
@@ -42,11 +45,17 @@ class PhyloController:
         
         is_processing = False
         
-        thread = threading.Thread(target=PhyloController.do_clustalo_alignment, args=(self, fasta))
-        thread.start()
-        
-        if thread.is_alive():
-            is_processing = True 
+        try:
+            thread = Process(target=PhyloController.do_clustalo_alignment, args=(fasta.get_id(),fasta.get_raw_fasta(), fasta.get_user_id()))
+            thread.start()
+            active_threads[fasta.get_id()] = thread
+            
+            if thread.is_alive():
+                is_processing = True 
+        except Exception as e:
+            self.multi_fasta_dao.delete_multi(fasta.get_id())
+            self.fasta_dao.delete_fasta(fasta.get_id())
+            print(f"Error on parse fasta to phylo controller: {e}")
         
         return is_processing
     
@@ -70,7 +79,7 @@ class PhyloController:
         is_correct: bool = False
 
         # Validates that the file is a valid multifasta format
-        if multi_fasta.count(">") > 1:
+        if multi_fasta.count(">") > 1 and multi_fasta.count(">") < 50:
             is_correct = True
 
         # Valida que las secuencias son nucleótidos
@@ -86,16 +95,22 @@ class PhyloController:
             try:
                 phylo_deleted = self.dao.delete_phylo(fasta_id)
                 
+                if fasta_id in active_threads:
+                    thread = active_threads[fasta_id]
+                    thread.terminate()
+                    print(f"Thread stopped")
+                    
+                
             except Exception as e:
-                print(e)
+                print(f"Delete phylo Controller: {e}")
 
             return phylo_deleted
         
-    def do_clustalo_alignment(self, fasta: Fasta):
+    def do_clustalo_alignment(fasta_id: int, fasta_seq: str, fasta_user_id: int):
         
         
         try:
-            fasta_content = fasta.get_raw_fasta()
+            fasta_content = fasta_seq
         
             with TemporaryDirectory() as temp_dir:
         
@@ -146,16 +161,16 @@ class PhyloController:
                 with open(phylo_file_path, "r") as newick:
                     phylo_newick_str = newick.read() 
                     
-                phylo = PhyloTree(fasta.get_id(),
-                                fasta.get_user_id(),
+                phylo = PhyloTree(fasta_id,
+                                fasta_user_id,
                                 phylo_newick_str)
                 
-                self.save_phylo(phylo)
+                PhyloController().save_phylo(phylo)
+                
+                
                     
         except Exception as e:
-            print(fasta.get_id())
-            print(self.dao.delete_phylo(fasta.get_id()))
-            print(self.fasta_dao.delete_fasta(fasta.get_id()))
-            print(self.multi_fasta_dao.delete_multi(fasta.get_id()))
+            PhyloController().multi_fasta_dao.delete_multi(fasta_id)
+            PhyloController().fasta_dao.delete_fasta(fasta_id)
             print(f"Error on ClustalO: {e}")
         

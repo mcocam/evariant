@@ -45,6 +45,14 @@ class SnpHandler:
     
     
     def get_reference_sequence(self, single_fasta: SingleFasta) -> str:
+        """Returns a ref seq for a singlefasta
+
+        Args:
+            single_fasta (SingleFasta): A SingleFasta Object
+
+        Returns:
+            str: A string with the ref seq
+        """
         
         ref_seq: str = ""
         
@@ -71,6 +79,15 @@ class SnpHandler:
         return ref_seq
     
     def identify_differences(self, ref_seq:str, single_fasta: SingleFasta) -> list[dict]:
+        """Calculates all differences between a singlefasta and its ref seq
+
+        Args:
+            ref_seq (str): The ref seq for the fasta
+            single_fasta (SingleFasta): A SingleFasta object
+
+        Returns:
+            list[dict]: _description_
+        """
         
         differences: list[int] = []
         difference: dict = {
@@ -101,6 +118,15 @@ class SnpHandler:
         
                 
     def get_snp_by_positions(self, differences: list[dict], single_fasta: SingleFasta) -> list[Snp]:
+        """Reads all differences between a singlefasta and its ref seq and checks if there's an snp associated to it
+
+        Args:
+            differences (list[dict]): A list of all detected differences
+            single_fasta (SingleFasta): A SingleFasta object
+
+        Returns:
+            list[Snp]: A list of all found snps
+        """
         
         snp_refs: list[str] = []
         snps: list[Snp] = []
