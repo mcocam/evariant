@@ -91,7 +91,7 @@ class PhyloController:
 
             return phylo_deleted
         
-    async def do_clustalo_alignment(self, fasta: Fasta):
+    def do_clustalo_alignment(self, fasta: Fasta):
         
         
         try:
@@ -153,7 +153,7 @@ class PhyloController:
                 self.save_phylo(phylo)
                     
         except Exception as e:
-            await self.multi_fasta_dao.delete_multi(fasta.get_id())
-            await self.fasta_dao.delete_fasta(fasta.get_id())
+            self.multi_fasta_dao.delete_multi(fasta.get_id())
+            self.fasta_dao.delete_fasta(fasta.get_id())
             print(f"Error on ClustalO: {e}")
         
