@@ -4,6 +4,11 @@ from sqlalchemy import create_engine, Engine, text
 
 
 def get_connection() -> Engine:
+    """Opens a connection to the database
+
+    Returns:
+        Engine: The connection to the database
+    """
 
     user: str = os.environ["DB_USER"]
     password: str = os.environ["DB_PASS"]
