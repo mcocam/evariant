@@ -21,7 +21,7 @@ class Snp:
         self.var_nucleotide: str = var_nucleotide
         self.creation_date: datetime = creation_date
 
-
+    # GETTERS
     def get_ref_snp(self) -> str:
         return self.ref_snp
     
@@ -40,6 +40,7 @@ class Snp:
     def get_creation_date(self) -> datetime:
         return self.creation_date
     
+    # SETTERS
     def set_ref_snp(self, ref_snp: str) -> None:
         self.ref_snp = ref_snp
 

@@ -12,6 +12,7 @@ class PhyloTree:
         self.user_id    = user_id,
         self.newick        = newick
         
+    # GETTERS
     def get_fasta_id(self) -> int:
         return self.fasta_id 
     
@@ -21,6 +22,7 @@ class PhyloTree:
     def get_newick(self) -> str:
         return self.newick 
     
+    # SETTERS
     def set_fasta_id(self, fasta_id: int) -> None:
         self.fasta_id = fasta_id
         

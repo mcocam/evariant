@@ -23,7 +23,7 @@ class User:
         self.id: int = id
         self.creation_date: datetime = creation_date
 
-
+    # GETTERS
     def get_name(self) -> str:
         return self.name
     
@@ -45,6 +45,7 @@ class User:
     def get_creation_date(self) -> datetime:
         return self.get_creation_date
     
+    # SETTERS
     def set_name(self, name: str) -> None:
         self.name = name
 
