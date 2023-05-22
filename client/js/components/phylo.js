@@ -41,6 +41,11 @@ function list_request_phylo() {
                     const buttonsClass = isFileProcessed ? '' : 'disabled';
                     const initialClass = isFileProcessed ? '' : 'disabled_row'
 
+                    if(!isFileProcessed){
+                        $("#btn_phylo").prop('disabled', true);
+                        $("#btn_phylo").text("New request \n (jobs in queue)");
+                    }
+
                     var row = $(`<tr id=${rowData[0]} class='${initialClass}'></tr>`);
 
                     //Add data to table
