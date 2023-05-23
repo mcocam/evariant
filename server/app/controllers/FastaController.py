@@ -14,6 +14,16 @@ class FastaController:
 
     # ----------------------------------------------------------------
     async def get_fasta(self, id):
+        """Returns a fasta identified by the given id
+
+        Args:
+            id (int): The desired fasta's id
+
+        Returns:
+            list[str]:  If found, returns the parsed fasta, a message, and a boolean indicating that there was no error.
+                        If not found, simply returns a message saying so.
+                        If there was an exception, returns that as the message.
+        """
 
         data = None
 
@@ -28,6 +38,14 @@ class FastaController:
     
     # ----------------------------------------------------------------
     async def get_fasta_owner(self, id):
+        """Gets a fasta's owner's id
+
+        Args:
+            id (_type_): The desired fasta's id
+
+        Returns:
+            int: The owner's id
+        """
 
         data = None
 
@@ -43,6 +61,14 @@ class FastaController:
 
     # ----------------------------------------------------------------
     async def add_fasta(self, new_fasta) -> int:
+        """Add a new Fasta to database
+
+        Args:
+            new_fasta (Fasta): The new fasta to add to the database
+
+        Returns:
+            int: The id assigned to the newly added fasta
+        """
 
         new_fasta_added: int = 0
 
@@ -55,11 +81,19 @@ class FastaController:
     
     # ----------------------------------------------------------------
     async def del_fasta(self, id) -> int:
+        """Removes a fasta from the database
+
+        Args:
+            id (int): The id of the fasta to delete
+
+        Returns:
+            int: A code from the list indicating if the operation was successful, or what failed exactly
+        """
 
         try:
             fasta_deleted = self.dao.delete_fasta(id)
         except Exception as e:
-            print(e)
+            fasta_deleted = e
 
         return fasta_deleted
     
@@ -143,7 +177,11 @@ class FastaController:
                 
                 associated_phylo = self.phylo_dao.get_phylo_by_fasta_id(t[0])
 
-                for i in t:
+                for index, i in enumerate(t):
+                    if index == 2:
+                        fasta_row.append("")
+                        continue
+                    
                     if type(i) == datetime.datetime:
                         fasta_row.append(i.strftime('%d/%m/%Y %H:%M'))
                     else:

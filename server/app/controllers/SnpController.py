@@ -131,10 +131,18 @@ class SnpController:
         return response
     
     async def del_snp(self, fasta_id) -> int:
+        """Removes an snp from the database
+
+        Args:
+            fasta_id (int): The id of the fasta to delete
+
+        Returns:
+            int: A code from the list indicating if the operation was successful, or what failed exactly
+        """
 
         try:
             snp_deleted = self.dao.delete_snp(fasta_id)
         except Exception as e:
-            print(e)
+            snp_deleted = e
 
         return snp_deleted

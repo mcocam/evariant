@@ -8,6 +8,14 @@ class MultiFastaController:
         self.dao: MultiFastaDao = MultiFastaDao()
         
     async def insert_fasta(self, fasta: Fasta) -> int:
+        """Add a new multifasta to the database
+
+        Args:
+            fasta (Fasta): A Fasta object
+
+        Returns:
+            int: The id assigned to the newly added multifasta
+        """
         
         new_fasta_added: int = 0
 
@@ -21,10 +29,18 @@ class MultiFastaController:
     
 
     async def del_multi(self, fasta_id) -> int:
+        """Removes a fasta from the database
 
-            try:
-                multi_deleted = self.dao.delete_multi(fasta_id)
-            except Exception as e:
-                print(e)
+        Args:
+            fasta_id (int): The id of the fasta to delete
 
-            return multi_deleted
+        Returns:
+            int: A code from the list indicating if the operation was successful, or what failed exactly
+        """
+
+        try:
+            multi_deleted = self.dao.delete_multi(fasta_id)
+        except Exception as e:
+            multi_deleted = e
+
+        return multi_deleted

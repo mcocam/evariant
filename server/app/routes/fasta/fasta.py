@@ -102,7 +102,7 @@ async def get_file(file: UploadFile = File(...), session_data: SessionData = Dep
         
     except Exception as e:
         print(f"Add fasta error: {e}")
-        response["message"] = "913" # Add fasta error
+        response["message"] = "911" # Add fasta error
     #print(content)
     
     return response

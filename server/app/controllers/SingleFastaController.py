@@ -9,7 +9,14 @@ class SingleFastaController:
         self.dao = SingleFastaDao()
 
     def parse_single_fasta(self, fasta: Fasta) -> int:
-        
+        """Parses a Fasta into a SingleFasta and adds it to the db
+
+        Args:
+            fasta (Fasta): A Fasta object
+
+        Returns:
+            int: The id assigned to the newly addes singlefasta
+        """
         
         inserted_id: int = 0
         
@@ -33,6 +40,14 @@ class SingleFastaController:
         return inserted_id
     
     async def get_single_fasta_by_id(self, id: int) -> SingleFasta or None:
+        """Returns the SingleFasta identified by the given id
+
+        Args:
+            id (int): The id number of the desired fasta
+
+        Returns:
+            SingleFasta: A SingleFasta object
+        """
         
         data = None
 
@@ -46,10 +61,18 @@ class SingleFastaController:
         return data
 
     async def del_single(self, fasta_id) -> int:
+        """Removes a single fasta from the database
 
-            try:
-                single_deleted = self.dao.delete_single(fasta_id)
-            except Exception as e:
-                print(e)
+        Args:
+            fasta_id (int): The id of the fasta to delete
 
-            return single_deleted
+        Returns:
+            int: A code from the list indicating if the operation was successful, or what failed exactly
+        """
+
+        try:
+            single_deleted = self.dao.delete_single(fasta_id)
+        except Exception as e:
+            single_deleted = e
+
+        return single_deleted
