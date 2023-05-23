@@ -70,6 +70,29 @@ class SnpDao:
         return snps
     
 
+
+    # ----------------------------------------------------------------
+    async def get_snp_refs_by_fasta_id(self, fasta_id: int) -> List[str]:
+        """
+        Retrieves all the SNPs references for a given FASTA id from the database.
+        
+        Arguments:
+        - fasta_id: The id of the FASTA to retrieve SNPs references for.
+        
+        Returns:
+        - A list of Snp references or an empty list if none found.
+        """
+        snp_refs = []
+        query = select(self.snp_table.c.ref_snp).where(self.snp_table.c.fasta_id == fasta_id)
+        #query = self.snp_table.c.ref_snp.select().where(self.snp_table.c.fasta_id == fasta_id)
+
+        cursor = self.connection.connect()
+        rows = cursor.execute(query)
+        for snp_ref in rows:
+            snp_refs.append(snp_ref)
+        return snp_refs
+    
+
     # ----------------------------------------------------------------
     async def add_new_snp(self, snp: Snp) -> bool:
         """

@@ -83,6 +83,33 @@ class SnpController:
 
 
 
+# ----------------------------------------------------------------
+    async def get_snp_refs_by_fasta_id(self, fasta_id: int) -> list[str]:
+
+        """
+        Retrieves all SNPs references from the database associated with a given FASTA ID.
+
+        Args:
+            fasta_id: An integer representing the ID of the FASTA to retrieve SNPs for.
+
+        Returns:
+            A list of SNP references (string)
+        """
+
+        fasta_snps_refs: list[str] = []
+        
+        try:
+            fasta_snps_refs = await self.dao.get_snp_refs_by_fasta_id(fasta_id)
+
+        except Exception as e:
+            print(f"get_snp_refs_by_fasta_id: {e}")
+
+        return fasta_snps_refs
+
+
+
+
+
     async def save_snps_to_db(self, snp: Snp) -> bool:
         """
         Retrieves SNPs from a FASTA file by a list of positions and saves them to the database.
