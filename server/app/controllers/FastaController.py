@@ -1,18 +1,15 @@
 import datetime
 import re
-from requests import get, Response
 from models.persist.FastaDao import FastaDao
 from models.utils.SnpHandler import SnpHandler
-
-from pydantic import BaseModel
 from models.Fasta import Fasta
-import env
-import os
+from models.persist.PhyloDao import PhyloDao
 
 class FastaController:
 
     def __init__(self) -> None:
         self.dao = FastaDao()
+        self.phylo_dao = PhyloDao()
         self.snp_handler = SnpHandler()
 
     # ----------------------------------------------------------------
@@ -28,6 +25,20 @@ class FastaController:
             print(f"Get fasta info error: {e}")
 
         return data
+    
+    # ----------------------------------------------------------------
+    async def get_fasta_owner(self, id):
+
+        data = None
+
+        try:
+            result = await self.dao.get_fasta_by_id(id)
+            data: Fasta = result['data']
+
+        except Exception as e:
+            print(f"Get fasta info error: {e}")
+
+        return data.get_user_id()
 
 
     # ----------------------------------------------------------------
@@ -41,6 +52,16 @@ class FastaController:
             print(e)
 
         return new_fasta_added
+    
+    # ----------------------------------------------------------------
+    async def del_fasta(self, id) -> int:
+
+        try:
+            fasta_deleted = self.dao.delete_fasta(id)
+        except Exception as e:
+            print(e)
+
+        return fasta_deleted
     
 
     # The function checks if it is a valid single FASTA
@@ -114,19 +135,23 @@ class FastaController:
         try:
             # Get Info Fasta from DAO
             info_fasta: list[list] =  await self.dao.get_info(user_id, single_fasta)
+            
 
             data: list[list] = []
             for t in info_fasta:
                 fasta_row: list[str] = []
+                
+                associated_phylo = self.phylo_dao.get_phylo_by_fasta_id(t[0])
 
                 for i in t:
                     if type(i) == datetime.datetime:
                         fasta_row.append(i.strftime('%d/%m/%Y %H:%M'))
                     else:
                         fasta_row.append(str(i))
+                        
+                fasta_row.append(len(associated_phylo))
+                
                 data.append(fasta_row)
-
-            print(data)
 
         except Exception as e:
             print(f"FastaController Exception: {e}")

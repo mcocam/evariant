@@ -125,7 +125,7 @@ class SnpDao:
         return inserted_rows
 
 
-
+    # ----------------------------------------------------------------
     @staticmethod
     async def __parse_snp(raw_data: List[any]) -> Snp:
         """
@@ -151,3 +151,33 @@ class SnpDao:
         var_nucleotide: str = raw_data[4]
         
         return Snp(snp_id, ref_snp, fasta_id, ref_nucleotide, var_nucleotide)
+    
+    # ----------------------------------------------------------------
+    def delete_snp(self, fasta_id: int) -> int:
+        """Removes an snp from the database
+
+        Args:
+            fasta_id (int): The id of the fasta to delete
+
+        Returns:
+            int: A code from the list indicating if the operation was successful, or what failed exactly
+        """
+
+        snp_deleted: int = 0
+
+        query = self.snp_table.delete().where(
+            self.snp_table.c.fasta_id == fasta_id
+        )
+
+        try:
+            cursor = self.connection.connect()
+            response = cursor.execute(query)
+            cursor.commit()
+
+            if (response.rowcount <= 0):
+                snp_deleted = 900
+
+        except Exception as e:
+            snp_deleted = e
+
+        return snp_deleted

@@ -1,10 +1,7 @@
 # from models.persist.FastaDao import FastaDao
 from models.persist.SingleFastaDao import SingleFastaDao
-from pydantic import BaseModel
 from models.Fasta import Fasta
 from models.SingleFasta import SingleFasta
-import env
-import os
 
 
 class SingleFastaController:
@@ -35,7 +32,7 @@ class SingleFastaController:
             
         return inserted_id
     
-    async def get_single_fasta_by_id(self, id: int) -> SingleFasta | None:
+    async def get_single_fasta_by_id(self, id: int) -> SingleFasta or None:
         
         data = None
 
@@ -47,3 +44,12 @@ class SingleFastaController:
             print(f"Get fasta info error: {e}")
 
         return data
+
+    async def del_single(self, fasta_id) -> int:
+
+            try:
+                single_deleted = self.dao.delete_single(fasta_id)
+            except Exception as e:
+                print(e)
+
+            return single_deleted

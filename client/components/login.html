@@ -1,38 +1,45 @@
-<!-- Modal -->
+<!-- LOGIN MODAL -->
+
 <div class="modal fade" id="login" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Login</h1>
+                <!-- BUTTON CANCEL -->
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form>
                 <div class="modal-body">
                     <div class="input-group mb-3">
+                        <!-- INPUT EMAIL -->
                         <span class="input-group-text" id="basic-addon1">Email</span>
                         <input id="loginEmail" type="email" class="form-control" placeholder="jane.doe@fakemail.com"
                             aria-label="email" aria-describedby="basic-addon1"><br>
 
                     </div>
-                    <!-- Error Message Email -->
+                    <!-- ERROR MESSAGE EMAIL -->
                     <div id="msgEmail" class="fs-6 text-danger"></div>
 
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">Password</span>
+                        <!-- INPUT PASSWORD -->
                         <input id="loginPassword" type="password" class="form-control" placeholder="mypassword123"
                             aria-label="password" aria-describedby="basic-addon1">
                          
                     </div>
-                    <!-- Error Message Password -->
+                    <!-- ERROR MESSAGE PASSWORD -->
                     <div id="msgPsw" class="fs-6 text-danger"></div>
 
                 </div>
 
                 <div id="result-login" class="fs-6"></div>
                 
+                <!-- FOOTER MODAL -->
                 <div class="modal-footer">
+                    <!-- BUTTON BACK -->
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Go Back</button>
+                    <!-- BUTTON NEXT -->
                     <button type="button" class="btn fw-bold px-4 py-2" id="loginButton" disabled>Sign in</button>
                 </div>
             </form>
@@ -40,4 +47,5 @@
     </div>
 </div>
 
+<!-- SCRIPT JS -->
 <script src="./js/components/login.js"></script>

@@ -1,6 +1,3 @@
-/* SNP results request results page js
-@author: Melania Prado */
-
 $().ready(() => {
   const urlParams = new URLSearchParams(window.location.search);
   const fasta_id = urlParams.get('fasta_id');
@@ -142,7 +139,11 @@ $().ready(() => {
         // Add the articles card body to the articles card content
         articlesCardContent.append(articlesCardBody);
 
-      });
+
+        .catch(function (error) {
+            console.log(error);
+            console.log('catch');
+        });
 
       // Add event listener to collapse/expand accordion
     })

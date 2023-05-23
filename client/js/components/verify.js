@@ -1,23 +1,18 @@
-async function validateCookie() {
 
+//Validates the user's session cookie by sending a POST request to the server.
+//@returns {Promise<Response>} A promise that resolves to the response of the server.
+ 
+async function validateCookie() {
 
     try {
         const response = await fetch("./api/users/verify", {
             method: 'POST'
         })
-        const text = await response.json();
-        return text;
-        // console.log(response.status)
+        return response;
     } catch(e) {
-        // console.log("tudo mal")
+        // console.log("Verify cookie failed: " e)
     }
 };
 
-const validSession = validateCookie();
-validSession.then(d => {
-    if(d.status_code === 200){
-        console.log("Session ok!")
-    }else{
-        console.log("Session Off!")
-    }
-});
+// Call the validateCookie function and store the promise in validSession
+let validSession = validateCookie();

@@ -7,23 +7,24 @@ function loginFunction(body){
     const loginMessage = $('#result-login')
     loginMessage.empty();
     
+    // Send a POST request to the server for user login
     axios
         .post('/api/users/login', body)
         .then(response => {
 
-            //If the request is successful, display a message to the user
+            // Display a message to the user based on the server response
             switch(response.data.message) {
                 case "900":
-                    $(loginMessage).text('Session On');
+                    $(loginMessage).html('<p class="text-center fw-bold text-success">Session On<p>');
                     setTimeout(function() {
-                        location.reload();
-                      }, 1000);
+                        window.location.href = './index.html';
+                      }, 500);
                     break;
                 case "904":
-                    $(loginMessage).text('Invalid Credentials');
+                    $(loginMessage).html('<p class="text-center fw-bold text-danger">Invalid Credentials</p>');
                     break;
                 case "909":
-                    $(loginMessage).text('Served has failed, try later');
+                    $(loginMessage).text('<p class="text-center fw-bold text-warning">Served has failed, try later</p>');
                     break;
                 default:
                     $(loginMessage).text('');
@@ -46,11 +47,13 @@ $().ready(() => {
         const email     = $("#loginEmail").val();
         const password  = $("#loginPassword").val();
 
+        // Create the body object with email and password
         const body = {
             "email": email, 
             "password": password
         };
 
+        // Call the loginFunction and pass the body object
         const response = loginFunction(body);
     });
 
@@ -59,16 +62,19 @@ $().ready(() => {
 
 /** ----------------------  ACTIVATE BUTTON ----------------------------- */
 
+// Event listeners for input changes on email and password fields
 ["#loginEmail", "#loginPassword"].forEach((i) => {
     $(i).on("change", () => {
         handleSignInButton()
     })
 })
 
+// Function to handle the state of the sign-in button
 const handleSignInButton = () => {
 
     let state = [];
 
+    // Validate email and password inputs
     ["#loginEmail", "#loginPassword"].forEach((input,index) => {
         const value = $(input).val();
             let isOk = false;
@@ -83,52 +89,49 @@ const handleSignInButton = () => {
     });
 
     if(state.some(data => data === false)){
-        // Desactivar
+        // Disable the sign-in button
         $('#loginButton').prop('disabled', true);
 
     }else{
-        // Activar
+        // Enable the sign-in button
         $('#loginButton').prop('disabled', false);
-
     }
 
 }
 
 /** -------------------------------- VALIDATION FUNCTIONS ------------------------ */
 
-
 // Validate email format and length
 function validateEmail() {
 
-    // Collect Valued email
+    // Collect the entered email
     email = $("#loginEmail").val();
 
-    // Regext Validate Email
+    // Regular expression to validate email format
     var regex = new RegExp(/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/);
     
     if (regex.test(email) && email.length <= 50) {
         $("#msgEmail").html("");
-        return true; // No hay errores
+        return true; // No errors
     }else{
         $("#msgEmail").html("<p>Wrong email format entered</p>");
-        return false; // Hay errores
+        return false; // Errors
     }
 }
 
 // Validate Password format and length
 function validatePassword() {
 
-    // Collect Valued Password
+    // Collect the entered password
     psw  = $("#loginPassword").val();
 
-    // Regext Validate Password
+    // Regular expression to validate password format
     var regex = new RegExp(/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/);
     if (regex.test(psw)) {
         $("#msgPsw").html("");
-        return true; // No hay errores
+        return true; // No errors
     }else{
         $("#msgPsw").html("<p>The password must have between 8 and 16 characters, at least one digit, at least one lower case and at least one upper case.</p>")
-        return false; // Hay errores
+        return false; // Errors
     }
-
 }

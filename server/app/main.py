@@ -3,6 +3,7 @@ from routes.users.session import router as session_router
 from routes.users.register import router as register_router
 from routes.fasta.fasta import router as fasta_router
 from routes.snp.snp import router as snp_router
+from routes.phylo.phylo import router as phylo_router
 from uvicorn import run
 
 from fastapi.middleware.cors import CORSMiddleware
@@ -29,7 +30,7 @@ app.include_router(session_router)
 app.include_router(register_router)
 app.include_router(fasta_router)
 app.include_router(snp_router)
-
+app.include_router(phylo_router)
 
 if __name__ == "__main__":
     # To test individually
