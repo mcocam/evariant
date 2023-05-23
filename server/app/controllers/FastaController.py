@@ -93,7 +93,7 @@ class FastaController:
         try:
             fasta_deleted = self.dao.delete_fasta(id)
         except Exception as e:
-            print(e)
+            fasta_deleted = e
 
         return fasta_deleted
     
