@@ -202,6 +202,12 @@ class PhyloController:
         except Exception as e:
             PhyloController().multi_fasta_dao.delete_multi(fasta_id)
             PhyloController().fasta_dao.delete_fasta(fasta_id)
+            try:
+                del active_threads[fasta_id]
+                del active_subprocess[fasta_id]
+                del temporal_folders[fasta_id]
+            except:
+                pass
             print(f"Error on ClustalO: {e}")
         finally:
             rmtree(temporal_path)
