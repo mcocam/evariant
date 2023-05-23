@@ -177,7 +177,11 @@ class FastaController:
                 
                 associated_phylo = self.phylo_dao.get_phylo_by_fasta_id(t[0])
 
-                for i in t:
+                for index, i in enumerate(t):
+                    if index == 2:
+                        fasta_row.append("")
+                        continue
+                    
                     if type(i) == datetime.datetime:
                         fasta_row.append(i.strftime('%d/%m/%Y %H:%M'))
                     else:
