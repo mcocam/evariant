@@ -10,6 +10,15 @@ class UserController:
 
 
     async def do_login(self, email: str, password: str) -> bool:
+        """Checks if the login info is correct
+
+        Args:
+            email (str): Email input by user
+            password (str): Password input by user
+
+        Returns:
+            bool: Returns true if email and password matches with the ones saved in the database
+        """
 
         result: bool = False
 
@@ -22,6 +31,14 @@ class UserController:
         return result
     
     async def check_if_user_exists(self, email: str) -> bool:
+        """Checks if an email is already associated with a user
+
+        Args:
+            email (str): The email to check
+
+        Returns:
+            bool: False if user doesn't exist, True if it does
+        """
         
         user_exists: bool = True 
         
@@ -38,6 +55,14 @@ class UserController:
         return user_exists
     
     async def get_user_info(self, email):
+        """Gets a user's info
+
+        Args:
+            email (_type_): The email of the desired user
+
+        Returns:
+            list: A list of the user's info
+        """
         
         data = {}
         
@@ -53,6 +78,14 @@ class UserController:
         
     
     async def register_user(self, new_user: User) -> bool:
+        """Adds a new user to the database
+
+        Args:
+            new_user (User): A User object to be stored in the db
+
+        Returns:
+            bool: Indicates if it's been successfully added
+        """
         
         new_user_added: bool = False
         
