@@ -120,7 +120,7 @@ $().ready(() => {
 
             let articlesCard = '';
             // Create table rows for each related article of the current SNP
-            if (snpRelatedArticles[index]) {
+            if (snpGenotypes[index] && snpRelatedArticles[index]) {
               const articlesArray = snpRelatedArticles[index];
               let articles = [];
               if (articlesArray.length > 1) {
