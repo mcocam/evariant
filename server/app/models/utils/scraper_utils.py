@@ -158,7 +158,10 @@ def get_snp_articles_titles(snp_refs, pages):
                 next_sibling = link.find_next_sibling(text=True)
                 if next_sibling:
 
-                    links_list.append(next_sibling.text.strip())
+
+                    title = next_sibling.text.strip().lstrip(']')  # Remove leading ']'
+                    links_list.append(title)
+                    #links_list.append(next_sibling.text.strip())
 
             text_after_links.append((snp_refs[i], links_list))
         except Exception as e:
@@ -167,59 +170,49 @@ def get_snp_articles_titles(snp_refs, pages):
     return text_after_links
 
 
-    
+def get_regions_values(snp_refs, pages):
+    regions_values = []
 
+    for i, page in enumerate(pages):
+        print(page)
+        try:
+            #pattern = r'var series = (\[[^\]]+\])'
+            pattern = r'var series = \[({"data":\[{[\s\S]*)}\]}\];'
+            match = re.search(pattern, page)
 
-def get_snp_data(snp_refs, pages):
-    """
-    Retrieves various types of data associated with the given SNP references.
-    
-    Args:
-        snp_refs (list): A list of SNP references.
-        pages (list): A list of SNPedia pages as strings.
-        
-    Returns:
-        dict: A dictionary containing SNP data including genotypes, articles, article URLs, and article titles.
-    """
-    snp_data = {}
-    try:
-        snp_data['snp_genotypes'] = get_snp_genotypes(snp_refs, pages)
-        snp_data['snp_articles'] = get_snp_articles(snp_refs, pages)
-        snp_data['snp_articles_urls'] = get_articles_urls(snp_refs, pages)
-        snp_data['snp_articles_titles'] = get_snp_articles_titles(snp_refs, pages)
+            data_list = []
+            if match:
+                for group in match.groups():
+                    data_string = group
+                    data_list.extend(data_string.split(','))
 
-        for key, values in snp_data.items():
-            snp_data[key] = {item[0]: item[1] for item in values}
+            # Limpiar los valores (eliminar comillas y espacios)
+            clean_data_list = [value.strip().strip('"') for value in data_list]
+            regions_values.append((snp_refs[i], clean_data_list))
 
-    except Exception as e:
-            print(f"Error getting SNP data: {str(e)}")
+        except Exception as e:
+            print(f"Error getting regions values for {snp_refs[i]}: {str(e)}")
 
-    return snp_data
+    return regions_values
 
 
 
 
+def get_regions_desc(snp_refs, pages):
+    extracted_texts = []
 
+    pattern = r'"meta":"[^"]+\sof\s([^"]+)"'
 
-# def get_snp_data(snp_refs, pages):
-#     snp_data = {}
-#     try:
-#         snp_data['snp_genotypes'] = get_snp_genotypes(snp_refs, pages)
-#         snp_data['snp_articles'] = get_snp_articles(snp_refs, pages)
-#         snp_data['snp_articles_urls'] = get_articles_urls(snp_refs, pages)
-#         snp_data['snp_articles_titles'] = get_snp_articles_titles(snp_refs, pages)
-#         snp_data['snp_regions'] = get_snp_regions(snp_refs, pages)
-#         snp_data['snp_regions_values'] = get_regions_values(snp_refs, pages)
-#         snp_data['snp_regions_desc'] = get_regions_desc(snp_refs, pages)
+    for i, page in enumerate(pages):
+        try:
+            matches = re.finditer(pattern, page)
+            for match in matches:
+                extracted_texts.append((snp_refs[i], match.group(1)))
 
-#         # Agregar el número de referencia SNP a cada dato
-#         for key, values in snp_data.items():
-#             snp_data[key] = {item[0]: item[1] for item in values}
+        except Exception as e:
+            print(f"Error getting regions descriptions for {snp_refs[i]}: {str(e)}")
+    return extracted_texts
 
-#     except Exception as e:
-#             print(f"Error getting SNP data: {str(e)}")
-
-#     return snp_data
 
 
 
@@ -248,45 +241,3 @@ def get_snp_data(snp_refs, pages):
 
 
 
-# def get_regions_values(snp_refs, pages):
-#     regions_values = []
-
-#     for i, page in enumerate(pages):
-#         print(page)
-#         try:
-#             #pattern = r'var series = (\[[^\]]+\])'
-#             pattern = r'var series = \[({"data":\[{[\s\S]*)}\]}\];'
-#             match = re.search(pattern, page)
-
-#             data_list = []
-#             if match:
-#                 for group in match.groups():
-#                     data_string = group
-#                     data_list.extend(data_string.split(','))
-
-#             # Limpiar los valores (eliminar comillas y espacios)
-#             clean_data_list = [value.strip().strip('"') for value in data_list]
-#             regions_values.append((snp_refs[i], clean_data_list))
-
-#         except Exception as e:
-#             print(f"Error getting regions values for {snp_refs[i]}: {str(e)}")
-
-#     return regions_values
-
-
-
-
-# def get_regions_desc(snp_refs, pages):
-#     extracted_texts = []
-
-#     pattern = r'"meta":"[^"]+\sof\s([^"]+)"'
-
-#     for i, page in enumerate(pages):
-#         try:
-#             matches = re.finditer(pattern, page)
-#             for match in matches:
-#                 extracted_texts.append((snp_refs[i], match.group(1)))
-
-#         except Exception as e:
-#             print(f"Error getting regions descriptions for {snp_refs[i]}: {str(e)}")
-#     return extracted_texts
