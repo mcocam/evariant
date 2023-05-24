@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, File, UploadFile
+from fastapi import APIRouter, Depends, File, UploadFile, HTTPException
 from routes.users.session import cookie, SessionData, verifier
 from controllers.PhyloController import PhyloController
 from controllers.FastaController import FastaController
@@ -118,10 +118,20 @@ async def send_results_phylo(fasta_id: str, session_data: SessionData = Depends(
         "message": "931",  # No results found
         "data": ""
     }
+    
+    user_id: int = session_data.id
 
     phylo_controller: PhyloController = PhyloController()
+    fasta_controller: FastaController = FastaController()
     
     try:
+        
+        fasta_owner = await fasta_controller.get_fasta_owner(fasta_id)
+        
+        if fasta_owner != user_id:
+            return HTTPException(403)
+        
+        
         result_phyloTree = await phylo_controller.get_phylo_by_id(fasta_id)
 
         if result_phyloTree:
