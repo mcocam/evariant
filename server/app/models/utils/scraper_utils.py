@@ -49,9 +49,7 @@ def get_snpedia_pages(snp_refs):
             session = requests.Session()
             response = session.get(url, headers=headers)
             
-            sleep(np.random.choice([1,3,2,5,4,6]))
-            
-            print(response.text)
+            sleep(np.random.choice([1,3,2,4]))
             if response.status_code == 200:
                 soup = BeautifulSoup(response.text, 'html.parser')
                 body_content = soup.body
