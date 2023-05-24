@@ -47,7 +47,7 @@ $().ready(() => {
             let genotypeCard = '';
             const snpGenotypeData = snpGenotypes[index];
             let genotype = [];
-            if (typeof snpGenotypeData[1] !== 'undefined') {
+            if (snpGenotypeData.length > 1) {
               if (snpGenotypeData[1] !== '') {
 
                 //Genotype Comparative Card
@@ -117,9 +117,8 @@ $().ready(() => {
             let articlesCard = '';
             // Create table rows for each related article of the current SNP
             const articlesArray = snpRelatedArticles[index];
-
             let articles = [];
-            if (typeof articlesArray[1] !== 'undefined') {
+            if (articlesArray.length > 1) {
               if (articlesArray[1] !== '') {
 
                 // Build SNP related articles info
