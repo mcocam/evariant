@@ -37,7 +37,8 @@ def get_snpedia_pages(snp_refs):
             headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"}
             str_ref = clean_snp_refs(ref)
             url = 'https://www.snpedia.com/index.php/' + str_ref
-            response = requests.get(url, headers=headers)
+            session = requests.Session()
+            response = session.get(url, headers=headers)
             
             print(response.text)
             if response.status_code == 200:
