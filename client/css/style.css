@@ -48,8 +48,7 @@ body {
 
 #home-header {
     margin-left: 14rem;
-    text-align: left;
-    float: left;
+    text-align: center;
 }
 
 #team_seccion {
@@ -238,6 +237,11 @@ body {
 
 
 /* SNP REQUEST RESULTS */
+
+.info-message {
+    text-align: center;
+    font-size: 1rem;
+}
 
 .snp-result-card {
     border: none;
