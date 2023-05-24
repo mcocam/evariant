@@ -217,8 +217,7 @@ class PhyloController:
                                         preexec_fn=os.setsid, 
                                         stdin=subprocess.PIPE, 
                                         stdout=subprocess.PIPE, 
-                                        stderr=subprocess.STDOUT, 
-                                        bufsize=1)
+                                        stderr=subprocess.STDOUT)
             
             temporal_folders[fasta_id] = temporal_path
             active_subprocess[fasta_id] = process
