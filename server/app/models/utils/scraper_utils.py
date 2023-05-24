@@ -39,11 +39,12 @@ def get_snpedia_pages(snp_refs):
             url = 'https://www.snpedia.com/index.php/' + str_ref
             response = requests.get(url, headers=headers)
             
-            print(response.status_code)
+            print(response)
             if response.status_code == 200:
                 soup = BeautifulSoup(response.text, 'html.parser')
                 body_content = soup.body
                 pages.append(str(body_content))
+                print(soup.body)
             else:
                 pages.append(None)
         except Exception as e:
