@@ -203,7 +203,9 @@ class PhyloController:
                                 iterations=1,
                                 distmat_full=False,
                                 distmat_full_iter=False,
-                                usekimura=True
+                                usekimura=False,
+                                force=True,
+                                outfmt="fasta"
                                 )
         
             cmd_string = str(clustalo_cline)
