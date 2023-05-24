@@ -34,11 +34,16 @@ def get_snpedia_pages(snp_refs):
     for ref in snp_refs:
         try:
             
-            headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"}
+            proxies = {
+                'http': 'http://proxy.example.com:8080',
+                'https': 'http://secureproxy.example.com:8090',
+                }
+            
+            headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
             str_ref = clean_snp_refs(ref)
             url = 'https://www.snpedia.com/index.php/' + str_ref
             session = requests.Session()
-            response = session.get(url, headers=headers)
+            response = session.get(url, headers=headers, proxies=proxies)
             
             print(response.text)
             if response.status_code == 200:
