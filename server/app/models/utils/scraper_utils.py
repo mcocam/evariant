@@ -1,7 +1,8 @@
 import re
 import requests
 from bs4 import BeautifulSoup
-
+import numpy as np
+from time import sleep
 
 def clean_snp_refs(snp_reference) -> str:
     """
@@ -34,18 +35,21 @@ def get_snpedia_pages(snp_refs):
     for ref in snp_refs:
         try:
             
-            proxies = {
-                'http': 'http://proxy.example.com:8080',
-                'https': 'http://secureproxy.example.com:8090',
-                }
-            
-            headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+                'Referer': 'https://www.google.com',
+                'Accept-Language': 'en-US,en;q=0.9',
+                'Accept-Encoding': 'gzip, deflate',
+                'Connection': 'keep-alive',
+                'Cache-Control': 'max-age=0',
+                'Upgrade-Insecure-Requests': '1'
+            }
             str_ref = clean_snp_refs(ref)
             url = 'https://www.snpedia.com/index.php/' + str_ref
             session = requests.Session()
-            response = session.get(url, headers=headers, proxies=proxies)
+            response = session.get(url, headers=headers)
             
-            print(response.text)
+            sleep(np.random.choice([1,3,2,4]))
             if response.status_code == 200:
                 soup = BeautifulSoup(response.text, 'html.parser')
                 body_content = soup.body
