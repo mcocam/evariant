@@ -14,7 +14,7 @@ $().ready(() => {
       const snpArticlesURL = response.data.snp_articles_url;
       const articlesTitles = response.data.snp_articles_titles;
       const regionsValues = response.data.snp_regions_values;
-      const regionsDesc = response.data.snp_regions_desc;
+      //const regionsDesc = response.data.snp_regions_desc;
 
       // Define outer structure for data
       const resultsContainer = $('#results_body');
@@ -197,11 +197,11 @@ $().ready(() => {
 
 
             // Create table rows for each related article of the current SNP
-            const regionsArray = regionsValues[index];
-            const regionsVal = regionsArray[1]
+            //const regionsArray = regionsValues[index];
+            //const regionsVal = regionsArray[1]
 
-            const regionsDescArray = regionsDesc[index];
-            const regionsDe = regionsDescArray[1]
+            //const regionsDescArray = regionsDesc[index];
+            //const regionsDe = regionsDescArray[1]
 
 
 

@@ -33,9 +33,13 @@ def get_snpedia_pages(snp_refs):
     pages = []
     for ref in snp_refs:
         try:
+            
+            headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'}
             str_ref = clean_snp_refs(ref)
             url = 'https://www.snpedia.com/index.php/' + str_ref
-            response = requests.get(url)
+            response = requests.get(url, headers=headers)
+            
+            print(response.status_code)
             if response.status_code == 200:
                 soup = BeautifulSoup(response.text, 'html.parser')
                 body_content = soup.body
@@ -174,7 +178,6 @@ def get_regions_values(snp_refs, pages):
     regions_values = []
 
     for i, page in enumerate(pages):
-        print(page)
         try:
             #pattern = r'var series = (\[[^\]]+\])'
             pattern = r'var series = \[({"data":\[{[\s\S]*)}\]}\];'
