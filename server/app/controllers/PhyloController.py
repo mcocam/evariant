@@ -196,12 +196,14 @@ class PhyloController:
             clustalo_cline = ClustalOmegaCommandline(
                                 infile = input_fasta_path.absolute(),
                                 outfile = output_fasta_path.absolute(),
-                                threads = 2,
+                                threads = 1,
                                 seqtype = "DNA",
                                 max_guidetree_iterations = 1,
-                                max_hmm_iterations=100,
+                                max_hmm_iterations=10,
                                 iterations=1,
-                                verbose = True
+                                distmat_full=False,
+                                distmat_full_iter=False,
+                                usekimura=True
                                 )
         
             cmd_string = str(clustalo_cline)
