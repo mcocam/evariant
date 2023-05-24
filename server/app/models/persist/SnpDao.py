@@ -65,8 +65,6 @@ class SnpDao:
         cursor = self.connection.connect()
         rows = cursor.execute(query)
         for row in rows:
-            print('row')
-            print(row)
             snp = await self.__parse_snp(row)
             snps.append(snp)
         return snps
