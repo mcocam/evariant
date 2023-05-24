@@ -13,7 +13,8 @@ $().ready(() => {
       const snpRelatedArticles = response.data.snp_articles;
       const snpArticlesURL = response.data.snp_articles_url;
       const articlesTitles = response.data.snp_articles_titles;
-      //const snpRegions = response.data[1].snp_regions;
+      const regionsValues = response.data.snp_regions_values;
+      const regionsDesc = response.data.snp_regions_desc;
 
       // Define outer structure for data
       const resultsContainer = $('#results_body');
@@ -22,6 +23,7 @@ $().ready(() => {
       // Iterate over each SNP key in the response
       if (Array.isArray(snpRefs)) {
         if(snpRefs.length > 0) {
+
           // Iterate found snp and display results and related data
           snpRefs.forEach(function (snpRef, index) {
 
@@ -29,12 +31,9 @@ $().ready(() => {
             const accordion = $('<div>').addClass('accordion mt-5').attr('id', `${snpRef}-accordion`);
             const accordionContent = $('<div>').addClass('accordion-content').attr('id', `${snpRef}-accordion-content`);
             const accordionHeader = $('<div>').addClass('d-flex justify-content-between align-items-center');
-            //resultsContainer.append(accordion);');
-            //resultsContainer.append(accordion);
 
 
-
-            // SNP AND NUCLEOTIDES INFO ===================================================================================================================================================
+            // Build found SNP and nucleotides info
 
             const snpRefText = $('<span>').addClass('snp-ref').text(`SNP: ${snpRef}`); 
             const snp_ref_nucleotide = snp_ref_nucleotides[index];
@@ -45,8 +44,7 @@ $().ready(() => {
 
 
 
-            // GENOTYPES INFO ============================================================================================================================================================
-
+            // Build SNP genotypes info
 
             //Genotype Comparative Card
             const genotypeCard = $('<div>').addClass('card snp-result-card mt-4');
@@ -112,7 +110,7 @@ $().ready(() => {
 
 
 
-            // RELATED ARTICLES ====================================================================================================================================================
+            // Build SNP related articles info RELATED ARTICLES
             // Related Articles Card
             const articlesCard = $('<div>').addClass('card snp-result-card mt-4');
             const articlesCardHeader = $('<div>').addClass('card-header d-flex');
@@ -190,16 +188,20 @@ $().ready(() => {
             const populationTableHead = $('<thead>');
             const populationTableBody = $('<tbody>');
 
-             // Create table header
-             const populationTableHeaderRow = $('<tr>');
-             const regionHeader = $('<th>').attr('scope', 'col').text('Population');
-             const regionDistHeader = $('<th>').attr('scope', 'col').text(`Distribution. ${genotypesList}`);
-             populationTableHeaderRow.append(articlePMIDHeader, articleTitleHeader);
-             populationTableHead.append(populationTableHeaderRow);
+            // Create table header
+            const populationTableHeaderRow = $('<tr>');
+            const regionHeader = $('<th>').attr('scope', 'col').text('Population');
+            const regionDistHeader = $('<th>').attr('scope', 'col').text(`Distribution. ${genotypesList}`);
+            populationTableHeaderRow.append(regionHeader, regionDistHeader);
+            populationTableHead.append(populationTableHeaderRow);
 
 
+            // Create table rows for each related article of the current SNP
+            const regionsArray = regionsValues[index];
+            const regionsVal = regionsArray[1]
 
-
+            const regionsDescArray = regionsDesc[index];
+            const regionsDe = regionsDescArray[1]
 
 
 
@@ -208,9 +210,31 @@ $().ready(() => {
             // Append cards to snp accordion div and results container in results page
             genotypeCard.append(genotypeCardContent);
             articlesCard.append(articlesCardContent);
+            populationCard.append(populationCardContent);
             accordionContent.append(accordionHeader,genotypeCard, articlesCard, populationCard);
             accordion.append(accordionContent);
             resultsContainer.append(accordion);
+
+
+            if (regionsDe && regionsDe.length > 0) {
+              regionsDe.forEach(function (region, index) {
+                const tableRow = $('<tr>');
+                const regionsDeCell = $('<td>').addClass('region-desc');
+                const regionValuesCell = $('<td>').addClass('article-title').text(regionsVal[index]);
+                tableRow.append(regionsDeCell, regionsValuesCell);
+                populationTableBody.append(tableRow);
+
+              });
+            } else {
+              const noPopulationsMessage = $('<tr>').append($('<td>').attr('colspan', '2').text('No populations info found.'));
+              populationTableBody.append(noPopulationsMessage);
+            }
+
+            // Add the population distribution table to the articles card body
+            populationCardBody.append(populationTable.append(populationTableHead, populationTableBody));
+
+            // Add the population distribution card body to the articles card content
+            populationCardContent.append(populationCardBody);
 
 
           })
