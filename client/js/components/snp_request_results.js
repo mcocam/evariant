@@ -47,63 +47,68 @@ $().ready(() => {
             let genotypeCard = '';
             const snpGenotypeData = snpGenotypes[index];
             let genotype = [];
-            console.log(snpGenotypeData);
-            if (snpGenotypeData[1] !== '' || typeof snpGenotypeData[1] !== undefined) {
+            console.log(snpGenotypeData[1]);
+            if (typeof snpGenotypeData[1] !== undefined) {
+              if (snpGenotypeData[1] !== '') {
 
-              //Genotype Comparative Card
-              genotypeCard = $('<div>').addClass('card snp-result-card mt-4');
-              const genotypeCardHeader = $('<div>').addClass('card-header d-flex').attr('id', `${snpRef}-genotype-card-header`);
-              const genotypeCardContent = $('<div>').addClass('card-content');
-              const genotypeCardBody = $('<div>').addClass('card-body');
+                //Genotype Comparative Card
+                genotypeCard = $('<div>').addClass('card snp-result-card mt-4');
+                const genotypeCardHeader = $('<div>').addClass('card-header d-flex').attr('id', `${snpRef}-genotype-card-header`);
+                const genotypeCardContent = $('<div>').addClass('card-content');
+                const genotypeCardBody = $('<div>').addClass('card-body');
 
-              // Add the SNP reference and genotype to the genotype card header
-              const genotypeHeader = $('<h5>', { class: 'mb-0' });
-              const collapseBtn = $('<button>').addClass('btn btn-link card-header-text').text('Genotype comparative').attr('href', `#genotype-collapse-${snpRef}`).attr('data-bs-toggle', 'collapse').attr('data-bs-target', `#genotype-collapse-${snpRef}`).attr('aria-expanded', 'true').attr('aria-controls', `genotype-collapse-${snpRef}`);
-              genotypeHeader.append(collapseBtn);
-              const genotypeCollapseDiv = $('<div>').addClass('collapse').attr('id', `genotype-collapse-${snpRef}`).attr('aria-labelledby', `${snpRef}-genotype-card-header`).attr('data-bs-parent', 'accordionContent');
+                // Add the SNP reference and genotype to the genotype card header
+                const genotypeHeader = $('<h5>', { class: 'mb-0' });
+                const collapseBtn = $('<button>').addClass('btn btn-link card-header-text').text('Genotype comparative').attr('href', `#genotype-collapse-${snpRef}`).attr('data-bs-toggle', 'collapse').attr('data-bs-target', `#genotype-collapse-${snpRef}`).attr('aria-expanded', 'true').attr('aria-controls', `genotype-collapse-${snpRef}`);
+                genotypeHeader.append(collapseBtn);
+                const genotypeCollapseDiv = $('<div>').addClass('collapse').attr('id', `genotype-collapse-${snpRef}`).attr('aria-labelledby', `${snpRef}-genotype-card-header`).attr('data-bs-parent', 'accordionContent');
 
-              genotypeCardHeader.append(genotypeHeader, collapseBtn);
+                genotypeCardHeader.append(genotypeHeader, collapseBtn);
 
-              genotype = snpGenotypeData[1];
+                genotype = snpGenotypeData[1];
 
-              // Genotype Comparative Table
-              const genotypeTable = $('<table>').addClass('table');
-              const genotypeTableHead = $('<thead>');
-              const genotypeTableBody = $('<tbody>');
+                // Genotype Comparative Table
+                const genotypeTable = $('<table>').addClass('table');
+                const genotypeTableHead = $('<thead>');
+                const genotypeTableBody = $('<tbody>');
 
-              // Create table header
-              const genotypeTableHeaderRow = $('<tr>');
-              const genotypeTableHeader = $('<th>').attr('scope', 'col').text('Genotype');
-              const magnitudeHeader = $('<th>').attr('scope', 'col').text('Magnitude');
-              const summaryHeader = $('<th>').attr('scope', 'col').text('Summary');
-              genotypeTableHeaderRow.append(genotypeTableHeader, magnitudeHeader, summaryHeader);
-              genotypeTableHead.append(genotypeTableHeaderRow);
+                // Create table header
+                const genotypeTableHeaderRow = $('<tr>');
+                const genotypeTableHeader = $('<th>').attr('scope', 'col').text('Genotype');
+                const magnitudeHeader = $('<th>').attr('scope', 'col').text('Magnitude');
+                const summaryHeader = $('<th>').attr('scope', 'col').text('Summary');
+                genotypeTableHeaderRow.append(genotypeTableHeader, magnitudeHeader, summaryHeader);
+                genotypeTableHead.append(genotypeTableHeaderRow);
 
-              const genotypesList = [];
-              // Create table rows for each SNP genotype
-              for (let i = 0; i < genotype.length; i += 3) {
-                const snpGenotype = genotype[i];
-                genotypesList.push(snpGenotype);
-                const magnitude = genotype[i + 1];
-                const summary = genotype[i + 2];
+                const genotypesList = [];
+                // Create table rows for each SNP genotype
+                for (let i = 0; i < genotype.length; i += 3) {
+                  const snpGenotype = genotype[i];
+                  genotypesList.push(snpGenotype);
+                  const magnitude = genotype[i + 1];
+                  const summary = genotype[i + 2];
 
-                const tableRow = $('<tr>');
-                const genotypeCell = $('<td>').addClass('genotype').text(snpGenotype);
-                const magnitudeCell = $('<td>').text(magnitude);
-                const summaryCell = $('<td>').text(summary);
-                tableRow.append(genotypeCell, magnitudeCell, summaryCell);
-                genotypeTableBody.append(tableRow);
+                  const tableRow = $('<tr>');
+                  const genotypeCell = $('<td>').addClass('genotype').text(snpGenotype);
+                  const magnitudeCell = $('<td>').text(magnitude);
+                  const summaryCell = $('<td>').text(summary);
+                  tableRow.append(genotypeCell, magnitudeCell, summaryCell);
+                  genotypeTableBody.append(tableRow);
+                }
+
+                // Add the genotype table to the genotype card body
+                genotypeCardBody.append(genotypeTable.append(genotypeTableHead, genotypeTableBody));
+
+                // Add the genotype card body to the genotype card content
+                genotypeCardContent.append(genotypeCardBody);
+                genotypeCollapseDiv.append(genotypeCardContent);
+                genotypeCard.append(genotypeCardHeader, genotypeCollapseDiv);
+
+                genotypeCard.append(genotypeCardContent);
+              } else {
+                const noGenotypeDatafound = $('<h4>').addClass('m-5 info-message').text('There are no Genotypes Data available or reachable for this SNP.').attr('id', 'no-genotype-data-message');
+                resultsContainer.append(noGenotypeDatafound);
               }
-
-              // Add the genotype table to the genotype card body
-              genotypeCardBody.append(genotypeTable.append(genotypeTableHead, genotypeTableBody));
-
-              // Add the genotype card body to the genotype card content
-              genotypeCardContent.append(genotypeCardBody);
-              genotypeCollapseDiv.append(genotypeCardContent);
-              genotypeCard.append(genotypeCardHeader, genotypeCollapseDiv);
-
-              genotypeCard.append(genotypeCardContent);
             } else {
               const noGenotypeDatafound = $('<h4>').addClass('m-5 info-message').text('There are no Genotypes Data available or reachable for this SNP.').attr('id', 'no-genotype-data-message');
               resultsContainer.append(noGenotypeDatafound);
@@ -115,65 +120,70 @@ $().ready(() => {
             const articlesArray = snpRelatedArticles[index];
 
             let articles = [];
-            if (articlesArray[1] !== '' || typeof articlesArray[1] !== undefined) {
+            if (typeof articlesArray[1] !== undefined) {
+              if (articlesArray[1] !== '') {
 
-              // Build SNP related articles info
-              // Related Articles Card
-              articlesCard = $('<div>').addClass('card snp-result-card mt-4');
-              const articlesCardHeader = $('<div>').addClass('card-header d-flex');
-              const articlesCardContent = $('<div>').addClass('collapse show').attr('id', `${snpRef}-articles-collapse`);
-              const articlesCardBody = $('<div>').addClass('card-body');
+                // Build SNP related articles info
+                // Related Articles Card
+                articlesCard = $('<div>').addClass('card snp-result-card mt-4');
+                const articlesCardHeader = $('<div>').addClass('card-header d-flex');
+                const articlesCardContent = $('<div>').addClass('collapse show').attr('id', `${snpRef}-articles-collapse`);
+                const articlesCardBody = $('<div>').addClass('card-body');
 
-              // Add the related articles card header
-              const articlesHeader = $('<h5>', { class: 'mb-0 card-header-text', text: 'Related Articles' });
-              articlesCardHeader.append(articlesHeader);
+                // Add the related articles card header
+                const articlesHeader = $('<h5>', { class: 'mb-0 card-header-text', text: 'Related Articles' });
+                articlesCardHeader.append(articlesHeader);
 
-              // Add the articles card header and content to the articles card
-              articlesCard.append(articlesCardHeader, articlesCardContent);
-
-
-              // Related Articles Table
-              const articlesTable = $('<table>', { class: 'table' });
-              const articlesTableHead = $('<thead>');
-              const articlesTableBody = $('<tbody>');
-
-              // Create table header
-              const articlesTableHeaderRow = $('<tr>');
-              const articlePMIDHeader = $('<th>').attr('scope', 'col').text('PMID');
-              const articleTitleHeader = $('<th>').attr('scope', 'col').text('Title');
-              articlesTableHeaderRow.append(articlePMIDHeader, articleTitleHeader);
-              articlesTableHead.append(articlesTableHeaderRow);
+                // Add the articles card header and content to the articles card
+                articlesCard.append(articlesCardHeader, articlesCardContent);
 
 
-              articles = articlesArray[1];
-              const titlesArray = articlesTitles[index];
-              const titles = titlesArray[1];
-              const articlesURLarray = snpArticlesURL[index];
-              const URLs = articlesURLarray[1]
+                // Related Articles Table
+                const articlesTable = $('<table>', { class: 'table' });
+                const articlesTableHead = $('<thead>');
+                const articlesTableBody = $('<tbody>');
 
-              if (articles && articles.length > 0) {
-                articles.forEach(function (article, index) {
-                  const tableRow = $('<tr>');
-                  const articlePMIDCell = $('<td>').addClass('article-PMID');
-                  const articlePMIDlink = $('<a>').text(article).attr('href', `${URLs[index]}`).attr('target', '_blank');
-                  const articleTitleCell = $('<td>').addClass('article-title').text(titles[index]);
-                  articlePMIDCell.append(articlePMIDlink);
-                  tableRow.append(articlePMIDCell, articleTitleCell);
-                  articlesTableBody.append(tableRow);
+                // Create table header
+                const articlesTableHeaderRow = $('<tr>');
+                const articlePMIDHeader = $('<th>').attr('scope', 'col').text('PMID');
+                const articleTitleHeader = $('<th>').attr('scope', 'col').text('Title');
+                articlesTableHeaderRow.append(articlePMIDHeader, articleTitleHeader);
+                articlesTableHead.append(articlesTableHeaderRow);
 
-                });
+
+                articles = articlesArray[1];
+                const titlesArray = articlesTitles[index];
+                const titles = titlesArray[1];
+                const articlesURLarray = snpArticlesURL[index];
+                const URLs = articlesURLarray[1]
+
+                if (articles && articles.length > 0) {
+                  articles.forEach(function (article, index) {
+                    const tableRow = $('<tr>');
+                    const articlePMIDCell = $('<td>').addClass('article-PMID');
+                    const articlePMIDlink = $('<a>').text(article).attr('href', `${URLs[index]}`).attr('target', '_blank');
+                    const articleTitleCell = $('<td>').addClass('article-title').text(titles[index]);
+                    articlePMIDCell.append(articlePMIDlink);
+                    tableRow.append(articlePMIDCell, articleTitleCell);
+                    articlesTableBody.append(tableRow);
+
+                  });
+                } else {
+                  const noArticlesMessage = $('<tr>').append($('<td>').attr('colspan', '2').text('No related articles found.'));
+                  articlesTableBody.append(noArticlesMessage);
+                }
+
+                // Add the articles table to the articles card body
+                articlesCardBody.append(articlesTable.append(articlesTableHead, articlesTableBody));
+
+                // Add the articles card body to the articles card content
+                articlesCardContent.append(articlesCardBody);
+
+                articlesCard.append(articlesCardContent);
               } else {
-                const noArticlesMessage = $('<tr>').append($('<td>').attr('colspan', '2').text('No related articles found.'));
-                articlesTableBody.append(noArticlesMessage);
+                const noArticlesfound = $('<h4>').addClass('m-5 info-message').text('There are no articles available or reachable for this SNP.').attr('id', 'no-articles-data-message');
+                resultsContainer.append(noArticlesfound);
               }
-
-              // Add the articles table to the articles card body
-              articlesCardBody.append(articlesTable.append(articlesTableHead, articlesTableBody));
-
-              // Add the articles card body to the articles card content
-              articlesCardContent.append(articlesCardBody);
-
-              articlesCard.append(articlesCardContent);
             } else {
               const noArticlesfound = $('<h4>').addClass('m-5 info-message').text('There are no articles available or reachable for this SNP.').attr('id', 'no-articles-data-message');
               resultsContainer.append(noArticlesfound);
