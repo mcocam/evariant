@@ -50,14 +50,21 @@ async def get_snp_results(fasta_id: str, session_data: SessionData = Depends(ver
         # Verify if the user has access to the request
         if session_data.id != fasta_user_id:
             raise HTTPException(status_code=403, detail="User does not have access to the request.")
-        
+        snps = []
         snps = await snp_controller.get_snps_by_fasta_id(fasta_id)
+        snp_ref_nucleotides = []
         snp_ref_nucleotides = [snp.get_ref_nucleotide() for snp in snps]
-      
+        snp_var_nucleotides = []
         snp_var_nucleotides = [snp.get_var_nucleotide() for snp in snps]
-     
+        snp_refs = []
         snp_refs = await snp_controller.get_snp_refs_by_fasta_id(fasta_id)
-
+        snpedia_pages = []
+        snp_articles = []
+        snp_articles_url = []
+        snp_articles_titles = []
+        snp_regions_desc =  []
+        snp_regions_values = []
+        snp_genotypes = []
         snpedia_pages = get_snpedia_pages(snp_refs)
         snp_genotypes = get_snp_genotypes(snp_refs, snpedia_pages)
         snp_articles = get_snp_articles(snp_refs, snpedia_pages)
