@@ -279,6 +279,29 @@ body {
     height: 15px;
 }
 
+#no-snp-message {
+    min-height: 300px;
+}
+
+
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.container {
+  min-height: 90%;
+  display: flex;
+  flex-direction: column;
+}
+
+#footer {
+  margin-top: auto;
+}
+
+
 /* PHYLO FASTA FILES TABLE */
 .disabled_row{
     background-color: #F1F6F9;

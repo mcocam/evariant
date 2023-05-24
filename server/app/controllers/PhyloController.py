@@ -32,6 +32,14 @@ class PhyloController:
         
         
     async def get_phylo_by_id(self, fasta_id: int) -> dict[str, str]:
+        """Returns a phylo entry identified by the given id
+
+        Args:
+            fasta_id (int): The fasta id of the desired phylo
+
+        Returns:
+            list[str]:  If found, returns the phylo in a list.
+        """
 
         phyloTree: dict[str, str] = []
 
@@ -46,6 +54,14 @@ class PhyloController:
         return phyloTree
     
     def parse_fasta_to_phylo(self, fasta: Fasta) -> bool:
+        """Takes a Fasta object and parses it into a Newick, to construct a phylogenetic tree (by calling the do_clustalo_alignment function in another thread)
+
+        Args:
+            fasta (Fasta): A Fasta object
+
+        Returns:
+            bool: Indicates if the process is running or not
+        """
         
         is_processing = False
         
@@ -66,6 +82,14 @@ class PhyloController:
         return is_processing
     
     def save_phylo(self, phylo: PhyloTree) -> int:
+        """Add a new PhyloTree to database
+
+        Args:
+            phylo (PhyloTree): The new PhyloTree to add to the database
+
+        Returns:
+            int: The number of rows added to the table
+        """
         
         saved_rows: int = 0
         try:
@@ -81,6 +105,14 @@ class PhyloController:
     # ----------------------------------------------------------------
     # Validate Multifasta
     async def validate_multifasta(self, multi_fasta):
+        """Validates that a fasta is multi as opposed to single
+
+        Args:
+            multi_fasta (_type_): The fasta to validate
+
+        Returns:
+            bool: A bool indicating if the fasta is multi or not
+        """
         
         is_correct: bool = False
 
@@ -97,6 +129,14 @@ class PhyloController:
     # ------------------------------------------------------
 
     async def del_phylo(self, fasta_id) -> int:
+        """Removes a phylo from the database
+
+        Args:
+            fasta_id (int): The id of the fasta to which the phylo to delete belongs
+
+        Returns:
+            int: A code from the list indicating if the operation was successful, or what failed exactly
+        """
 
         try:
             phylo_deleted = self.dao.delete_phylo(fasta_id)
@@ -124,6 +164,16 @@ class PhyloController:
         return phylo_deleted
         
     def do_clustalo_alignment(fasta_id: int, fasta_seq: str, fasta_user_id: int):
+        """Gets a fasta and calculates the corresponding phylogenetic tree
+
+        Args:
+            fasta_id (int): The fasta's id
+            fasta_seq (str): The fasta's sequence
+            fasta_user_id (int): The fasta's user's id
+
+        Raises:
+            Exception: Raised if there's an exception
+        """
         
         temp_dir = Path(f"/temporal")
         temp_dir.mkdir(exist_ok=True)
@@ -202,6 +252,12 @@ class PhyloController:
         except Exception as e:
             PhyloController().multi_fasta_dao.delete_multi(fasta_id)
             PhyloController().fasta_dao.delete_fasta(fasta_id)
+            try:
+                del active_threads[fasta_id]
+                del active_subprocess[fasta_id]
+                del temporal_folders[fasta_id]
+            except:
+                pass
             print(f"Error on ClustalO: {e}")
         finally:
             rmtree(temporal_path)

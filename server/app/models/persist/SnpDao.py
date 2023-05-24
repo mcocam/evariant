@@ -65,6 +65,8 @@ class SnpDao:
         cursor = self.connection.connect()
         rows = cursor.execute(query)
         for row in rows:
+            print('row')
+            print(row)
             snp = await self.__parse_snp(row)
             snps.append(snp)
         return snps
@@ -72,7 +74,7 @@ class SnpDao:
 
 
     # ----------------------------------------------------------------
-    async def get_snp_refs_by_fasta_id(self, fasta_id: int) -> List[str]:
+    async def get_snp_refs_by_fasta_id(self, fasta_id: int) -> list[str]:
         """
         Retrieves all the SNPs references for a given FASTA id from the database.
         
@@ -89,7 +91,7 @@ class SnpDao:
         cursor = self.connection.connect()
         rows = cursor.execute(query)
         for snp_ref in rows:
-            snp_refs.append(snp_ref)
+            snp_refs.append(snp_ref[0])
         return snp_refs
     
 
@@ -150,7 +152,7 @@ class SnpDao:
         ref_nucleotide: str = raw_data[3]
         var_nucleotide: str = raw_data[4]
         
-        return Snp(snp_id, ref_snp, fasta_id, ref_nucleotide, var_nucleotide)
+        return Snp(id = snp_id, ref_snp = ref_snp, fasta_id = fasta_id, ref_nucleotide = ref_nucleotide, var_nucleotide = var_nucleotide)
     
     # ----------------------------------------------------------------
     def delete_snp(self, fasta_id: int) -> int:
