@@ -114,73 +114,79 @@ $().ready(() => {
                 resultsContainer.append(noGenotypeDatafound);
               }
             } else {
-
+              const noGenotypeDatafound = $('<h4>').addClass('m-5 info-message').text('There are no Genotypes Data available or reachable for this SNP.').attr('id', 'no-genotype-data-message');
+              resultsContainer.append(noGenotypeDatafound);
             }
 
             let articlesCard = '';
             // Create table rows for each related article of the current SNP
-            const articlesArray = snpRelatedArticles[index];
-            let articles = [];
-            if (articlesArray.length > 1) {
-              if (articlesArray[1] !== '') {
+            if (snpRelatedArticles[index]) {
+              const articlesArray = snpRelatedArticles[index];
+              let articles = [];
+              if (articlesArray.length > 1) {
+                if (articlesArray[1] !== '') {
 
-                // Build SNP related articles info
-                // Related Articles Card
-                articlesCard = $('<div>').addClass('card snp-result-card mt-4');
-                const articlesCardHeader = $('<div>').addClass('card-header d-flex');
-                const articlesCardContent = $('<div>').addClass('collapse show').attr('id', `${snpRef}-articles-collapse`);
-                const articlesCardBody = $('<div>').addClass('card-body');
+                  // Build SNP related articles info
+                  // Related Articles Card
+                  articlesCard = $('<div>').addClass('card snp-result-card mt-4');
+                  const articlesCardHeader = $('<div>').addClass('card-header d-flex');
+                  const articlesCardContent = $('<div>').addClass('collapse show').attr('id', `${snpRef}-articles-collapse`);
+                  const articlesCardBody = $('<div>').addClass('card-body');
 
-                // Add the related articles card header
-                const articlesHeader = $('<h5>', { class: 'mb-0 card-header-text', text: 'Related Articles' });
-                articlesCardHeader.append(articlesHeader);
+                  // Add the related articles card header
+                  const articlesHeader = $('<h5>', { class: 'mb-0 card-header-text', text: 'Related Articles' });
+                  articlesCardHeader.append(articlesHeader);
 
-                // Add the articles card header and content to the articles card
-                articlesCard.append(articlesCardHeader, articlesCardContent);
-
-
-                // Related Articles Table
-                const articlesTable = $('<table>', { class: 'table' });
-                const articlesTableHead = $('<thead>');
-                const articlesTableBody = $('<tbody>');
-
-                // Create table header
-                const articlesTableHeaderRow = $('<tr>');
-                const articlePMIDHeader = $('<th>').attr('scope', 'col').text('PMID');
-                const articleTitleHeader = $('<th>').attr('scope', 'col').text('Title');
-                articlesTableHeaderRow.append(articlePMIDHeader, articleTitleHeader);
-                articlesTableHead.append(articlesTableHeaderRow);
+                  // Add the articles card header and content to the articles card
+                  articlesCard.append(articlesCardHeader, articlesCardContent);
 
 
-                articles = articlesArray[1];
-                const titlesArray = articlesTitles[index];
-                const titles = titlesArray[1];
-                const articlesURLarray = snpArticlesURL[index];
-                const URLs = articlesURLarray[1]
+                  // Related Articles Table
+                  const articlesTable = $('<table>', { class: 'table' });
+                  const articlesTableHead = $('<thead>');
+                  const articlesTableBody = $('<tbody>');
 
-                if (articles && articles.length > 0) {
-                  articles.forEach(function (article, index) {
-                    const tableRow = $('<tr>');
-                    const articlePMIDCell = $('<td>').addClass('article-PMID');
-                    const articlePMIDlink = $('<a>').text(article).attr('href', `${URLs[index]}`).attr('target', '_blank');
-                    const articleTitleCell = $('<td>').addClass('article-title').text(titles[index]);
-                    articlePMIDCell.append(articlePMIDlink);
-                    tableRow.append(articlePMIDCell, articleTitleCell);
-                    articlesTableBody.append(tableRow);
+                  // Create table header
+                  const articlesTableHeaderRow = $('<tr>');
+                  const articlePMIDHeader = $('<th>').attr('scope', 'col').text('PMID');
+                  const articleTitleHeader = $('<th>').attr('scope', 'col').text('Title');
+                  articlesTableHeaderRow.append(articlePMIDHeader, articleTitleHeader);
+                  articlesTableHead.append(articlesTableHeaderRow);
 
-                  });
+
+                  articles = articlesArray[1];
+                  const titlesArray = articlesTitles[index];
+                  const titles = titlesArray[1];
+                  const articlesURLarray = snpArticlesURL[index];
+                  const URLs = articlesURLarray[1]
+
+                  if (articles && articles.length > 0) {
+                    articles.forEach(function (article, index) {
+                      const tableRow = $('<tr>');
+                      const articlePMIDCell = $('<td>').addClass('article-PMID');
+                      const articlePMIDlink = $('<a>').text(article).attr('href', `${URLs[index]}`).attr('target', '_blank');
+                      const articleTitleCell = $('<td>').addClass('article-title').text(titles[index]);
+                      articlePMIDCell.append(articlePMIDlink);
+                      tableRow.append(articlePMIDCell, articleTitleCell);
+                      articlesTableBody.append(tableRow);
+
+                    });
+                  } else {
+                    const noArticlesMessage = $('<tr>').append($('<td>').attr('colspan', '2').text('No related articles found.'));
+                    articlesTableBody.append(noArticlesMessage);
+                  }
+
+                  // Add the articles table to the articles card body
+                  articlesCardBody.append(articlesTable.append(articlesTableHead, articlesTableBody));
+
+                  // Add the articles card body to the articles card content
+                  articlesCardContent.append(articlesCardBody);
+
+                  articlesCard.append(articlesCardContent);
                 } else {
-                  const noArticlesMessage = $('<tr>').append($('<td>').attr('colspan', '2').text('No related articles found.'));
-                  articlesTableBody.append(noArticlesMessage);
+                  const noArticlesfound = $('<h4>').addClass('m-5 info-message').text('There are no articles available or reachable for this SNP.').attr('id', 'no-articles-data-message');
+                  resultsContainer.append(noArticlesfound);
                 }
-
-                // Add the articles table to the articles card body
-                articlesCardBody.append(articlesTable.append(articlesTableHead, articlesTableBody));
-
-                // Add the articles card body to the articles card content
-                articlesCardContent.append(articlesCardBody);
-
-                articlesCard.append(articlesCardContent);
               } else {
                 const noArticlesfound = $('<h4>').addClass('m-5 info-message').text('There are no articles available or reachable for this SNP.').attr('id', 'no-articles-data-message');
                 resultsContainer.append(noArticlesfound);
