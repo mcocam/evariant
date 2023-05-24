@@ -29,10 +29,18 @@ const components = [
     {
         id: "#snpRequest",
         path: "./components/snpRequest.html"
+    },
+    {
+        id: "#phyloRequest",
+        path: "./components/phyloRequest.html"
     }
     
 ];
 
 // Injector. DON'T TOUCH
+/**
+ * Function to inject components into the HTML page.
+ * @param {Array} components - An array of components with id and path properties.
+ */
 const addComponents = (components) =>  components.forEach(c =>  $(c.id).load(c.path) );
 $().ready( () =>  addComponents(components));

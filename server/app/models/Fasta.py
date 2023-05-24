@@ -21,7 +21,7 @@ class Fasta:
         self.id = id
         self.creation_date = creation_date
 
-    # GETTER
+    # GETTERS
     def get_title(self) -> str:
         return self.title
     
@@ -40,7 +40,7 @@ class Fasta:
     def get_creation_date(self) -> datetime:
         return self.get_creation_date
 
-    # SETTER
+    # SETTERS
     def set_title(self, title: str) -> None:
         self.title = title
 

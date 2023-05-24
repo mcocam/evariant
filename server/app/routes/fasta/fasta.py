@@ -1,11 +1,10 @@
-from typing import Annotated
-from fastapi import APIRouter, Response, Depends, File, UploadFile
-from uvicorn import run
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi import APIRouter, Depends, File, UploadFile
 
 from controllers.FastaController import FastaController
 from controllers.SingleFastaController import SingleFastaController
+from controllers.MultiFastaController import MultiFastaController
 from controllers.SnpController import SnpController
+from controllers.PhyloController import PhyloController
 
 from models.Fasta import Fasta
 from models.SingleFasta import SingleFasta
@@ -14,7 +13,6 @@ from models.Snp import Snp
 from models.utils.SnpHandler import SnpHandler
 
 from routes.users.session import cookie, SessionData, verifier
-from uuid import uuid4 # Genera un texto random
 
 
 router: APIRouter = APIRouter(
@@ -43,6 +41,7 @@ async def get_file(file: UploadFile = File(...), session_data: SessionData = Dep
         
         ## Upload Fasta
         content = await file.read()
+        requests_title = file.filename
         content = content.decode("utf-8")
         
         fasta_type: int = await fasta_controller.get_type_fasta(content)
@@ -59,7 +58,12 @@ async def get_file(file: UploadFile = File(...), session_data: SessionData = Dep
                 position_split: list[int] = [int(position) for position in position.split(":")]
                 sequence: str = is_valid_fasta[5]
                 
-                fasta: Fasta = Fasta(title=uuid4(),
+                # If there are any incoherences with lenght
+                if position_split[1]-position_split[0] != len(sequence)-1:
+                    response["message"] = "911"
+                    return response
+                
+                fasta: Fasta = Fasta(title=requests_title,
                                      raw_fasta=content,
                                      type=1,
                                      user_id=session_data.id)
@@ -87,103 +91,103 @@ async def get_file(file: UploadFile = File(...), session_data: SessionData = Dep
                             
                             
                         response["error"] = False 
-                        response["message"] = f"Number of SNPs detected: {detected_snps}"
-                        response["data"] = ""
+                        response["message"] = "912"
+                        response["data"] = f"Number of SNPs detected: {detected_snps}"
                         
             else:
-                response["message"] = "915"
-            
-            pass
+                response["message"] = "911"
         elif fasta_type == 0:
-            pass
+            response["message"] = "911"
         
         
     except Exception as e:
         print(f"Add fasta error: {e}")
-    
-    
-    
+        response["message"] = "911" # Add fasta error
     #print(content)
     
     return response
 
 
 
+@router.get("/requests", dependencies= [Depends(cookie)])
+async def requests_snp(session_data: SessionData = Depends(verifier)):
+
+    response: dict[str,any] = {
+        "error": True,
+        "message": "914",  # No results found
+        "data": ""
+    }
+
+    try:
+        fasta_Controller: FastaController = FastaController()
+
+        # Logged in User ID
+        user_id = session_data.id
+        # fasta id of the app "SNP Finder"
+        single_fasta: int = 1
+
+        # Get data
+        data = await fasta_Controller.get_fasta_info(user_id, single_fasta)
+        # print(f"llega al fasta {data}")
+
+        if data:
+            response["error"] = False
+            response["message"] = "915" # Data obtained successfully
+            response["data"] = data
+        else:
+            response["message"] = "914" # No results found
 
 
+    except Exception as e:
+        print(e)
+        response["message"] = "916" #error exception
+
+    return response
+
+@router.get("/delete_fasta/{id}", dependencies= [Depends(cookie)])
+async def delete_fasta(id: int, session_data: SessionData = Depends(verifier)):
+
+    response: dict[str,any] = {
+        "error": True,
+        "message": "914",  # No results found
+        "data": ""
+    }
+
+    try:
+        fasta_controller: FastaController = FastaController()
+        sinle_controller: SingleFastaController = SingleFastaController()
+        multi_controller: MultiFastaController = MultiFastaController()
+        snp_controller: SnpController = SnpController()
+        phylo_controller: PhyloController = PhyloController()
+
+        # Logged in User ID
+        user_id = session_data.id
+
+        # Check if fasta belongs to user
+        fasta_owner = await fasta_controller.get_fasta_owner(id)
+
+        if(fasta_owner != user_id):
+            response["message"] = "904" # Invalid credentials
+            return response
+
+        # Get data
+        data = await snp_controller.del_snp(id)
+        data = await phylo_controller.del_phylo(id)
+        data = await sinle_controller.del_single(id)
+        data = await multi_controller.del_multi(id)
+        data = await fasta_controller.del_fasta(id)
+        # print(f"llega al fasta {data}")
+
+        if data:
+            response["error"] = False
+            response["message"] = "917" # Data deleted successfully
+            response["data"] = data
+        else:
+            response["message"] = "914" # No results found
 
 
+    except Exception as e:
+        print(e)
+        response["message"] = "916" #error exception
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    # response: dict[str,any] = {
-    #     "error": True,
-    #     "message": "904",
-    #     "data": ""
-    # }
-
-    # fastaController: FastaController = FastaController()
-# response: dict[str,any] = {
-    #     "error": True,
-    #     "message": "904",
-    #     "data": ""
-    # }
-
-    # fastaController: FastaController = FastaController()
-
-    # try:
-    #     fasta: Fasta = Fasta(new_file.title,
-    #                          new_file.raw_fasta,
-    #                          new_file.type,
-    #                          new_file.user_id)
-        
-    #     new_file_added: bool = await fastaController.register_fasta(fasta)
-
-    #     if new_file_added:
-    #         response["message"] = "900"
-    #         response["error"] = False
-        
-    # except Exception as e:
-    #     print(f"Add Fasta Exception: {e}")
-    #     response["message"] = "909"
-
-    # return response
-
-
-    # try:
-    #     fasta: Fasta = Fasta(new_file.title,
-    #                          new_file.raw_fasta,
-    #                          new_file.type,
-    #                          new_file.user_id)
-        
-    #     new_file_added: bool = await fastaController.register_fasta(fasta)
-
-    #     if new_file_added:
-    #         response["message"] = "900"
-    #         response["error"] = False
-        
-    # except Exception as e:
-    #     print(f"Add Fasta Exception: {e}")
-    #     response["message"] = "909"
-
-    # return response
-
+    return response

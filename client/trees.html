@@ -1,30 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <script src="./vendor/jquery/jquery-3.6.4.min.js"></script>
     <script src="./js/components/verify.js"></script>
+    <script src="./js/route_guard.js"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/style.css">
     <link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet'>
-    <title>Foundational document</title>
+    <title>eV: sequences</title> 
 </head>
-<body>
 
+<body>
     <!-- NAVIGATION BAR -->
     <nav id="nav"></nav>
+    <!-- MODALS -->
+    <div id="loginModal"></div>
+    <div id="logoutModal"></div>
+    <div id="phyloRequest"></div>
 
-    <!-- SECTION -->
+
+    <!-- SECTION PHYLOGENETIC TREE -->
     <section>
         <div class="container-fluid">
-            <div class="row">
-                <div class="col mt-5 p-5">
-
-                    <h1 class="text-center fw-bold" > Phylogenetic Trees</h1>
-                    <p class="text-center"> Page under construction</p>
-
+            <div class="row justify-content-around mt-5 mx-5 p-5">
+                <div class="col-md-6">
+                    <h1 class="fw-bold"> Phylogenetic Trees</h1>
+                    <p> Discover the genetic connections that shape life: create phylogenetic trees with our specialised tool. </p>
                 </div>
+
+                <!-- BUTTON NEW REQUEST -->
+                <div class="col-md-6 justify-content-end ml-5 pl-5">
+                    <button type="button" class="btn btn-info px-3 py-2 fw-bold btn-new-request" id="btn_phylo" data-bs-toggle="modal"
+                        data-bs-target="#newRequestPhylo">
+                        New Request
+                    </button>
+                </div>
+            </div>
+
+            <!-- Requirements of the Fasta File -->
+            <div class="row justify-content-center">
+                <div class=" card card_snp_Finder ">
+                <div class="card-body card_snp_Finder">
+                    <h4 class="card-title"> Optimize the Use of Phylogenetic Tree with the Proper Format </h4>
+                        <li> The multifasta file must have a minimum of 2 sequences.</li>
+                        <li> The header of each sequence will be taken as the title for the alignments.</li>
+                        <li>Example:</li>
+                        <img class="mx-5" src="img/example_multi-fasta.png" alt="Example Multi-Fasta">
+                        <p class="text-danger fw-bold mt-3"> Due to resource limitations, only fastas with less than 50 sequences are accepted</p>
+                    </ul>
+                </div>
+                </div>
+            </div>
+
+            <!-- MESSAGE -->
+            <div class="text-center mt-5 mx-5 p-5" id="result-phylo"></div>
+
+            <!-- TABLE -->
+            <div class="table-responsive mx-5 px-5">
+                <table id="table-phylo" class="table"></table>
             </div>
 
         </div>
@@ -34,9 +72,15 @@
     <!-- FOOTER -->
     <div id="footer"></div>
 
-    <script src="./vendor/jquery/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <!-- LIBRARIES -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- COMPONENTS JS -->
     <script src="./js/components/components.js"></script>
+    <script src="./js/components/phylo.js"></script>
 
 </body>
+
 </html>

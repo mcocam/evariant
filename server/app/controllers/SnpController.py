@@ -1,13 +1,8 @@
 # Class Snp
 # @author: Melania Prado
 
-from typing import List
 from models.persist.SnpDao import SnpDao
-from pydantic import BaseModel
 from models.Snp import Snp
-import env
-import os
-from models.utils.SnpHandler import SnpHandler
 
 class SnpController:
     
@@ -88,6 +83,33 @@ class SnpController:
 
 
 
+# ----------------------------------------------------------------
+    async def get_snp_refs_by_fasta_id(self, fasta_id: int) -> list[str]:
+
+        """
+        Retrieves all SNPs references from the database associated with a given FASTA ID.
+
+        Args:
+            fasta_id: An integer representing the ID of the FASTA to retrieve SNPs for.
+
+        Returns:
+            A list of SNP references (string)
+        """
+
+        fasta_snps_refs: list[str] = []
+        
+        try:
+            fasta_snps_refs = await self.dao.get_snp_refs_by_fasta_id(fasta_id)
+
+        except Exception as e:
+            print(f"get_snp_refs_by_fasta_id: {e}")
+
+        return fasta_snps_refs
+
+
+
+
+
     async def save_snps_to_db(self, snp: Snp) -> bool:
         """
         Retrieves SNPs from a FASTA file by a list of positions and saves them to the database.
@@ -107,3 +129,20 @@ class SnpController:
         response = await self.dao.add_new_snp(snp)
         
         return response
+    
+    async def del_snp(self, fasta_id) -> int:
+        """Removes an snp from the database
+
+        Args:
+            fasta_id (int): The id of the fasta to delete
+
+        Returns:
+            int: A code from the list indicating if the operation was successful, or what failed exactly
+        """
+
+        try:
+            snp_deleted = self.dao.delete_snp(fasta_id)
+        except Exception as e:
+            snp_deleted = e
+
+        return snp_deleted

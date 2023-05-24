@@ -111,7 +111,7 @@ body {
 
 
 /* SNP FINDER */
-#btn-snp {
+.btn-new-request {
     float: right;
     align-items: end;
     color: #3B8AB2;
@@ -120,6 +120,15 @@ body {
     box-shadow: 0px 0px 1px #00000029;
     border: 0;
     opacity: 1;
+}
+
+/* SNP FINDER CARD*/
+
+.card_snp_Finder {
+    font-size: 1.5rem;
+    border-color:#012E3D;
+    color:#012E3D;
+    max-width: 60rem;
 }
 
 /* SNP FINDER -> TABLE */
@@ -187,7 +196,7 @@ body {
   }
 
 
-#file-input {
+.file-input {
     position: absolute;
     top: 0;
     left: 0;
@@ -197,23 +206,38 @@ body {
     cursor: pointer;
 }
 
-/* PROGRESS BAR*/
+/* SPINNER */
+.loader {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: block;
+    margin:25px auto;
+    position: relative;
+    background: #012E3D;
+    box-shadow: -24px 0 #012E3D, 24px 0 #012E3D;
+    box-sizing: border-box;
+    animation: shadowPulse 2s linear infinite;
+  }
   
-#div_progress {
-    border: #D8E1E5 1px solid;
-    border-color: #D8E1E5;
-    height: 6em;
-}
+  @keyframes shadowPulse {
+    33% {
+      background: #012E3D;
+      box-shadow: -24px 0 #B7E7FF, 24px 0 #012E3D;
+    }
+    66% {
+      background: #B7E7FF;
+      box-shadow: -24px 0 #012E3D 24px 0 #012E3D;
+    }
+    100% {
+      background: #012E3D;
+      box-shadow: -24px 0 #012E3D, 24px 0 #B7E7FF;
+    }
+  }
 
-#progress-bar {
-    width: 80%;
-    color: #012E3D;
-}
 
 
-/* REQUEST RESULTS */
-
-
+/* SNP REQUEST RESULTS */
 
 .snp-result-card {
     border: none;
@@ -254,3 +278,39 @@ body {
     width: 220px;
     height: 15px;
 }
+
+#no-snp-message {
+    min-height: 300px;
+}
+
+
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.container {
+  min-height: 90%;
+  display: flex;
+  flex-direction: column;
+}
+
+#footer {
+  margin-top: auto;
+}
+
+
+/* PHYLO FASTA FILES TABLE */
+.disabled_row{
+    background-color: #F1F6F9;
+}
+
+/* PHYLO REQUEST RESULTS */
+
+#see-result-phylo {
+    height: 100%;
+    border-color: #012E3D;
+}
+

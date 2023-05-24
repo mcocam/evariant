@@ -10,7 +10,19 @@ class Credentials(BaseModel):
 
 
     @validator('email')
-    def email_validator(cls, email):
+    def email_validator(cls, email: str):
+        """Validates that an email has the correct format
+
+        Args:
+            email (str): The email to validate
+
+        Raises:
+            ValueError: If the email doesn't follow the restrictions
+
+        Returns:
+            str: The same email
+        """
+
         regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
         
         if re.fullmatch(regex,email):
@@ -19,7 +31,18 @@ class Credentials(BaseModel):
             raise ValueError("Invalid email data")
         
     @validator('password')
-    def password_validator(cls, password):
+    def password_validator(cls, password: str):
+        """Validates that a password has the correct format
+
+        Args:
+            password (str): The password to validate
+
+        Raises:
+            ValueError: If the password doesn't follow the restrictions
+
+        Returns:
+            str: The same password
+        """
 
         regex = re.compile(r'(?=.*[a-zA-Z])(?=.*[0-9])')
 

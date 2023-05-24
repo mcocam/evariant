@@ -11,6 +11,18 @@ class New_user(BaseModel):
 
     @validator('email')
     def email_validator(cls, email):
+        """Validates that an email has the correct format
+
+        Args:
+            email (str): The email to validate
+
+        Raises:
+            ValueError: If the email doesn't follow the restrictions
+
+        Returns:
+            str: The same email
+        """
+        
         regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
         
         if re.fullmatch(regex,email):
@@ -20,6 +32,17 @@ class New_user(BaseModel):
         
     @validator('password')
     def password_validator(cls, password):
+        """Validates that a password has the correct format
+
+        Args:
+            password (str): The password to validate
+
+        Raises:
+            ValueError: If the password doesn't follow the restrictions
+
+        Returns:
+            str: The same password
+        """
 
         regex = re.compile(r'(?=.*[a-zA-Z])(?=.*[0-9])')
 
@@ -33,6 +56,17 @@ class New_user(BaseModel):
     
     @validator('name')
     def name_validator(cls, name):
+        """Validates that a name has the correct format
+
+        Args:
+            name (str): The name to validate
+
+        Raises:
+            ValueError: If the name doesn't follow the restrictions
+
+        Returns:
+            str: The same name
+        """
 
         regex = re.compile(r"^[A-Za-z\s.'-]*[A-Za-z][A-Za-z\s.'-]*$")
 
@@ -46,6 +80,17 @@ class New_user(BaseModel):
     
     @validator('surname')
     def surname_validator(cls, surname):
+        """Validates that a surname has the correct format
+
+        Args:
+            surname (str): The surname to validate
+
+        Raises:
+            ValueError: If the surname doesn't follow the restrictions
+
+        Returns:
+            str: The same surname
+        """
 
         regex = re.compile(r"^[A-Za-z\s.'-]*[A-Za-z][A-Za-z\s.'-]*$")
 

@@ -1,4 +1,0 @@
-/* 
-Main javascript logic to insert on index.html
-
-*/

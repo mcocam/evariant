@@ -1,21 +1,29 @@
+import datetime
 import re
-from requests import get, Response
 from models.persist.FastaDao import FastaDao
 from models.utils.SnpHandler import SnpHandler
-
-from pydantic import BaseModel
 from models.Fasta import Fasta
-import env
-import os
+from models.persist.PhyloDao import PhyloDao
 
 class FastaController:
 
     def __init__(self) -> None:
         self.dao = FastaDao()
+        self.phylo_dao = PhyloDao()
         self.snp_handler = SnpHandler()
 
     # ----------------------------------------------------------------
     async def get_fasta(self, id):
+        """Returns a fasta identified by the given id
+
+        Args:
+            id (int): The desired fasta's id
+
+        Returns:
+            list[str]:  If found, returns the parsed fasta, a message, and a boolean indicating that there was no error.
+                        If not found, simply returns a message saying so.
+                        If there was an exception, returns that as the message.
+        """
 
         data = None
 
@@ -27,10 +35,40 @@ class FastaController:
             print(f"Get fasta info error: {e}")
 
         return data
+    
+    # ----------------------------------------------------------------
+    async def get_fasta_owner(self, id):
+        """Gets a fasta's owner's id
+
+        Args:
+            id (_type_): The desired fasta's id
+
+        Returns:
+            int: The owner's id
+        """
+
+        data = None
+
+        try:
+            result = await self.dao.get_fasta_by_id(id)
+            data: Fasta = result['data']
+
+        except Exception as e:
+            print(f"Get fasta info error: {e}")
+
+        return data.get_user_id()
 
 
     # ----------------------------------------------------------------
     async def add_fasta(self, new_fasta) -> int:
+        """Add a new Fasta to database
+
+        Args:
+            new_fasta (Fasta): The new fasta to add to the database
+
+        Returns:
+            int: The id assigned to the newly added fasta
+        """
 
         new_fasta_added: int = 0
 
@@ -40,6 +78,24 @@ class FastaController:
             print(e)
 
         return new_fasta_added
+    
+    # ----------------------------------------------------------------
+    async def del_fasta(self, id) -> int:
+        """Removes a fasta from the database
+
+        Args:
+            id (int): The id of the fasta to delete
+
+        Returns:
+            int: A code from the list indicating if the operation was successful, or what failed exactly
+        """
+
+        try:
+            fasta_deleted = self.dao.delete_fasta(id)
+        except Exception as e:
+            fasta_deleted = e
+
+        return fasta_deleted
     
 
     # The function checks if it is a valid single FASTA
@@ -58,6 +114,16 @@ class FastaController:
         match = re.search(header_pattern,fasta)
         if match:
             genome, chromosome, strand, position = match.group(1,2,3,4)
+            
+            splitted_fasta = fasta.split("\n")
+            
+            sequences = [line for line in splitted_fasta if len(re.findall(r">.*",line.strip())) == 0 and len(line) > 0 ]
+            for seq in sequences:
+                seq_temp = seq.replace(" ","").strip()
+                invalid_nucleotides_search = re.findall("([^ATCGatcg])",seq_temp)
+                
+                if len(invalid_nucleotides_search) > 0:
+                    return False, None, None, None, None, None
 
             # Validate that it has found the content in the header
             if genome and chromosome and strand and position:
@@ -80,51 +146,51 @@ class FastaController:
 
 
     # The function checks if the file is a single fasta or a multi fasta
+    # @param fasta
+    # @return num_sequences: int, Return 0 if there is more than one sequence, 1 if there is only one
     async def get_type_fasta(self, fasta) -> int:
 
-        # Separar el archivo en secuencias
+        # Separate the file into sequences
         sequences = fasta.split('>')[1:]
-        # Contar el número de secuencias
+        # Count the number of sequences
         num_sequences = len(sequences)
         
-        # Devolver 0 si hay más de una secuencia, 1 si hay una sola
         return 0 if num_sequences > 1 else 1
-
-
-
-
-
-
-
-# Pruebas
-# if __name__ == '__main__':
-#     fasta = '>hg38;chr3;1;8762635:8762739\nCTCGGGCACAGCATTCATGGAAAGGAAAGGTGTACGGGACATGCCCGAGGATCCTCAGTCCCACAGAAAC AGGGAGGGGCTGGGAAGCTCATTCTACAGATGGGG'
-#     fasta_incorrect = '>GRCh38;1;1:50\natgatacacgcgggcgaccgcgcagtcaaYcttcaacatgtaaccctagacgccctgaat\nagctatgtccacacttcctcatttctgcctcccagataccagagcccgcggcgttgggct\ncacataccagaattccScgttcttacctaa'
-#     multi_fasta = '>random coding sequence 9 consisting of 300 bases.\natgatctgtcttcttccctccgtgcacatgcgttgcatgtatatagcatcaatacccttt\ntgttccactaatgtggcggtgcatgaggctgttcgcatgagccgtatacagcgattcttg\naatttggagtacaaaacaatggaacccccatatagaactccgaataccatatcctgcatt\nggcggaaggaacccgtgggcacggtctcccttacgaagctacttaagaatgcttggcaaa\ntcgtgctatcctctgcgagagagtatcaggtcaattcaactcgtttcctctattccctag\n\n>random coding sequence 10 consisting of 300 bases.\natgagacactccgtaatttccagcaagacgaatt'
     
-#     fastaC: FastaController = FastaController()
-    
-#     # Tipo de Fasta
-#     type_fasta = fastaC.get_type_fasta(fasta)
 
-#     print(f"Tipo de fasta: {type_fasta}")
+    # Get Info Fasta
+    # @param user_id:int
+    # @param type:int
+    # @return data: list[list]
+    #----------------------------------------------------------------
+    async def get_fasta_info(self, user_id: int, single_fasta: int) :
 
-#     if type_fasta == 1 :
+        info_fasta: list[list] = []
+        try:
+            # Get Info Fasta from DAO
+            info_fasta: list[list] =  await self.dao.get_info(user_id, single_fasta)
+            
 
-#         is_fasta, genome, chromosome, strand, position, sequence = fastaC.is_valid_fasta(fasta)
-#         if is_fasta:
-#             print(f"Fasta Semple. Genoma de reference:{genome} Chromosome: {chromosome} Hebra: {strand} y las posiciones: {position}")
-#             print(f"Secuencia: {sequence}")
-#         else:
-#             print("No es un archivo fasta simple válido.")
-#     elif type_fasta == 0:
-#         print("Es un multi fasta")
-#     else:
-#         print("No es un formato fasta valido5")
+            data: list[list] = []
+            for t in info_fasta:
+                fasta_row: list[str] = []
+                
+                associated_phylo = self.phylo_dao.get_phylo_by_fasta_id(t[0])
 
+                for index, i in enumerate(t):
+                    if index == 2:
+                        fasta_row.append("")
+                        continue
+                    
+                    if type(i) == datetime.datetime:
+                        fasta_row.append(i.strftime('%d/%m/%Y %H:%M'))
+                    else:
+                        fasta_row.append(str(i))
+                        
+                fasta_row.append(len(associated_phylo))
+                
+                data.append(fasta_row)
 
-# Process Fasta
-# Que todos sean nucleotides
-# multi o simple
-# Multi que tenga secuencia, insertar de una
-# que tenga secuencia, ... y otros campos
+        except Exception as e:
+            print(f"FastaController Exception: {e}")
+        return data

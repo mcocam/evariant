@@ -65,9 +65,34 @@ class SnpDao:
         cursor = self.connection.connect()
         rows = cursor.execute(query)
         for row in rows:
+            print('row')
+            print(row)
             snp = await self.__parse_snp(row)
             snps.append(snp)
         return snps
+    
+
+
+    # ----------------------------------------------------------------
+    async def get_snp_refs_by_fasta_id(self, fasta_id: int) -> list[str]:
+        """
+        Retrieves all the SNPs references for a given FASTA id from the database.
+        
+        Arguments:
+        - fasta_id: The id of the FASTA to retrieve SNPs references for.
+        
+        Returns:
+        - A list of Snp references or an empty list if none found.
+        """
+        snp_refs = []
+        query = select(self.snp_table.c.ref_snp).where(self.snp_table.c.fasta_id == fasta_id)
+        #query = self.snp_table.c.ref_snp.select().where(self.snp_table.c.fasta_id == fasta_id)
+
+        cursor = self.connection.connect()
+        rows = cursor.execute(query)
+        for snp_ref in rows:
+            snp_refs.append(snp_ref[0])
+        return snp_refs
     
 
     # ----------------------------------------------------------------
@@ -102,7 +127,7 @@ class SnpDao:
         return inserted_rows
 
 
-
+    # ----------------------------------------------------------------
     @staticmethod
     async def __parse_snp(raw_data: List[any]) -> Snp:
         """
@@ -127,4 +152,34 @@ class SnpDao:
         ref_nucleotide: str = raw_data[3]
         var_nucleotide: str = raw_data[4]
         
-        return Snp(snp_id, ref_snp, fasta_id, ref_nucleotide, var_nucleotide)
+        return Snp(id = snp_id, ref_snp = ref_snp, fasta_id = fasta_id, ref_nucleotide = ref_nucleotide, var_nucleotide = var_nucleotide)
+    
+    # ----------------------------------------------------------------
+    def delete_snp(self, fasta_id: int) -> int:
+        """Removes an snp from the database
+
+        Args:
+            fasta_id (int): The id of the fasta to delete
+
+        Returns:
+            int: A code from the list indicating if the operation was successful, or what failed exactly
+        """
+
+        snp_deleted: int = 0
+
+        query = self.snp_table.delete().where(
+            self.snp_table.c.fasta_id == fasta_id
+        )
+
+        try:
+            cursor = self.connection.connect()
+            response = cursor.execute(query)
+            cursor.commit()
+
+            if (response.rowcount <= 0):
+                snp_deleted = 900
+
+        except Exception as e:
+            snp_deleted = e
+
+        return snp_deleted
