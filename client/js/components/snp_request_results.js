@@ -48,7 +48,7 @@ $().ready(() => {
             const snpGenotypeData = snpGenotypes[index];
             let genotype = [];
             console.log(snpGenotypeData);
-            if (snpGenotypeData[1] !== '' || snpGenotypeData[1] !== undefined) {
+            if (snpGenotypeData[1] !== '' || typeof snpGenotypeData[1] !== undefined) {
 
               //Genotype Comparative Card
               genotypeCard = $('<div>').addClass('card snp-result-card mt-4');
@@ -115,7 +115,7 @@ $().ready(() => {
             const articlesArray = snpRelatedArticles[index];
 
             let articles = [];
-            if (articlesArray[1] !== '' || articlesArray[1] !== undefined) {
+            if (articlesArray[1] !== '' || typeof articlesArray[1] !== undefined) {
 
               // Build SNP related articles info
               // Related Articles Card
