@@ -243,12 +243,17 @@ body {
     border: none;
 }
 
-.snp-result-card h5 {
+.snp-result-card h5, .card-header-text {
     font-size: 1.7rem;
+    color: #012E3D;
+    font-weight: 800;
+    text-decoration: none;
 }
 
 .snp-result-inner-card h5 {
+    color: #012E3D;
     font-size: 1.3rem;
+    
 }
 
 .snp-result-card .card {
@@ -282,8 +287,6 @@ body {
 #no-snp-message {
     min-height: 300px;
 }
-
-
 
 html,
 body {
