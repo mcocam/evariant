@@ -125,7 +125,6 @@ const sendFile = (file, request_title) =>{
   })
   .then(response => response.json())
   .then(data => {
-    console.log(data);
     $("#snp_spinner").hide();
     $("#snp_spinner_text").hide();
     $('#btn_back_step2').prop('disabled', false);

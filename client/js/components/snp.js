@@ -85,7 +85,6 @@ function deleteFasta(fasta_id) {
         axios
             .get(`/api/files/delete_fasta/` + fasta_id)
             .then(response => {
-                console.log(response)
                 window.location.href = './snp.html';
             })
             .catch(e => {
