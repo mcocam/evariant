@@ -47,7 +47,6 @@ $().ready(() => {
             let genotypeCard = '';
             const snpGenotypeData = snpGenotypes[index];
             let genotype = [];
-            console.log(snpGenotypeData[1]);
             if (typeof snpGenotypeData[1] !== undefined) {
               if (snpGenotypeData[1] !== '') {
 
