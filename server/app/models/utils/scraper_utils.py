@@ -34,17 +34,16 @@ def get_snpedia_pages(snp_refs):
     for ref in snp_refs:
         try:
             
-            headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'}
+            headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"}
             str_ref = clean_snp_refs(ref)
             url = 'https://www.snpedia.com/index.php/' + str_ref
             response = requests.get(url, headers=headers)
             
-            print(response)
+            print(response.text)
             if response.status_code == 200:
                 soup = BeautifulSoup(response.text, 'html.parser')
                 body_content = soup.body
                 pages.append(str(body_content))
-                print(soup.body)
             else:
                 pages.append(None)
         except Exception as e:
