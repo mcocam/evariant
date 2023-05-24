@@ -129,7 +129,7 @@ async def send_results_phylo(fasta_id: str, session_data: SessionData = Depends(
         fasta_owner = await fasta_controller.get_fasta_owner(fasta_id)
         
         if fasta_owner != user_id:
-            return HTTPException(403)
+            raise HTTPException(status_code=404, detail="Forbidden")
         
         
         result_phyloTree = await phylo_controller.get_phylo_by_id(fasta_id)
